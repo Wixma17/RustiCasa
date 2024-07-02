@@ -9,7 +9,9 @@ CREATE TABLE Cliente (
 
 CREATE TABLE Casa (
     idCasa INT PRIMARY KEY,
-    nombreCasa VARCHAR(50)
+    nombreCasa VARCHAR(50),
+    descripcion LONGTEXT,
+    mascotas BOOLEAN
 );
 
 CREATE TABLE Imagen (

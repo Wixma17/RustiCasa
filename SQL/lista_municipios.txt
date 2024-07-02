@@ -733,7 +733,7 @@ INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipiose
 (748, 25, 'Puebla de la Calzada', 'puebla-de-la-calzada', 06490, 38.893789, -6.622868),
 (749, 25, 'Puebla de la Reina', 'puebla-de-la-reina', 06477, 38.664586, -6.103420),
 (750, 25, 'Puebla de Obando', 'puebla-de-obando', 06191, 39.177732, -6.628103);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (751, 25, 'Puebla de Sancho Pérez', 'puebla-de-sancho-perez', 06310, 38.398300, -6.400309),
 (752, 25, 'Puebla del Maestre', 'puebla-del-maestre', 06906, 38.085814, -6.078508),
 (753, 25, 'Puebla del Prior', 'puebla-del-prior', 06229, 38.571102, -6.197448),
@@ -1414,7 +1414,7 @@ INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionse
 (1435, 37, 'Rezmondo', 'rezmondo', 09108, 42.515306, -4.251280),
 (1436, 37, 'Riocavado de la Sierra', 'riocavado-de-la-sierra', 09615, 42.152173, -3.198180),
 (1437, 37, 'Roa', 'roa', 09300, 41.697157, -3.927484);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (1438, 37, 'Rojas', 'rojas', 09246, 42.578650, -3.440094),
 (1439, 37, 'Royuela de Río Franco', 'royuela-de-rio-franco', 09344, 41.997152, -3.956065),
 (1440, 37, 'Rubena', 'rubena', 09199, 42.387887, -3.573647),
@@ -2103,7 +2103,7 @@ INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionse
 (2128, 14, 'Torrecampo', 'torrecampo', 14410, 38.476768, -4.678330),
 (2129, 14, 'Valenzuela', 'valenzuela', 14670, 37.774582, -4.219437),
 (2130, 14, 'Valsequillo', 'valsequillo', 14206, 38.405043, -5.352402);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (2131, 14, 'Victoria', 'victoria', 14140, 37.681511, -4.852180),
 (2132, 14, 'Villa del Río', 'villa-del-rio', 14640, 37.982910, -4.297080),
 (2133, 14, 'Villafranca de Córdoba', 'villafranca-de-cordoba', 14420, 37.964321, -4.543440),
@@ -2830,7 +2830,7 @@ INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionse
 (2861, 30, 'Villanueva Mesía', 'villanueva-mesia', 18369, 37.213686, -4.010053),
 (2862, 30, 'Víznar', 'viznar', 18179, 37.230465, -3.553648),
 (2863, 30, 'Zafarraya', 'zafarraya', 18128, 36.975610, -4.143991);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (2864, 30, 'Zagra', 'zagra', 18311, 37.253150, -4.168024),
 (2865, 30, 'Zubia', 'lazubia', 18140, 37.120872, -3.584375),
 (2866, 30, 'Zújar', 'zujar', 18811, 37.540426, -2.842369),
@@ -3562,7 +3562,7 @@ INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionse
 (3598, 50, 'Puerta de Segura', 'puerta-de-segura', 23360, 38.350256, -2.740102),
 (3599, 50, 'Quesada', 'quesada', 23480, 37.845105, -3.068275),
 (3600, 50, 'Rus', 'rus', 23430, 38.050592, -3.461273);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (3601, 50, 'Sabiote', 'sabiote', 23410, 38.070443, -3.304954),
 (3602, 50, 'Santa Elena', 'santa-elena', 23213, 38.341202, -3.536139),
 (3603, 50, 'Santiago de Calatrava', 'santiago-de-calatrava', 23612, 37.752801, -4.171050),
@@ -4277,7 +4277,7 @@ INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionse
 (4319, 15, 'Alcobendas', 'alcobendas', 28100, 40.545200, -3.643099),
 (4320, 15, 'Alcorcón', 'alcorcon', 28921, 40.351410, -3.824244),
 (4321, 15, 'Aldea del Fresno', 'aldea-del-fresno', 28620, 40.323975, -4.202364);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (4322, 15, 'Algete', 'algete', 28110, 40.597900, -3.499994),
 (4323, 15, 'Alpedrete', 'alpedrete', 28430, 40.658885, -4.033204),
 (4324, 15, 'Ambite', 'ambite', 28580, 40.326776, -3.183315),
@@ -5014,7 +5014,7 @@ INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionse
 (5064, 17, 'Salas', 'salas', 33869, 43.408875, -6.260619),
 (5065, 17, 'San Martín de Oscos', 'san-martin-de-oscos', 33777, 43.265280, -6.962004),
 (5066, 17, 'San Martín del Rey Aurelio', 'san-martin-del-rey-aurelio', 33791, 43.275000, -5.604184);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (5067, 17, 'San Tirso de Abres', 'san-tirso-de-abres', 33774, 43.409960, -7.142039),
 (5068, 17, 'Santa Eulalia de Oscos', 'santa-eulalia-de-oscos', 33776, 43.259712, -7.022213),
 (5069, 17, 'Santo Adriano', 'santo-adriano', 33119, 43.273321, -6.002424),
@@ -5695,7 +5695,7 @@ INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionse
 (5749, 24, 'Candelaria', 'candelaria', 38530, 28.352979, -16.370616),
 (5750, 24, 'Fasnia', 'fasnia', 38570, 28.240222, -16.439795),
 (5751, 24, 'Frontera', 'frontera-tenerife', 38911, 28.293280, -16.522659);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (5752, 24, 'Fuencaliente de la Palma', 'fuencaliente-de-la-palma', 38740, 28.489476, -17.849865),
 (5753, 24, 'Garachico', 'garachico', 38450, 28.372107, -16.764107),
 (5754, 24, 'Garafía', 'garafia', 38787, 28.816740, -17.915955),
@@ -6391,7 +6391,7 @@ INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionse
 (6453, 20, 'Fatarella', 'fatarella', 43781, 41.161461, 0.473350),
 (6454, 20, 'Febró', 'febro', 43364, 41.277149, 1.004240),
 (6455, 20, 'Figuera', 'figuera', 43736, 41.215918, 0.730076);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (6456, 20, 'Figuerola del Camp', 'figuerola-del-camp', 43811, 41.371525, 1.266765),
 (6457, 20, 'Flix', 'flix', 43750, 41.228079, 0.543202),
 (6458, 20, 'Forés', 'fores', 43425, 41.494616, 1.238549),
@@ -7112,7 +7112,7 @@ INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionse
 (7180, 36, 'Massanassa', 'massanassa', 46470, 39.411031, -0.400872),
 (7181, 36, 'Meliana', 'meliana', 46133, 39.529235, -0.350018),
 (7182, 36, 'Millares', 'millares', 46198, 39.238037, -0.773335);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (7183, 36, 'Miramar', 'miramar', 46711, 38.951466, -0.139217),
 (7184, 36, 'Mislata', 'mislata', 46920, 39.476055, -0.418983),
 (7185, 36, 'Mogente/Moixent', 'mogente-moixent', 46640, 38.874062, -0.751877),
@@ -7796,7 +7796,7 @@ INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionse
 (7868, 48, 'Villardondiego', 'villardondiego', 49871, 41.584634, -5.377593),
 (7869, 48, 'Villarrín de Campos', 'villarrin-de-campos', 49137, 41.796272, -5.639935),
 (7870, 48, 'Villaseco del Pan', 'villaseco-del-pan', 49181, 41.470033, -5.962744);
-INSERT INTO `poblacion` (`idpoblacion`, `idprovincia`, `poblacion`, `poblacionseo`, `postal`, `latitud`, `longitud`) VALUES
+INSERT INTO `MUNICIPIO` (`idMunicipio`, `idprovincia`, `municipio`, `municipioseo`, `postal`, `latitud`, `longitud`) VALUES
 (7871, 48, 'Villavendimio', 'villavendimio', 49870, 41.578503, -5.343518),
 (7872, 48, 'Villaveza de Valverde', 'villaveza-de-valverde', 49697, 41.944330, -5.850563),
 (7873, 48, 'Villaveza del Agua', 'villaveza-del-agua', 49760, 41.918725, -5.679717),
