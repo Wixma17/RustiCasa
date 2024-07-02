@@ -11,7 +11,9 @@ CREATE TABLE Casa (
     idCasa INT PRIMARY KEY,
     nombreCasa VARCHAR(50),
     descripcion LONGTEXT,
-    mascotas BOOLEAN
+    mascotas BOOLEAN,
+    gmail VARCHAR(150),
+    FOREIGN KEY (gmail) REFERENCES Cliente(gmail)
 );
 
 CREATE TABLE Imagen (

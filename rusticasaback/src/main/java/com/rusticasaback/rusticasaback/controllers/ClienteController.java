@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.rusticasaback.rusticasaback.services.ClienteService;
 
 @RestController
@@ -17,10 +16,9 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
-
     @GetMapping("/list")
-    public ResponseEntity<?> listaCliente(){        
+    public ResponseEntity<?> listaCliente() {
         return clienteService.getListaCliente();
     }
-    
+
 }
