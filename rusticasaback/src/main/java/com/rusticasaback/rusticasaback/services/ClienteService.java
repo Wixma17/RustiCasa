@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.rusticasaback.rusticasaback.entities.ClienteEntity;
 import com.rusticasaback.rusticasaback.repositories.ClienteRepository;
-import com.rusticasaback.rusticasaback.response.ClienteResponse;
+import com.rusticasaback.rusticasaback.responses.ClienteResponse;
 
 @Service
 public class ClienteService {
@@ -38,6 +38,10 @@ public class ClienteService {
         } else {
             return null;
         }
+    }
+
+    public ClienteEntity guardaCliente(ClienteEntity cli) {
+        return clienteRepository.save(cli);
     }
 
 }

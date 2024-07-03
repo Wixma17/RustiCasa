@@ -1,4 +1,4 @@
-package com.rusticasaback.rusticasaback.response;
+package com.rusticasaback.rusticasaback.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,8 +1,15 @@
 package com.rusticasaback.rusticasaback.entities;
 
+import java.util.Date;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,5 +43,12 @@ public class ClienteEntity {
 
     @Column(name = "administrador")
     private boolean administrador;
+
+    @Column(name = "fecha_nacimiento")
+    private Date fecha_nacimiento;
+
+    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Set<CasaEntity> casas;
 
 }

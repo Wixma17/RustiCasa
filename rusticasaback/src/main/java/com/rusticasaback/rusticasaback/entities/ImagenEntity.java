@@ -2,7 +2,11 @@ package com.rusticasaback.rusticasaback.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,12 +25,14 @@ public class ImagenEntity {
 
     @Id
     @Column(name = "idImagen", nullable = false)
-    private int idImagen;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idImagen;
 
     @Column(name = "nombreImagen")
     private String nombreImagen;
 
-    @Column(name = "idCasa")
-    private int idCasa; //FOREIGN KEY (idCasa) REFERENCES Casa(idCasa)
+    @ManyToOne
+    @JoinColumn(name = "id_casa")
+    private CasaEntity casa; // FOREIGN KEY (idCasa) REFERENCES Casa(idCasa)
 
 }

@@ -1,4 +1,4 @@
-package com.rusticasaback.rusticasaback.request;
+package com.rusticasaback.rusticasaback.requests;
 
 import lombok.Data;
 
