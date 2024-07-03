@@ -24,15 +24,19 @@ import lombok.NoArgsConstructor;
 public class ImagenEntity {
 
     @Id
-    @Column(name = "idImagen", nullable = false)
+    @Column(name = "id_imagen", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idImagen;
 
-    @Column(name = "nombreImagen")
+    @Column(name = "nombre_imagen")
     private String nombreImagen;
+
+    @Column(name = "posicion_carrusel")
+    private int posicionCarrusel;
+
 
     @ManyToOne
     @JoinColumn(name = "id_casa")
-    private CasaEntity casa; // FOREIGN KEY (idCasa) REFERENCES Casa(idCasa)
+    private CasaEntity casa;
 
 }

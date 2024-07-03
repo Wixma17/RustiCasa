@@ -1,11 +1,11 @@
 package com.rusticasaback.rusticasaback.entities;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.rusticasaback.rusticasaback.entities.relaciones.AlquilaEntity;
+import com.rusticasaback.rusticasaback.entities.relaciones.OpinaEntity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -45,10 +45,20 @@ public class ClienteEntity {
     private boolean administrador;
 
     @Column(name = "fecha_nacimiento")
-    private Date fecha_nacimiento;
+    private Date fechaNacimiento;
 
-    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private Set<CasaEntity> casas;
+    @OneToMany(mappedBy = "clienteEmisor")
+    private List<MensajeEntity> listaMensajeEnviados;
 
+    @OneToMany(mappedBy = "clienteReceptor")
+    private List<MensajeEntity> listaMensajeRecibidos;
+
+    @OneToMany(mappedBy = "clientePublicador")
+    private List<CasaEntity> listaCasaPublicadas;
+
+    @OneToMany(mappedBy = "cliente")
+    private List<AlquilaEntity> listaAlquilados;
+
+    @OneToMany(mappedBy = "clienteOpinion")
+    private List<OpinaEntity> listaClienteOpinion;
 }

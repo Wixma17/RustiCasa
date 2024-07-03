@@ -8,25 +8,9 @@ CREATE TABLE Cliente (
     fecha_nacimiento DATE
 );
 
-CREATE TABLE Casa (
-    id_casa INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_casa VARCHAR(50),
-    descripcion LONGTEXT,
-    mascotas BOOLEAN,
-    gmail VARCHAR(150),
-    FOREIGN KEY (gmail) REFERENCES Cliente(gmail)
-);
-
-CREATE TABLE Imagen (
-    id_imagen INT AUTO_INCREMENT PRIMARY KEY,
-    nombre_imagen VARCHAR(150),
-    id_casa INT,
-    FOREIGN KEY (id_casa) REFERENCES Casa(id_casa)
-);
-
 CREATE TABLE Provincia (
     id_provincia INT PRIMARY KEY,
-    nombre_provincia VARCHAR(100)
+    nombre_provincia VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE Municipio (
@@ -35,81 +19,56 @@ CREATE TABLE Municipio (
     municipio VARCHAR(150) NOT NULL,
     municipio_seo VARCHAR(150) DEFAULT NULL,
     postal INT(5) DEFAULT NULL,
-    latitud decimal(9,6) DEFAULT NULL,
-    longitud decimal(9,6) DEFAULT NULL,
+    latitud DECIMAL(9,6) DEFAULT NULL,
+    longitud DECIMAL(9,6) DEFAULT NULL,
     FOREIGN KEY (id_provincia) REFERENCES Provincia(id_provincia)
 );
 
-CREATE TABLE Opinion (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    texto_opinion TEXT,
-    id_casa INT,
+CREATE TABLE Casa (
+    id_casa INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_casa VARCHAR(50) NOT NULL,
+    descripcion LONGTEXT,
+    mascotas BOOLEAN,
     gmail VARCHAR(150),
+    id_municipio INT,    
+    FOREIGN KEY (gmail) REFERENCES Cliente(gmail),
+    FOREIGN KEY (id_municipio) REFERENCES Municipio(id_municipio)
+);
+
+CREATE TABLE Imagen (
+    id_imagen INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_imagen VARCHAR(150) NOT NULL,
+    id_casa INT,
+    posicion_carrusel INT,
+    FOREIGN KEY (id_casa) REFERENCES Casa(id_casa)
+);
+
+CREATE TABLE Opina ( 
+    id_casa INT,
+    gmail VARCHAR(150),   
+    texto_opinion TEXT,    
+    PRIMARY KEY (gmail, id_casa),
     FOREIGN KEY (id_casa) REFERENCES Casa(id_casa),
     FOREIGN KEY (gmail) REFERENCES Cliente(gmail)
 );
 
 CREATE TABLE Mensaje (
     id_mensaje INT AUTO_INCREMENT PRIMARY KEY,
-    texto_mensaje TEXT,
-    gmail VARCHAR(150),
-    FOREIGN KEY (gmail) REFERENCES Cliente(gmail)
-);
-
-CREATE TABLE Publica (
-    gmail VARCHAR(150),
-    id_casa INT,
-    PRIMARY KEY (gmail, id_casa),
-    FOREIGN KEY (gmail) REFERENCES Cliente(gmail),
-    FOREIGN KEY (id_casa) REFERENCES Casa(id_casa)
+    texto_mensaje TEXT NOT NULL,
+    emisor VARCHAR(150),
+    receptor VARCHAR(150),
+    FOREIGN KEY (emisor) REFERENCES Cliente(gmail),
+    FOREIGN KEY (receptor) REFERENCES Cliente(gmail)
 );
 
 CREATE TABLE Alquila (
     gmail VARCHAR(150),
     id_casa INT,
-    PRIMARY KEY (gmail, id_casa),
+    fecha_entrada DATE,
+    fecha_salida DATE,
+    PRIMARY KEY (gmail, id_casa,fecha_entrada),
     FOREIGN KEY (gmail) REFERENCES Cliente(gmail),
     FOREIGN KEY (id_casa) REFERENCES Casa(id_casa)
-);
-
-CREATE TABLE Habla (
-    gmail_cliente VARCHAR(150),
-    id_mensaje INT,
-    PRIMARY KEY (gmail_cliente, id_mensaje),
-    FOREIGN KEY (gmail_cliente) REFERENCES Cliente(gmail),
-    FOREIGN KEY (id_mensaje) REFERENCES Mensaje(id_mensaje)
-);
-
-CREATE TABLE Escribe (
-    gmail VARCHAR(150),
-    id_mensaje INT,
-    PRIMARY KEY (gmail, id_mensaje),
-    FOREIGN KEY (gmail) REFERENCES Cliente(gmail),
-    FOREIGN KEY (id_mensaje) REFERENCES Mensaje(id_mensaje)
-);
-
-CREATE TABLE Posee (
-    gmail VARCHAR(150),
-    id_casa INT,
-    PRIMARY KEY (gmail, id_casa),
-    FOREIGN KEY (gmail) REFERENCES Cliente(gmail),
-    FOREIGN KEY (id_casa) REFERENCES Casa(id_casa)
-);
-
-CREATE TABLE Tiene (
-    id_casa INT,
-    id_imagen INT,
-    PRIMARY KEY (id_casa, id_imagen),
-    FOREIGN KEY (id_casa) REFERENCES Casa(id_casa),
-    FOREIGN KEY (id_imagen) REFERENCES Imagen(id_imagen)
-);
-
-CREATE TABLE Pertenece (
-    id_provincia INT,
-    id_municipio INT,
-    PRIMARY KEY (id_provincia, id_municipio),
-    FOREIGN KEY (id_provincia) REFERENCES Provincia(id_provincia),
-    FOREIGN KEY (id_municipio) REFERENCES Municipio(id_municipio)
 );
 
 INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)

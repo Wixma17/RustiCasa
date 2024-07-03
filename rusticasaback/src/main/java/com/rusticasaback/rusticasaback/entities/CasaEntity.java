@@ -1,5 +1,10 @@
 package com.rusticasaback.rusticasaback.entities;
 
+import java.util.List;
+
+import com.rusticasaback.rusticasaback.entities.relaciones.AlquilaEntity;
+import com.rusticasaback.rusticasaback.entities.relaciones.OpinaEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,18 +32,33 @@ public class CasaEntity {
     @Id
     @Column(name = "id_casa", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_casa;
+    private Long idCasa;
 
     @Column(name = "descripcion")
     private String descripcion;
 
     @Column(name = "nombre_casa")
-    private String nombre_casa;
+    private String nombreCasa;
 
     @Column(name = "mascotas")
     private boolean mascotas;
 
     @ManyToOne
+    @JoinColumn(name = "id_municipio")
+    private MunicipioEntity municipio;
+
+
+    @OneToMany(mappedBy = "casa")
+    private List<ImagenEntity> listaImagenes;
+
+    @ManyToOne
     @JoinColumn(name = "gmail")
-    private ClienteEntity cliente;
+    private ClienteEntity clientePublicador;
+
+    @OneToMany(mappedBy = "casa")
+    private List<AlquilaEntity> listaAlquilado;
+
+    @OneToMany(mappedBy = "casaOpinion")
+    private List<OpinaEntity> listaCasaOpinion;
+
 }

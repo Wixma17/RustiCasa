@@ -1,8 +1,13 @@
 package com.rusticasaback.rusticasaback.entities;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,16 +25,13 @@ import lombok.NoArgsConstructor;
 public class MunicipioEntity {
 
     @Id
-    @Column(name = "idMunicipio", nullable = false)
+    @Column(name = "id_municipio", nullable = false)
     private int idMunicipio;
-
-    @Column(name = "idProvincia")
-    private int idProvincia;//FOREIGN KEY (idProvincia) REFERENCES Provincia(idProvincia)
 
     @Column(name = "municipio")
     private String municipio;
 
-    @Column(name = "municipioseo")
+    @Column(name = "municipio_seo")
     private String municipioseo;
 
     @Column(name = "postal")
@@ -40,5 +42,12 @@ public class MunicipioEntity {
 
     @Column(name = "longitud")
     private double longitud;
+
+    @ManyToOne
+    @JoinColumn(name = "id_provincia")
+    private ProvinciaEntity provincia;
+
+    @OneToMany(mappedBy = "municipio")
+    private List<CasaEntity> listaCasa;
 
 }

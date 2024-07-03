@@ -3,6 +3,8 @@ package com.rusticasaback.rusticasaback.entities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,13 +22,18 @@ import lombok.NoArgsConstructor;
 public class MensajeEntity {
     
     @Id
-    @Column(name = "idMensaje", nullable = false)
+    @Column(name = "id_mensaje", nullable = false)
     private int idMensaje;
 
-    @Column(name = "textoMensaje")
+    @Column(name = "texto_mensaje")
     private String textoMensaje;
 
-    @Column(name = "gmail")
-    private String gmail;// FOREIGN KEY (gmail) REFERENCES Cliente(gmail)
+    @ManyToOne
+    @JoinColumn(name = "emisor")
+    private ClienteEntity clienteEmisor;
+
+    @ManyToOne
+    @JoinColumn(name = "receptor")
+    private ClienteEntity clienteReceptor;
 
 }
