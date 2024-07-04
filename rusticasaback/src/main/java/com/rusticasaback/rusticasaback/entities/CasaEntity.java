@@ -47,8 +47,7 @@ public class CasaEntity {
     @JoinColumn(name = "id_municipio")
     private MunicipioEntity municipio;
 
-
-    @OneToMany(mappedBy = "casa")
+    @OneToMany(mappedBy = "casaImagen")
     private List<ImagenEntity> listaImagenes;
 
     @ManyToOne

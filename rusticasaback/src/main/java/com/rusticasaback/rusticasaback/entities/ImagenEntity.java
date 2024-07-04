@@ -37,6 +37,6 @@ public class ImagenEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_casa")
-    private CasaEntity casa;
+    private CasaEntity casaImagen;
 
 }

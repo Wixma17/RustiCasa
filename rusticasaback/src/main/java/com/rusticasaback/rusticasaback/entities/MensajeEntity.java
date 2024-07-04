@@ -2,6 +2,8 @@ package com.rusticasaback.rusticasaback.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -20,10 +22,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "mensaje")
 public class MensajeEntity {
-    
+
     @Id
     @Column(name = "id_mensaje", nullable = false)
-    private int idMensaje;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idMensaje;
 
     @Column(name = "texto_mensaje")
     private String textoMensaje;
