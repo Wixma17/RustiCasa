@@ -37,4 +37,8 @@ public class CasaService {
         return casaRepository.save(casa);
     }
 
+    public List<CasaEntity> getCasasByMascotas(boolean mascotas) {
+        return casaRepository.findByMascotas(mascotas);
+    }
+
 }

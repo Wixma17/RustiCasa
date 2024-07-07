@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface CasaRepository extends JpaRepository<CasaEntity, Long> {
     List<CasaEntity> findByClientePublicador(ClienteEntity clientePublicador);
+    List<CasaEntity> findByMascotas(boolean mascotas);
 }
 
 

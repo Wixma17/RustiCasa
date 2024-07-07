@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 public class ProvinciaEntity {
 
     @Id
-    @Column(name = "id_pronvincia", nullable = false)
+    @Column(name = "id_provincia", nullable = false)
     private int idPronvincia;
 
     @Column(name = "provincia")
