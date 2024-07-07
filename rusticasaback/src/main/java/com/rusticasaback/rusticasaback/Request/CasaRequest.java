@@ -14,9 +14,15 @@ public class CasaRequest {
     private String descripcion;
     private String nombreCasa;
     private boolean mascotas;
-    private MunicipioEntity municipio;
-    private List<ImagenEntity> listaImagenes;
-    private ClienteEntity clientePublicador;
-    private List<AlquilaEntity> listaAlquilado;
-    private List<OpinaEntity> listaCasaOpinion;
+    private MunicipioEntity municipio; 
+    private int precioNoche;
+    private int numeroHabitaciones;
+    private int numeroInquilinos;   
+    private boolean piscina;
+    private boolean wifi;
+    private boolean jardin;
+    private List<ImagenEntity> listaImagenes; 
+    private ClienteEntity clientePublicador; 
+    private List<AlquilaEntity> listaAlquilado; 
+    private List<OpinaEntity> listaCasaOpinion; 
 }

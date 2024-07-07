@@ -9,9 +9,12 @@ CREATE TABLE Cliente (
 );
 
 CREATE TABLE Provincia (
-    id_provincia INT PRIMARY KEY,
-    nombre_provincia VARCHAR(100) NOT NULL
-);
+  id_provincia int(10) PRIMARY KEY NOT NULL,
+  provincia varchar(50) NOT NULL,
+  provincia_seo varchar(50) NOT NULL,
+  provincia3 char(3) DEFAULT NULL,
+  comunidad varchar(100) NOT NULL
+);;
 
 CREATE TABLE Municipio (
     id_municipio INT NOT NULL PRIMARY KEY,
@@ -30,7 +33,13 @@ CREATE TABLE Casa (
     descripcion LONGTEXT,
     mascotas BOOLEAN,
     gmail VARCHAR(150),
-    id_municipio INT,    
+    id_municipio INT,
+    precio_noche INT,
+    numero_habitaciones INT,
+    numero_inquilinos INT, 
+    piscina BOOLEAN, 
+    wifi BOOLEAN,  
+    jardin BOOLEAN,
     FOREIGN KEY (gmail) REFERENCES Cliente(gmail),
     FOREIGN KEY (id_municipio) REFERENCES Municipio(id_municipio)
 );
@@ -75,58 +84,59 @@ INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, f
 VALUES ('testuser@example.com', 'password123', 'testuser', 'Test', 'User', false, '1990-01-01');
 
 
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (1, 'Álava');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (2, 'Albacete');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (3, 'Alicante');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (4, 'Almería');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (5, 'Ávila');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (6, 'Badajoz');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (7, 'Islas Baleares');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (8, 'Barcelona');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (9, 'Burgos');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (10, 'Cáceres');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (11, 'Cádiz');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (12, 'Castellón');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (13, 'Ciudad Real');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (14, 'Córdoba');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (15, 'A Coruña');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (16, 'Cuenca');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (17, 'Girona');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (18, 'Granada');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (19, 'Guadalajara');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (20, 'Guipúzcoa');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (21, 'Huelva');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (22, 'Huesca');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (23, 'Jaén');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (24, 'León');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (25, 'Lleida');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (26, 'La Rioja');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (27, 'Lugo');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (28, 'Madrid');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (29, 'Málaga');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (30, 'Murcia');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (31, 'Navarra');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (32, 'Ourense');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (33, 'Asturias');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (34, 'Palencia');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (35, 'Las Palmas');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (36, 'Pontevedra');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (37, 'Salamanca');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (38, 'Santa Cruz de Tenerife');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (39, 'Cantabria');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (40, 'Segovia');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (41, 'Sevilla');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (42, 'Soria');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (43, 'Tarragona');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (44, 'Teruel');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (45, 'Toledo');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (46, 'Valencia');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (47, 'Valladolid');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (48, 'Vizcaya');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (49, 'Zamora');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (50, 'Zaragoza');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (51, 'Ceuta');
-INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES (52, 'Melilla');
+INSERT INTO Provincia (`id_provincia`, `provincia`, `provincia_seo`, `provincia3`, `comunidad`) VALUES
+(1, 'Álava', 'alava', 'ALV', 'PVC'),
+(2, 'Castellón', 'castellon', 'CAS', ''),
+(3, 'León', 'leon', 'LEO', ''),
+(4, 'Salamanca', 'salamanca', 'SAL', ''),
+(5, 'Albacete', 'albacete', 'ABC', ''),
+(6, 'Ceuta', 'ceuta', 'CEU', ''),
+(7, 'Lleida', 'lleida', 'LLE', ''),
+(8, 'Segovia', 'segovia', 'SGV', ''),
+(9, 'Alicante', 'alicante', 'ALA', ''),
+(10, 'Ciudad Real', 'ciudad-real', 'CRE', ''),
+(11, 'Lugo', 'lugo', 'LUG', ''),
+(12, 'Sevilla', 'sevilla', 'SVL', 'AND'),
+(13, 'Almería', 'almeria', 'ALM', ''),
+(14, 'Córdoba', 'cordoba', 'CBA', 'AND'),
+(15, 'Madrid', 'madrid', 'MAD', ''),
+(16, 'Soria', 'soria', 'SOR', ''),
+(17, 'Asturias', 'asturias', 'AST', ''),
+(18, 'A Coruña', 'coruna', 'LCO', ''),
+(19, 'Málaga', 'malaga', 'MAL', 'AND'),
+(20, 'Tarragona', 'tarragona', 'TRN', ''),
+(21, 'Ávila', 'avila', 'AVL', ''),
+(22, 'Cuenca', 'cuenca', 'CNC', ''),
+(23, 'Melilla', 'melilla', 'MEL', ''),
+(24, 'S.C. Tenerife', 'tenerife', 'SCT', ''),
+(25, 'Badajoz', 'badajoz', 'BDJ', ''),
+(26, 'Girona', 'girona', 'GIR', ''),
+(27, 'Murcia', 'murcia', 'MUR', ''),
+(28, 'Teruel', 'teruel', 'TER', ''),
+(29, 'Baleares', 'baleares', 'BAL', ''),
+(30, 'Granada', 'granada', 'GND', 'AND'),
+(31, 'Navarra', 'navarra', 'NVR', ''),
+(32, 'Toledo', 'toledo', 'TOL', ''),
+(33, 'Barcelona', 'barcelona', 'BCN', ''),
+(34, 'Guadalajara', 'guadalajara', 'GLJ', ''),
+(35, 'Ourense', 'ourense', 'OUR', ''),
+(36, 'Valencia', 'valencia', 'VAL', ''),
+(37, 'Burgos', 'burgos', 'BRG', ''),
+(38, 'Guipúzcoa', 'guipuzcoa', 'GPZ', 'PVC'),
+(39, 'Palencia', 'palencia', 'PAL', ''),
+(40, 'Valladolid', 'valladolid', 'VLL', ''),
+(41, 'Cáceres', 'caceres', 'CAC', ''),
+(42, 'Huelva', 'huelva', 'HLV', 'AND'),
+(43, 'Las Palmas', 'palmas', 'LPA', ''),
+(44, 'Vizcaya', 'vizcaya', 'VZC', 'PVC'),
+(45, 'Cádiz', 'cadiz', 'CDZ', 'AND'),
+(46, 'Huesca', 'huesca', 'HSC', ''),
+(47, 'Pontevedra', 'pontevedra', 'PNV', ''),
+(48, 'Zamora', 'zamora', 'ZAM', ''),
+(49, 'Cantabria', 'cantabria', 'CTB', ''),
+(50, 'Jaén', 'jaen', 'JAE', 'AND'),
+(51, 'La Rioja', 'rioja', 'LRJ', ''),
+(52, 'Zaragoza', 'zaragoza', 'ZAR', '');
 
 
 
@@ -8230,3 +8240,18 @@ INSERT INTO `MUNICIPIO` (`id_municipio`, `id_provincia`, `municipio`, `municipio
 (8173, 23, 'Melilla', 'melilla', 52001, 35.291248, -2.937910),
 (8174, 46, 'Agüero', 'aguero', 22808, 42.354290, -0.795170);
 
+
+INSERT INTO Casa (nombre_casa, descripcion, mascotas, gmail, id_municipio, precio_noche, numero_habitaciones, numero_inquilinos, piscina, wifi, jardin)
+VALUES (
+    'Casa Pepe', 
+    'Una casa muy bonita', 
+    TRUE, 
+    'testuser@example.com', 
+    4576, 
+    100, 
+    3, 
+    6,
+    FALSE, 
+    TRUE,  
+    FALSE  
+);

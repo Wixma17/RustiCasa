@@ -25,12 +25,11 @@ public class CasaController {
     @PostMapping("/registrarCasa")
     public ResponseEntity<?> registrarCasa(@RequestBody CasaRequest casaRequest) {
 
-        /* Comprobar que funciona */
-
         CasaEntity nuevaCasa = new CasaEntity(casaRequest.getIdCasa(), casaRequest.getDescripcion(),
                 casaRequest.getNombreCasa(), casaRequest.isMascotas(), casaRequest.getMunicipio(),
-                casaRequest.getListaImagenes(), casaRequest.getClientePublicador(), casaRequest.getListaAlquilado(),
-                casaRequest.getListaCasaOpinion());
+                casaRequest.getPrecioNoche(), casaRequest.getNumeroHabitaciones(), casaRequest.getNumeroInquilinos(),
+                casaRequest.isPiscina(), casaRequest.isWifi(), casaRequest.isJardin(), casaRequest.getListaImagenes(),
+                casaRequest.getClientePublicador(), casaRequest.getListaAlquilado(), casaRequest.getListaCasaOpinion());
 
         return new ResponseEntity<>(casaService.guardaCasa(nuevaCasa), HttpStatus.CREATED);
     }

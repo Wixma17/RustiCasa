@@ -26,8 +26,17 @@ public class ProvinciaEntity {
     @Column(name = "id_pronvincia", nullable = false)
     private int idPronvincia;
 
-    @Column(name = "nombre_provincia")
+    @Column(name = "provincia")
     private String nombreProvincia;
+
+    @Column(name = "provincia_seo")
+    private String nombreProvinciaSeo;
+
+    @Column(name = "provincia3")
+    private String nombreProvincia3;
+
+    @Column(name = "comunidad")
+    private String comunidad;
 
     @OneToMany(mappedBy = "provincia")
     private List<MunicipioEntity> listaMunicipios;

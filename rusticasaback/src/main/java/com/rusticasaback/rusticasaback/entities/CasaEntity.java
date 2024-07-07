@@ -45,19 +45,37 @@ public class CasaEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_municipio")
-    private MunicipioEntity municipio;
+    private MunicipioEntity municipio; /* Preguntar Si esto haria un problemas de JSON infinitos */
+
+    @Column(name = "precio_noche")
+    private int precioNoche;
+
+    @Column(name = "numero_habitaciones")
+    private int numeroHabitaciones;
+
+    @Column(name = "numero_inquilinos")
+    private int numeroInquilinos;   
+
+    @Column(name = "piscina")
+    private boolean piscina;
+
+    @Column(name = "wifi")
+    private boolean wifi;
+
+    @Column(name = "jardin")
+    private boolean jardin;
 
     @OneToMany(mappedBy = "casaImagen")
-    private List<ImagenEntity> listaImagenes;
+    private List<ImagenEntity> listaImagenes; /* Preguntar Si esto haria un problemas de JSON infinitos */
 
     @ManyToOne
-    @JoinColumn(name = "gmail")
-    private ClienteEntity clientePublicador;
+    @JoinColumn(name = "gmail") 
+    private ClienteEntity clientePublicador; /* Preguntar Si esto haria un problemas de JSON infinitos */
 
     @OneToMany(mappedBy = "casa")
-    private List<AlquilaEntity> listaAlquilado;
+    private List<AlquilaEntity> listaAlquilado; /* Preguntar Si esto haria un problemas de JSON infinitos */
 
     @OneToMany(mappedBy = "casaOpinion")
-    private List<OpinaEntity> listaCasaOpinion;
+    private List<OpinaEntity> listaCasaOpinion; /* Preguntar Si esto haria un problemas de JSON infinitos */
 
 }
