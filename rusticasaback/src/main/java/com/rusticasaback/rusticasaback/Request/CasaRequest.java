@@ -1,28 +1,23 @@
 package com.rusticasaback.rusticasaback.Request;
 
 import java.util.List;
+
+import com.rusticasaback.rusticasaback.DTOs.AlquilaDTO;
+import com.rusticasaback.rusticasaback.DTOs.CasaDTO;
+import com.rusticasaback.rusticasaback.DTOs.ImagenDTO;
+import com.rusticasaback.rusticasaback.DTOs.MunicipioDTO;
+import com.rusticasaback.rusticasaback.DTOs.OpinaDTO;
 import com.rusticasaback.rusticasaback.entities.ClienteEntity;
-import com.rusticasaback.rusticasaback.entities.ImagenEntity;
-import com.rusticasaback.rusticasaback.entities.MunicipioEntity;
-import com.rusticasaback.rusticasaback.entities.relaciones.AlquilaEntity;
-import com.rusticasaback.rusticasaback.entities.relaciones.OpinaEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class CasaRequest {
-    private Long idCasa;
-    private String descripcion;
-    private String nombreCasa;
-    private boolean mascotas;
-    private MunicipioEntity municipio; 
-    private int precioNoche;
-    private int numeroHabitaciones;
-    private int numeroInquilinos;   
-    private boolean piscina;
-    private boolean wifi;
-    private boolean jardin;
-    private List<ImagenEntity> listaImagenes; 
+    private CasaDTO casaDto;
+    private MunicipioDTO municipio;
+    private List<ImagenDTO> listaImagenes; //Cambio
     private ClienteEntity clientePublicador; 
-    private List<AlquilaEntity> listaAlquilado; 
-    private List<OpinaEntity> listaCasaOpinion; 
+    private List<AlquilaDTO> listaAlquilado; //Cambio
+    private List<OpinaDTO> listaCasaOpinion; //Cambio
 }

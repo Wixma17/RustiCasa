@@ -1,5 +1,7 @@
 package com.rusticasaback.rusticasaback.Response;
 
+import com.rusticasaback.rusticasaback.DTOs.ClienteDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,10 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClienteResponse {
-    private String nickname;
-    private String gmail;
-    private String passwd;
-    private String nombre;
-    private String apellido;
-    private boolean administrador; 
+    private ClienteDTO clienteDTO;
 }

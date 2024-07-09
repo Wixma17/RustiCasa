@@ -1,0 +1,37 @@
+package com.rusticasaback.rusticasaback.DTOs;
+
+import java.util.Date;
+
+import com.rusticasaback.rusticasaback.entities.ClienteEntity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ClienteDTO {
+    private String gmail;
+    private String nombre;
+    private String apellido;
+    private String passwd;
+    private String nickname;
+    private boolean administrador;
+    private Date fechaNacimiento;
+
+    public ClienteDTO(ClienteEntity clienteEntity) {
+        gmail = clienteEntity.getGmail();
+        nombre = clienteEntity.getNombre();
+        apellido = clienteEntity.getApellido();
+        passwd = clienteEntity.getPasswd();
+        nickname = clienteEntity.getNickname();
+        administrador = clienteEntity.isAdministrador();
+        fechaNacimiento = clienteEntity.getFechaNacimiento();
+    }
+
+    public ClienteEntity createClienteEntity(){
+        return new ClienteEntity(gmail, nombre, apellido, passwd, nickname, administrador, fechaNacimiento, null, null, null, null, null);
+    }
+
+}

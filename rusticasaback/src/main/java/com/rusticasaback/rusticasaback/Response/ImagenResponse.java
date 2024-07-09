@@ -1,6 +1,8 @@
 package com.rusticasaback.rusticasaback.Response;
 
-import com.rusticasaback.rusticasaback.entities.CasaEntity;
+import com.rusticasaback.rusticasaback.DTOs.CasaDTO;
+import com.rusticasaback.rusticasaback.DTOs.ImagenDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ImagenResponse {
-    private Long idImagen;
-    private String nombreImagen;
-    private int posicionCarrusel;
-    private CasaEntity casa;
+    private ImagenDTO imagenDTO;
+    private CasaDTO casa;
 }

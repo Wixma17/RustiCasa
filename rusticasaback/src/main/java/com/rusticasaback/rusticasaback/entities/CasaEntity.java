@@ -1,7 +1,6 @@
 package com.rusticasaback.rusticasaback.entities;
 
 import java.util.List;
-
 import com.rusticasaback.rusticasaback.entities.relaciones.AlquilaEntity;
 import com.rusticasaback.rusticasaback.entities.relaciones.OpinaEntity;
 
@@ -44,8 +43,8 @@ public class CasaEntity {
     private boolean mascotas;
 
     @ManyToOne
-    @JoinColumn(name = "id_municipio")
-    private MunicipioEntity municipio; /* Preguntar Si esto haria un problemas de JSON infinitos */
+    @JoinColumn(name = "id_municipio")    
+    private MunicipioEntity municipio;
 
     @Column(name = "precio_noche")
     private int precioNoche;
