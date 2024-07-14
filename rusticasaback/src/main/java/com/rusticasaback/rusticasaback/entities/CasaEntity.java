@@ -65,16 +65,16 @@ public class CasaEntity {
     private boolean jardin;
 
     @OneToMany(mappedBy = "casaImagen")
-    private List<ImagenEntity> listaImagenes; /* Preguntar Si esto haria un problemas de JSON infinitos */
+    private List<ImagenEntity> listaImagenes; 
 
     @ManyToOne
     @JoinColumn(name = "gmail") 
-    private ClienteEntity clientePublicador; /* Preguntar Si esto haria un problemas de JSON infinitos */
+    private ClienteEntity clientePublicador; 
 
     @OneToMany(mappedBy = "casa")
-    private List<AlquilaEntity> listaAlquilado; /* Preguntar Si esto haria un problemas de JSON infinitos */
+    private List<AlquilaEntity> listaAlquilado; 
 
     @OneToMany(mappedBy = "casaOpinion")
-    private List<OpinaEntity> listaCasaOpinion; /* Preguntar Si esto haria un problemas de JSON infinitos */
+    private List<OpinaEntity> listaCasaOpinion; 
 
 }

@@ -1,5 +1,8 @@
 package com.rusticasaback.rusticasaback.DTOs;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,8 +36,26 @@ public class CasaDTO {
         jardin = casaEntity.isJardin();
     }
 
+
     public CasaEntity createCasaEntity(){
         return new CasaEntity(idCasa, descripcion, nombreCasa, mascotas, null, precioNoche, numeroHabitaciones, numeroInquilinos, piscina, wifi, jardin, null, null, null, null);
+    }
+
+    public static CasaEntity createCasaEntity(CasaDTO casaDTO){
+        return new CasaEntity(casaDTO.idCasa, casaDTO.descripcion, casaDTO.nombreCasa, casaDTO.mascotas, null, casaDTO.precioNoche, casaDTO.numeroHabitaciones, casaDTO.numeroInquilinos, casaDTO.piscina, casaDTO.wifi, casaDTO.jardin, null, null, null, null);
+    }
+
+
+    public static List<CasaEntity> convertFromDtoList(List<CasaDTO> listaDTO){
+        List<CasaEntity> listaEntity = new ArrayList<>();
+        listaDTO.forEach(c -> listaEntity.add(createCasaEntity(c)));
+        return listaEntity;
+    }
+
+    public static List<CasaDTO> convertFromEntityList(List<CasaEntity> listaEntity){
+        List<CasaDTO> listaDTO = new ArrayList<>();
+        listaEntity.forEach(c -> listaDTO.add(new CasaDTO(c)));
+        return listaDTO;
     }
 
 }

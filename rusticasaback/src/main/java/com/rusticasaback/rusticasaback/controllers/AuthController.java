@@ -1,5 +1,7 @@
 package com.rusticasaback.rusticasaback.controllers;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,12 +33,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
 
-        ClienteEntity nuevoCliente = new ClienteEntity(registerRequest.getGmail(), registerRequest.getNombre(),
-                registerRequest.getApellido(), registerRequest.getPasswd(), registerRequest.getNickname(),
-                registerRequest.isAdministrador(), registerRequest.getFechaNacimiento(),
-                registerRequest.getListaMensajeEnviados(), registerRequest.getListaMensajeRecibidos(),
-                registerRequest.getListaCasaPublicadas(), registerRequest.getListaAlquilados(),
-                registerRequest.getListaClienteOpinion());
+        ClienteEntity nuevoCliente = new ClienteEntity(registerRequest.getClienteDTO().getGmail(),
+                registerRequest.getClienteDTO().getNombre(),
+                registerRequest.getClienteDTO().getApellido(), registerRequest.getClienteDTO().getPasswd(),
+                registerRequest.getClienteDTO().getNickname(),
+                registerRequest.getClienteDTO().isAdministrador(), registerRequest.getClienteDTO().getFechaNacimiento(),
+                new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
         return new ResponseEntity<>(clienteService.guardaCliente(nuevoCliente), HttpStatus.CREATED);
     }
