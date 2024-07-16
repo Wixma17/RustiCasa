@@ -30,8 +30,7 @@ public class ImagenService {
 
         ArrayList<ImagenResponse> listaImagenesCasaRep = new ArrayList<ImagenResponse>();
         for (ImagenEntity img : listaImagenesCasa) {
-            ImagenDTO imagenDTO= new ImagenDTO(img);
-            //Cambiar por si da error es una casaEntity
+            ImagenDTO imagenDTO= new ImagenDTO(img);            
             CasaDTO casaDTO=new CasaDTO(casa);
             listaImagenesCasaRep.add(new ImagenResponse(imagenDTO,casaDTO));
         }
