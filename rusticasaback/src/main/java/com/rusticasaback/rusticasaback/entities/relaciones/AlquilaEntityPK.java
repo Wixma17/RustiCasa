@@ -18,7 +18,7 @@ public class AlquilaEntityPK {
     private String gmail;
 
     @Column(name = "id_casa")
-    private String idCasa;
+    private Long idCasa;
 
     @Column(name = "fecha_entrada")
     private Date fechaEntrada;

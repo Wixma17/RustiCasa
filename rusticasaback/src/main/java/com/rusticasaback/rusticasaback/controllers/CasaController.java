@@ -5,10 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.rusticasaback.rusticasaback.Request.AlquilaRequest;
 import com.rusticasaback.rusticasaback.Request.CasaRequest;
+import com.rusticasaback.rusticasaback.Request.OpinaRequest;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
+import com.rusticasaback.rusticasaback.services.AlquilaService;
 import com.rusticasaback.rusticasaback.services.CasaService;
 import com.rusticasaback.rusticasaback.services.ImagenService;
+import com.rusticasaback.rusticasaback.services.OpinaService;
 
 @RestController
 @RequestMapping("/api/casa")
@@ -20,6 +25,12 @@ public class CasaController {
 
     @Autowired
     private ImagenService imagenService;
+
+    @Autowired
+    private OpinaService opinaService;
+
+    @Autowired
+    private AlquilaService alquilaService;
 
     @GetMapping("/listaCasa/{email}")
     public ResponseEntity<?> listaCasa(@PathVariable(name = "email") String email) {
@@ -72,6 +83,22 @@ public class CasaController {
 
         return casaService.getCasa(idCasa);// Cambiar la respuesta
 
+    }
+
+    @PostMapping("/subirOpinion")
+    public ResponseEntity<?> subirOpinion(@RequestBody OpinaRequest opinaRequest) {
+
+        opinaService.creaOpinion(opinaRequest);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/reservarCasa")
+    public ResponseEntity<?> reservarCasa(@RequestBody AlquilaRequest alquilaRequest) {
+
+        alquilaService.creaReserva(alquilaRequest);
+
+        return ResponseEntity.ok().build();
     }
 
 }

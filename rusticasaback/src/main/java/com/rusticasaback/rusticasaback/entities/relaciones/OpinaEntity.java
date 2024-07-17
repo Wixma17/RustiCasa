@@ -30,6 +30,9 @@ public class OpinaEntity {
     @Column(name = "texto_opinion")
     private String textoOpinion;
 
+    @Column(name = "puntuacion_casa")
+    private double puntuacionCasa;
+
     @ManyToOne
     @MapsId("gmail")
     @JoinColumn(name = "gmail", referencedColumnName = "gmail")

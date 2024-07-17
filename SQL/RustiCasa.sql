@@ -55,7 +55,8 @@ CREATE TABLE Imagen (
 CREATE TABLE Opina ( 
     id_casa INT,
     gmail VARCHAR(150),   
-    texto_opinion TEXT,    
+    texto_opinion TEXT,
+    puntuacion_casa DOUBLE,    
     PRIMARY KEY (gmail, id_casa),
     FOREIGN KEY (id_casa) REFERENCES Casa(id_casa),
     FOREIGN KEY (gmail) REFERENCES Cliente(gmail)
@@ -82,6 +83,9 @@ CREATE TABLE Alquila (
 
 INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)
 VALUES ('testuser@example.com', 'password123', 'testuser', 'Test', 'User', false, '1990-01-01');
+
+INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)
+VALUES ('ismael@gmail.com', 'ismael', 'ismaelote10', 'Ismael', 'Jimenez Lopez', false, '2002-11-09');
 
 
 INSERT INTO Provincia (`id_provincia`, `provincia`, `provincia_seo`, `provincia3`, `comunidad`) VALUES
@@ -8251,6 +8255,21 @@ VALUES (
     100, 
     3, 
     6,
+    FALSE, 
+    TRUE,  
+    FALSE  
+);
+
+INSERT INTO Casa (nombre_casa, descripcion, mascotas, gmail, id_municipio, precio_noche, numero_habitaciones, numero_inquilinos, piscina, wifi, jardin)
+VALUES (
+    'Casa Ismael', 
+    'casa de prueba Ismael', 
+    TRUE, 
+    'ismael@gmail.com', 
+    4576, 
+    200, 
+    2, 
+    2,
     FALSE, 
     TRUE,  
     FALSE  

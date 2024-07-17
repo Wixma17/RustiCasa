@@ -15,18 +15,20 @@ import lombok.NoArgsConstructor;
 public class OpinaDTO {
     private OpinaEntityPK opinaEntityPK;
     private String textoOpinion;
+    private double puntuacion;
 
     public OpinaDTO(OpinaEntity opinaEntity) {
         opinaEntityPK = opinaEntity.getOpinaEntityPK();
         textoOpinion = opinaEntity.getTextoOpinion();
+        puntuacion = opinaEntity.getPuntuacionCasa();
     }
 
     public OpinaEntity createOpinaEntity() {
-        return new OpinaEntity(opinaEntityPK, textoOpinion, null, null);
+        return new OpinaEntity(opinaEntityPK, textoOpinion, puntuacion ,null, null);
     }
 
     public static OpinaEntity createOpinaEntity(OpinaDTO op) {
-        return new OpinaEntity(op.opinaEntityPK, op.textoOpinion, null, null);
+        return new OpinaEntity(op.opinaEntityPK, op.textoOpinion, op.puntuacion ,null, null);
     }
 
     public static List<OpinaEntity> convertFromDtoList(List<OpinaDTO> listaDTO) {
