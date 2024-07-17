@@ -3,14 +3,22 @@ package com.rusticasaback.rusticasaback.services;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.rusticasaback.rusticasaback.DTOs.CasaDTO;
+import com.rusticasaback.rusticasaback.DTOs.ClienteDTO;
+import com.rusticasaback.rusticasaback.DTOs.ImagenDTO;
+import com.rusticasaback.rusticasaback.DTOs.MunicipioDTO;
+import com.rusticasaback.rusticasaback.Request.CasaRequest;
+import com.rusticasaback.rusticasaback.Response.CasaCompletaResponse;
 import com.rusticasaback.rusticasaback.Response.CasaResponse;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import com.rusticasaback.rusticasaback.entities.ClienteEntity;
+import com.rusticasaback.rusticasaback.entities.MunicipioEntity;
 import com.rusticasaback.rusticasaback.repositories.CasaRepository;
 import com.rusticasaback.rusticasaback.repositories.ClienteRepository;
+import com.rusticasaback.rusticasaback.repositories.MunicipioRepository;
 
 @Service
 public class CasaService {
@@ -20,6 +28,9 @@ public class CasaService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+
+    @Autowired
+    private MunicipioRepository municipioRepository;
 
     public ResponseEntity<?> getListaCasa(String gmail) {
         ClienteEntity cliente = clienteRepository.findById(gmail).get();
@@ -63,4 +74,32 @@ public class CasaService {
         return listaCasaFiltrada;
     }
 
+    public CasaEntity crearCasa(CasaRequest casaRequest) {
+
+        MunicipioEntity municipio = municipioRepository.findById(casaRequest.getIdMunicipio()).get();
+        ClienteEntity cliente = clienteRepository.findById(casaRequest.getGmail()).get();
+
+        CasaEntity nuevaCasa = new CasaEntity(casaRequest.getCasaDto().getIdCasa(),
+                casaRequest.getCasaDto().getDescripcion(),
+                casaRequest.getCasaDto().getNombreCasa(), casaRequest.getCasaDto().isMascotas(), municipio,
+                casaRequest.getCasaDto().getPrecioNoche(), casaRequest.getCasaDto().getNumeroHabitaciones(),
+                casaRequest.getCasaDto().getNumeroInquilinos(),
+                casaRequest.getCasaDto().isPiscina(), casaRequest.getCasaDto().isWifi(),
+                casaRequest.getCasaDto().isJardin(), new ArrayList<>(), cliente, new ArrayList<>(), new ArrayList<>());
+
+        return guardaCasa(nuevaCasa);
+    }
+
+    public ResponseEntity<?> getCasa(Long codCasa) {
+        CasaEntity casaEntity = casaRepository.findById(codCasa).get();
+
+        CasaDTO casaDTO = new CasaDTO(casaEntity);
+        ClienteDTO cliente = new ClienteDTO(casaEntity.getClientePublicador());
+        MunicipioDTO municipio = new MunicipioDTO(casaEntity.getMunicipio());
+
+        CasaCompletaResponse casaResultado = new CasaCompletaResponse(casaDTO, municipio,
+                ImagenDTO.convertFromEntityList(casaEntity.getListaImagenes()), cliente);
+
+        return new ResponseEntity<>(casaResultado, HttpStatus.CREATED);
+    }
 }
