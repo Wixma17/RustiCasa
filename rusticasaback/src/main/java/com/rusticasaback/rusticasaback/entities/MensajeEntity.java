@@ -1,5 +1,7 @@
 package com.rusticasaback.rusticasaback.entities;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +32,9 @@ public class MensajeEntity {
 
     @Column(name = "texto_mensaje")
     private String textoMensaje;
+
+    @Column(name = "fecha_mensaje")
+    private Date fechaMensaje;
 
     @ManyToOne
     @JoinColumn(name = "emisor")

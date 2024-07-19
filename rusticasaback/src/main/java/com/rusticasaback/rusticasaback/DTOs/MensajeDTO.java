@@ -1,6 +1,7 @@
 package com.rusticasaback.rusticasaback.DTOs;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import com.rusticasaback.rusticasaback.entities.MensajeEntity;
 import lombok.AllArgsConstructor;
@@ -13,18 +14,20 @@ import lombok.NoArgsConstructor;
 public class MensajeDTO {
     private Long idMensaje;
     private String textoMensaje;
+    private Date fechaMensaje;
 
     public MensajeDTO(MensajeEntity mensajeEntity) {
         idMensaje = mensajeEntity.getIdMensaje();
         textoMensaje = mensajeEntity.getTextoMensaje();
+        fechaMensaje = mensajeEntity.getFechaMensaje();
     }
 
     public MensajeEntity createMensajeEntity() {
-        return new MensajeEntity(idMensaje, textoMensaje, null, null);
+        return new MensajeEntity(idMensaje, textoMensaje, fechaMensaje, null, null);
     }
 
     public static MensajeEntity createMensajeEntity(MensajeDTO men) {
-        return new MensajeEntity(men.idMensaje, men.textoMensaje, null, null);
+        return new MensajeEntity(men.idMensaje, men.textoMensaje, men.fechaMensaje, null, null);
     }
 
     public static List<MensajeEntity> convertFromDtoList(List<MensajeDTO> listaDTO) {

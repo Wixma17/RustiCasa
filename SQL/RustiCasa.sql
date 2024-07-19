@@ -67,6 +67,7 @@ CREATE TABLE Mensaje (
     texto_mensaje TEXT NOT NULL,
     emisor VARCHAR(150),
     receptor VARCHAR(150),
+    fecha_mensaje DATE,
     FOREIGN KEY (emisor) REFERENCES Cliente(gmail),
     FOREIGN KEY (receptor) REFERENCES Cliente(gmail)
 );
