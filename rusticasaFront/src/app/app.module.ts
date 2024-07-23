@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CabeceraModule } from './cabecera/cabecera.module';
 
 
 @NgModule({
@@ -12,8 +11,7 @@ import { CabeceraModule } from './cabecera/cabecera.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    CabeceraModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
