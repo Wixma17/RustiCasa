@@ -18,26 +18,21 @@ a{
   text-decoration: none;
 }
 
-.divi{
-  height: 1px;
-  background-color: #ccc;
-  margin: 20px 0;
-  width: 100%;
-}
-
 figure figcaption img{
   width: 100%;
 }
 
 .posMen{
-  left: -106px;
+  left: -80px;
 }
 
-.transicion{
+/*--subrayado y funcionamiento del subrayado--*/
+.transicion {
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.transicion:hover{
+.transicion:hover,
+.transicion.active {
   color: #000;
   transform: scale(1.03);
 }
@@ -49,26 +44,34 @@ figure figcaption img{
   bottom: -5px;
   width: 100%;
   height: 2px;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s ease;
 }
 
-.transicion:hover::after {
+.transicion:hover::after,
+.transicion.active::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+/*--Fin subrayado y funcionamiento del subrayado--*/
+
+.headerMen{
+  font-size: 20px;
+  width: 100%;
 }
 
 /*--Responsive--*/
 
 @media screen and (min-width: 992px) {
   h1{
-    font-size: 3vw;
+    font-size: 1.5vw;
   }
 
   h2{
-    font-size: 1.5vw;
+    font-size: 1vw;
   }
 
   figure figcaption img{
@@ -76,7 +79,7 @@ figure figcaption img{
   }
 
   .posMen{
-    left: -46px;
+    left: -40px;
   }
 
   .transicion:hover{
