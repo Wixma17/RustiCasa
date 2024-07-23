@@ -9,8 +9,8 @@ import com.rusticasaback.rusticasaback.DTOs.CasaDTO;
 import com.rusticasaback.rusticasaback.services.CasaService;
 
 @RestController
-@RequestMapping("/api/filtro")
 @CrossOrigin
+@RequestMapping("/api/filtro")
 public class FilterController {
 
     @Autowired

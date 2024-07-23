@@ -15,9 +15,10 @@ import com.rusticasaback.rusticasaback.services.CasaService;
 import com.rusticasaback.rusticasaback.services.ImagenService;
 import com.rusticasaback.rusticasaback.services.OpinaService;
 
+
 @RestController
-@RequestMapping("/api/casa")
 @CrossOrigin
+@RequestMapping("/api/casa")
 public class CasaController {
 
     @Autowired
@@ -32,9 +33,15 @@ public class CasaController {
     @Autowired
     private AlquilaService alquilaService;
 
-    @GetMapping("/listaCasa/{email}")
-    public ResponseEntity<?> listaCasa(@PathVariable(name = "email") String email) {
-        return casaService.getListaCasa(email);
+    @GetMapping("/listaCasas")
+    public ResponseEntity<?> listaCasas() {
+        return casaService.getListaCasas();
+    }
+    
+
+    @GetMapping("/listaCasasUsuario/{email}")
+    public ResponseEntity<?> listaCasasUsuario(@PathVariable(name = "email") String email) {
+        return casaService.getListaCasasUsuario(email);
     }
 
     /*

@@ -7,8 +7,8 @@ import com.rusticasaback.rusticasaback.Request.MensajeRequest;
 import com.rusticasaback.rusticasaback.services.MensajeService;
 
 @RestController
-@RequestMapping("/api/mensajes")
 @CrossOrigin
+@RequestMapping("/api/mensajes")
 public class MensajesController {
 
     @Autowired

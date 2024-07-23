@@ -13,8 +13,8 @@ import com.rusticasaback.rusticasaback.entities.ClienteEntity;
 import com.rusticasaback.rusticasaback.services.ClienteService;
 
 @RestController
-@RequestMapping("/api/auth")
 @CrossOrigin
+@RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     private ClienteService clienteService;

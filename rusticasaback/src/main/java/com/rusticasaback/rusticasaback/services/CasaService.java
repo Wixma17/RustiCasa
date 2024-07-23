@@ -12,7 +12,6 @@ import com.rusticasaback.rusticasaback.DTOs.ImagenDTO;
 import com.rusticasaback.rusticasaback.DTOs.MunicipioDTO;
 import com.rusticasaback.rusticasaback.Request.CasaRequest;
 import com.rusticasaback.rusticasaback.Response.CasaCompletaResponse;
-import com.rusticasaback.rusticasaback.Response.CasaResponse;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import com.rusticasaback.rusticasaback.entities.ClienteEntity;
 import com.rusticasaback.rusticasaback.entities.MunicipioEntity;
@@ -32,13 +31,21 @@ public class CasaService {
     @Autowired
     private MunicipioRepository municipioRepository;
 
-    public ResponseEntity<?> getListaCasa(String gmail) {
+    public ResponseEntity<?> getListaCasas() {
+        List<CasaEntity> listaCasa = casaRepository.findAll();
+        ArrayList<CasaDTO> listaCasaResp = new ArrayList<CasaDTO>();
+        for (CasaEntity casa : listaCasa) {
+            listaCasaResp.add(new CasaDTO(casa));
+        }
+        return ResponseEntity.ok(listaCasaResp);
+    }
+
+    public ResponseEntity<?> getListaCasasUsuario(String gmail) {
         ClienteEntity cliente = clienteRepository.findById(gmail).get();
         List<CasaEntity> listaCasa = casaRepository.findByClientePublicador(cliente);
-        ArrayList<CasaResponse> listaCasaResp = new ArrayList<CasaResponse>();
+        ArrayList<CasaDTO> listaCasaResp = new ArrayList<CasaDTO>();
         for (CasaEntity casa : listaCasa) {
-            CasaDTO casaDTO = new CasaDTO(casa);
-            listaCasaResp.add(new CasaResponse(casaDTO));
+            listaCasaResp.add(new CasaDTO(casa));
         }
 
         return ResponseEntity.ok(listaCasaResp);

@@ -1,3 +1,5 @@
+import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
+import { CasaService } from './../../../shared/services/casa.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -10,6 +12,7 @@ export class FooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }
