@@ -37,7 +37,6 @@ public class CasaController {
     public ResponseEntity<?> listaCasas() {
         return casaService.getListaCasas();
     }
-    
 
     @GetMapping("/listaCasasUsuario/{email}")
     public ResponseEntity<?> listaCasasUsuario(@PathVariable(name = "email") String email) {
