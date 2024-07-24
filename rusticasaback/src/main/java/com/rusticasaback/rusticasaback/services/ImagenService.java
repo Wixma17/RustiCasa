@@ -53,7 +53,7 @@ public class ImagenService {
 
         /* Subida de archivos */
 
-        String ruta = "FotosCasas/" + casaEntity.getClientePublicador().getGmail() + "/";
+        String ruta = "FotosCasas/" + casaEntity.getClientePublicador().getGmail() + "/" + idCasa+ "/";
 
         File uploadDirFile = new File(ruta);
         if (!uploadDirFile.exists()) {
