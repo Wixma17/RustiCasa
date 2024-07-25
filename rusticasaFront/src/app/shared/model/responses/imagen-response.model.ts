@@ -1,4 +1,8 @@
+import { SafeResourceUrl } from "@angular/platform-browser";
+
 export interface ImagenResponse {
-  extension: string,
-  src: string
+  idImagen: number,
+  rutaImagen: string,
+  posicionCarrusel: number,
+  safeUrl?: SafeResourceUrl
 }

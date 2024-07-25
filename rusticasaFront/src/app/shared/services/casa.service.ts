@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CasaResponse } from '../model/responses/casa-response.model';
+import { ImagenResponse } from '../model/responses/imagen-response.model';
 
 @Injectable()
 export class CasaService {
@@ -13,7 +14,8 @@ export class CasaService {
     return this.httpClient.get<CasaResponse[]>(url);
   }
 
-  // getFotosCasas(idCasa: number): Observable<ImagenResponse[]>{
-
-  // }
+  getFotosCasas(idCasa: number): Observable<ImagenResponse[]>{
+    let url = `${environment.urlApiCasas}fotosCasa/${idCasa}`;
+    return this.httpClient.get<ImagenResponse[]>(url);
+  }
 }

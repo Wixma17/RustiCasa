@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.rusticasaback.rusticasaback.DTOs.ImagenDTO;
+import com.rusticasaback.rusticasaback.Response.ImagenResponse;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import com.rusticasaback.rusticasaback.entities.ImagenEntity;
 import com.rusticasaback.rusticasaback.repositories.CasaRepository;
@@ -33,10 +34,15 @@ public class ImagenService {
     public ResponseEntity<?> getListaImagenesDeCasa(Long idCasa) {
         CasaEntity casa = casaRepository.findById(idCasa).get();
         List<ImagenEntity> listaImagenesCasa = imagenRepository.findByCasaImagen(casa);
-        ArrayList<ImagenDTO> listaImagenesCasaRep = new ArrayList<ImagenDTO>();
+
+        ArrayList<ImagenResponse> listaImagenesCasaRep = new ArrayList<ImagenResponse>();
         for (ImagenEntity img : listaImagenesCasa) {
-            listaImagenesCasaRep.add(new ImagenDTO(img));
+            ImagenDTO imagenDTO = new ImagenDTO(img);
+            listaImagenesCasaRep.add(new ImagenResponse(imagenDTO.getIdImagen(),
+                    "http://localhost:8082/FotosCasas/" + idCasa + "/" + imagenDTO.getNombreImagen(),
+                    imagenDTO.getPosicionCarrusel()));
         }
+
         return ResponseEntity.ok(listaImagenesCasaRep);
     }
 
@@ -47,7 +53,7 @@ public class ImagenService {
 
         /* Subida de archivos */
 
-        String ruta = "FotosCasas/" + idCasa+ "/";
+        String ruta = "FotosCasas/" + idCasa + "/";
 
         File uploadDirFile = new File(ruta);
         if (!uploadDirFile.exists()) {

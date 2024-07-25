@@ -46,10 +46,10 @@ public class CasaController {
         return casaService.getListaCasasUsuario(email);
     }
 
-    // @GetMapping("/fotosCasa/{idCasa}")
-    // public ResponseEntity<?> fotosCasa(@PathVariable(name = "idCasa") Long idCasa) {
-    //     return new String();
-    // }
+    @GetMapping("/fotosCasa/{idCasa}")
+    public ResponseEntity<?> fotosCasa(@PathVariable(name = "idCasa") Long idCasa) {
+        return imagenService.getListaImagenesDeCasa(idCasa);
+    }
     
 
     /*
