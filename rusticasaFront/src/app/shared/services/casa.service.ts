@@ -12,4 +12,8 @@ export class CasaService {
     let url = `${environment.urlApiCasas}listaCasas`;
     return this.httpClient.get<CasaResponse[]>(url);
   }
+
+  // getFotosCasas(idCasa: number): Observable<ImagenResponse[]>{
+
+  // }
 }

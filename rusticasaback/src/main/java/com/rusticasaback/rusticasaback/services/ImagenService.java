@@ -15,9 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.rusticasaback.rusticasaback.DTOs.CasaDTO;
 import com.rusticasaback.rusticasaback.DTOs.ImagenDTO;
-import com.rusticasaback.rusticasaback.Response.ImagenResponse;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import com.rusticasaback.rusticasaback.entities.ImagenEntity;
 import com.rusticasaback.rusticasaback.repositories.CasaRepository;
@@ -35,14 +33,10 @@ public class ImagenService {
     public ResponseEntity<?> getListaImagenesDeCasa(Long idCasa) {
         CasaEntity casa = casaRepository.findById(idCasa).get();
         List<ImagenEntity> listaImagenesCasa = imagenRepository.findByCasaImagen(casa);
-
-        ArrayList<ImagenResponse> listaImagenesCasaRep = new ArrayList<ImagenResponse>();
+        ArrayList<ImagenDTO> listaImagenesCasaRep = new ArrayList<ImagenDTO>();
         for (ImagenEntity img : listaImagenesCasa) {
-            ImagenDTO imagenDTO = new ImagenDTO(img);
-            CasaDTO casaDTO = new CasaDTO(casa);
-            listaImagenesCasaRep.add(new ImagenResponse(imagenDTO, casaDTO));
+            listaImagenesCasaRep.add(new ImagenDTO(img));
         }
-
         return ResponseEntity.ok(listaImagenesCasaRep);
     }
 

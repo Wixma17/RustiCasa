@@ -14,6 +14,9 @@ import com.rusticasaback.rusticasaback.services.AlquilaService;
 import com.rusticasaback.rusticasaback.services.CasaService;
 import com.rusticasaback.rusticasaback.services.ImagenService;
 import com.rusticasaback.rusticasaback.services.OpinaService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -42,6 +45,12 @@ public class CasaController {
     public ResponseEntity<?> listaCasasUsuario(@PathVariable(name = "email") String email) {
         return casaService.getListaCasasUsuario(email);
     }
+
+    // @GetMapping("/fotosCasa/{idCasa}")
+    // public ResponseEntity<?> fotosCasa(@PathVariable(name = "idCasa") Long idCasa) {
+    //     return new String();
+    // }
+    
 
     /*
      * @PostMapping("/registrarCasa")
@@ -88,7 +97,6 @@ public class CasaController {
         imagenService.subidaImagenes(files, idCasa);
 
         return casaService.getCasa(idCasa);// Cambiar la respuesta
-
     }
 
     @PostMapping("/subirOpinion")
