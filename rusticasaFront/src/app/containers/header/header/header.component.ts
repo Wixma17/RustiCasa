@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  nombreCasa:string ='';
+  resultados: string[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  buscar(): void {
+    console.log('Buscando:', this.nombreCasa);
   }
 
 }
