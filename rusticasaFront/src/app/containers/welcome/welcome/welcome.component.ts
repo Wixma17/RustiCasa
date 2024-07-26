@@ -28,14 +28,12 @@ export class WelcomeComponent implements OnInit {
           this.casaServicio
             .getFotosCasas(casa.idCasa)
             .pipe(
-              // Esta pipe mapea los datos para insertar un nuevo atributo con respecto a lo devuelto desde BBDD
               map((imagenes) =>
-                // Mapea un atributo con el SafeResourceUrl necesario para mostrar la imagen
-                imagenes.map((obj) => {
+                imagenes.map((imagen) => {
                   return {
-                    ...obj,
+                    ...imagen,
                     safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl(
-                      obj.rutaImagen
+                      imagen.rutaImagen
                     ),
                   };
                 })
@@ -43,10 +41,11 @@ export class WelcomeComponent implements OnInit {
             )
             .subscribe({
               next: (imagenes) => {
+                let imagenesAux = [];
                 for (const imagen in imagenes) {
-                  imagenes[imagenes[imagen].posicionCarrusel] = imagenes[imagen];
+                  imagenesAux[imagenes[imagen].posicionCarrusel] = imagenes[imagen];
                 }
-                this.listaImagenes[casa.idCasa] = imagenes;
+                this.listaImagenes[casa.idCasa] = imagenesAux;
               },
               error: (error) => {
                 console.error(error);
