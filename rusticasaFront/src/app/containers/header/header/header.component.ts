@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { CasaService } from 'src/app/shared/services/casa.service';
 
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit {
   nombreCasa:string ='';
   resultados: CasaResponse[] = [];
 
-  constructor(private casaS:CasaService) { }
+  constructor(private casaS:CasaService,private router:Router) { }
 
   ngOnInit(): void {
   }
@@ -22,6 +23,9 @@ export class HeaderComponent implements OnInit {
     this.casaS.getListaCasasPorNombre(this.nombreCasa).subscribe({
       next:(casa)=>{
           console.log(casa)
+      },
+      complete:()=>{
+        this.router.navigate(['/full-search']);
       }
     });
 
