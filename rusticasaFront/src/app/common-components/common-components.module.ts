@@ -1,12 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HouseComponent } from './house/house.component';
+import { CasaService } from '../shared/services/casa.service';
+import { CarouselModule } from 'primeng/carousel';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [HouseComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    CarouselModule
+  ],
+  exports:[
+    HouseComponent
+  ],
+  providers:[
+    CasaService
   ]
 })
 export class CommonComponentsModule { }

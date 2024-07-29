@@ -1,0 +1,22 @@
+<div class="card mb-3 row-col col-6">
+  <div class="row g-0 d-flex align-items-center">
+    <div class="col-12 order-2 col-md-6 order-md-1">
+      <div class="card-body">
+        <h5 class="card-title">{{ datosCasa.nombreCasa }}</h5>
+        <p class="card-text">
+          {{ datosCasa.descripcion }}
+        </p>
+        <p class="card-text">
+          <small class="text-body-secondary">Last updated 3 mins ago</small>
+        </p>
+      </div>
+    </div>
+    <div class="col-12 order-1 col-md-6 order-md-2" *ngIf="listaImagenes">
+      <p-carousel [value]="listaImagenes" class="p-3">
+        <ng-template let-imagen pTemplate="item">
+          <img [src]="imagen.safeUrl"/>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </div>
+</div>

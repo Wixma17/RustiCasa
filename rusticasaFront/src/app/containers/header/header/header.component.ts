@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
+import { CasaService } from 'src/app/shared/services/casa.service';
 
 @Component({
   selector: 'app-header',
@@ -8,15 +10,21 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   nombreCasa:string ='';
-  resultados: string[] = [];
+  resultados: CasaResponse[] = [];
 
-  constructor() { }
+  constructor(private casaS:CasaService) { }
 
   ngOnInit(): void {
   }
 
   buscar(): void {
-    console.log('Buscando:', this.nombreCasa);
+
+    this.casaS.getListaCasasPorNombre(this.nombreCasa).subscribe({
+      next:(casa)=>{
+          console.log(casa)
+      }
+    });
+
   }
 
 }

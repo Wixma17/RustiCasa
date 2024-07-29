@@ -12,4 +12,7 @@ public interface CasaRepository extends JpaRepository<CasaEntity, Long> {
 
     @Query("Select c From CasaEntity c where c.mascotas=:mascotas and c.piscina=:piscina and c.wifi=:wifi and c.jardin=:jardin")
     List<CasaEntity> findFiltrados(boolean mascotas, boolean wifi, boolean jardin, boolean piscina);
+
+    @Query("Select c From CasaEntity c where c.nombreCasa like %:nombreCasa%")
+    List<CasaEntity> findLikeNombreCasa(String nombreCasa);
 }

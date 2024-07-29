@@ -35,13 +35,13 @@
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-between headerMen">
           <li class="nav-item me-5 col-lg-3 text-center">
-            <a class="nav-link active transicion" aria-current="page" href="#"> <i class="bi bi-house-door"></i> Inicio</a>
+            <a class="nav-link active transicion" aria-current="page" [routerLink]="['/welcome']" routerLinkActive="active"> <i class="bi bi-house-door"></i> Inicio</a>
           </li>
           <li class="nav-item me-5 col-lg-3 text-center">
-            <a class="nav-link transicion" href="#"> <i class="bi bi-search"></i> Búsquedas</a>
+            <a class="nav-link transicion" [routerLink]="['/full-search']"> <i class="bi bi-search"></i> Búsquedas</a>
           </li>
           <li class="nav-item me-5 col-lg-3 text-center">
-            <a class="nav-link transicion" href="#"> <i class="bi bi-house-up"></i> Publica tu Casa</a>
+            <a class="nav-link transicion" [routerLink]="['/upload-house']"> <i class="bi bi-house-up"></i> Publica tu Casa</a>
           </li>
           <!--<li class="nav-item">
             <a class="nav-link transicion" href="#"> <i class="bi bi-person-lines-fill"></i> Contacta con nosotros</a>
@@ -52,10 +52,12 @@
         </ul>
       </div>
 
-      <span class="p-float-label">
-        <i class="pi pi-search" ></i>
-        <input type="text" pInputText [(ngModel)]="nombreCasa" placeholder="Buscar..." (input)="buscar()">
-      </span>
+      <div class="p-col-12 p-md-4">
+        <div class="p-inputgroup">
+            <input type="text" pInputText [(ngModel)]="nombreCasa" placeholder="Buscar..." aria-placeholder="Buscar por nombre de casa">
+            <button type="button" pButton pRipple (click)="buscar()" icon="pi pi-search"></button>
+        </div>
+      </div>
 
     </div>
   </nav>

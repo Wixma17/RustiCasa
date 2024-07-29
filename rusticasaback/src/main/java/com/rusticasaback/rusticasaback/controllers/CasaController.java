@@ -41,6 +41,11 @@ public class CasaController {
         return casaService.getListaCasas();
     }
 
+    @GetMapping("/listaCasasPorNombre/{nombreCasa}")
+    public ResponseEntity<?> listaCasasPorNombre(@PathVariable(name = "nombreCasa") String nombreCasa) {
+        return casaService.getCasaPorNombre(nombreCasa);
+    }
+
     @GetMapping("/listaCasasUsuario/{email}")
     public ResponseEntity<?> listaCasasUsuario(@PathVariable(name = "email") String email) {
         return casaService.getListaCasasUsuario(email);

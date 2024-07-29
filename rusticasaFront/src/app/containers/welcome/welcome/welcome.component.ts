@@ -23,46 +23,10 @@ export class WelcomeComponent implements OnInit {
     this.casaServicio.getListaCasas().subscribe({
       next: (casas) => {
         this.listaCasaGenerica = casas;
-
-        this.listaCasaGenerica.forEach((casa) => {
-          this.casaServicio
-            .getFotosCasas(casa.idCasa)
-            .pipe(
-              map((imagenes) =>
-                imagenes.map((imagen) => {
-                  return {
-                    ...imagen,
-                    safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl(
-                      imagen.rutaImagen
-                    ),
-                  };
-                })
-              )
-            )
-            .subscribe({
-              next: (imagenes) => {
-                let imagenesAux = [];
-                for (const imagen in imagenes) {
-                  imagenesAux[imagenes[imagen].posicionCarrusel] = imagenes[imagen];
-                }
-                this.listaImagenes[casa.idCasa] = imagenesAux;
-              },
-              error: (error) => {
-                console.error(error);
-              },
-              complete: () => {
-                console.log(
-                  `Carga de datos de fotos de la casa [id: ${casa.idCasa}, nombre: ${casa.nombreCasa}] completa`
-                );
-              },
-            });
-        });
       },
       complete: () => {
         console.log('Casas actuales ->');
         console.log(this.listaCasaGenerica);
-        console.log('Imágenes actuales ->');
-        console.log(this.listaImagenes);
       },
     });
   }

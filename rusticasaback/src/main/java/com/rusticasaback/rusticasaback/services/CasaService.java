@@ -109,4 +109,26 @@ public class CasaService {
 
         return new ResponseEntity<>(casaResultado, HttpStatus.CREATED);
     }
+
+    public ResponseEntity<?> getCasaPorNombre(String nombreCasa) {
+        List<CasaEntity> listaCasaEntity = casaRepository.findLikeNombreCasa(nombreCasa);
+
+        ArrayList<CasaCompletaResponse> listaCasaResultado = new ArrayList<CasaCompletaResponse>();
+
+        for (CasaEntity casa : listaCasaEntity) {
+
+            CasaDTO casaDTO = new CasaDTO(casa);
+
+            ClienteDTO cliente = new ClienteDTO(casa.getClientePublicador());
+
+            MunicipioDTO municipio = new MunicipioDTO(casa.getMunicipio());
+
+            CasaCompletaResponse casaResultado = new CasaCompletaResponse(casaDTO, municipio,
+                    ImagenDTO.convertFromEntityList(casa.getListaImagenes()), cliente);
+
+            listaCasaResultado.add(casaResultado);
+        }
+
+        return new ResponseEntity<>(listaCasaResultado, HttpStatus.CREATED);
+    }
 }

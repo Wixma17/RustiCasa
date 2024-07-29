@@ -1,6 +1,6 @@
-<div class="d-flex flex-column align-items-center justify-content-center">
+<div class="d-flex flex-lg-row flex-column align-items-center justify-content-around">
   <div *ngFor="let casa of listaCasaGenerica" class="col-6 m-3">
-    <div class="card mb-3">
+    <!-- <div class="card mb-3">
       <div class="row g-0">
         <div class="col-12 order-2 col-md-6 order-md-1">
           <div class="card-body">
@@ -21,7 +21,7 @@
           </p-carousel>
         </div>
       </div>
-
-    </div>
+    </div> -->
+    <app-house [datosCasa]="casa"></app-house>
   </div>
 </div>

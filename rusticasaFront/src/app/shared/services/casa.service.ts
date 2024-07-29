@@ -18,4 +18,9 @@ export class CasaService {
     let url = `${environment.urlApiCasas}fotosCasa/${idCasa}`;
     return this.httpClient.get<ImagenResponse[]>(url);
   }
+
+  getListaCasasPorNombre(nombreCasa:string): Observable<CasaResponse[]> {
+    let url = `${environment.urlApiCasas}listaCasasPorNombre/${nombreCasa}`;
+    return this.httpClient.get<CasaResponse[]>(url);
+  }
 }
