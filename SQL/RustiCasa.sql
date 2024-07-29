@@ -1,4 +1,4 @@
-CREATE TABLE Cliente (
+CREATE OR REPLACE TABLE Cliente (
     gmail VARCHAR(150) PRIMARY KEY,
     passwd VARCHAR(50) NOT NULL,
     nickname VARCHAR(50) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE Cliente (
     fecha_nacimiento DATE
 );
 
-CREATE TABLE Provincia (
+CREATE OR REPLACE TABLE Provincia (
   id_provincia int(10) PRIMARY KEY NOT NULL,
   provincia varchar(50) NOT NULL,
   provincia_seo varchar(50) NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE Provincia (
   comunidad varchar(100) NOT NULL
 );;
 
-CREATE TABLE Municipio (
+CREATE OR REPLACE TABLE Municipio (
     id_municipio INT NOT NULL PRIMARY KEY,
     id_provincia INT NOT NULL,
     municipio VARCHAR(150) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE Municipio (
     FOREIGN KEY (id_provincia) REFERENCES Provincia(id_provincia)
 );
 
-CREATE TABLE Casa (
+CREATE OR REPLACE TABLE Casa (
     id_casa INT AUTO_INCREMENT PRIMARY KEY,
     nombre_casa VARCHAR(50) NOT NULL,
     descripcion LONGTEXT,
@@ -44,7 +44,7 @@ CREATE TABLE Casa (
     FOREIGN KEY (id_municipio) REFERENCES Municipio(id_municipio)
 );
 
-CREATE TABLE Imagen (
+CREATE OR REPLACE TABLE Imagen (
     id_imagen INT AUTO_INCREMENT PRIMARY KEY,
     nombre_imagen VARCHAR(150) NOT NULL,
     id_casa INT,
@@ -53,7 +53,7 @@ CREATE TABLE Imagen (
     FOREIGN KEY (id_casa) REFERENCES Casa(id_casa)
 );
 
-CREATE TABLE Opina ( 
+CREATE OR REPLACE TABLE Opina ( 
     id_casa INT,
     gmail VARCHAR(150),   
     texto_opinion TEXT,
@@ -63,7 +63,7 @@ CREATE TABLE Opina (
     FOREIGN KEY (gmail) REFERENCES Cliente(gmail)
 );
 
-CREATE TABLE Mensaje (
+CREATE OR REPLACE TABLE Mensaje (
     id_mensaje INT AUTO_INCREMENT PRIMARY KEY,
     texto_mensaje TEXT NOT NULL,
     emisor VARCHAR(150),
@@ -73,7 +73,7 @@ CREATE TABLE Mensaje (
     FOREIGN KEY (receptor) REFERENCES Cliente(gmail)
 );
 
-CREATE TABLE Alquila (
+CREATE OR REPLACE TABLE Alquila (
     gmail VARCHAR(150),
     id_casa INT,
     fecha_entrada DATE,
