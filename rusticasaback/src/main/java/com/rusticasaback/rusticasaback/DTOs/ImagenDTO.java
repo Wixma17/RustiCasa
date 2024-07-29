@@ -22,11 +22,11 @@ public class ImagenDTO {
     }
 
     public ImagenEntity createImagenEntity() {
-        return new ImagenEntity(idImagen, nombreImagen, posicionCarrusel, null);
+        return new ImagenEntity(idImagen, nombreImagen, posicionCarrusel ,null);
     }
 
     public static ImagenEntity createImagenEntity(ImagenDTO imagenDTO) {
-        return new ImagenEntity(imagenDTO.idImagen, imagenDTO.nombreImagen, imagenDTO.posicionCarrusel, null);
+        return new ImagenEntity(imagenDTO.idImagen, imagenDTO.nombreImagen, imagenDTO.posicionCarrusel ,null);
     }
 
     public static List<ImagenEntity> convertFromDtoList(List<ImagenDTO> listaDTO) {

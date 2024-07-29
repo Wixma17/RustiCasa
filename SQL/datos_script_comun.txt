@@ -1,6 +1,6 @@
-- 2 casas
-- 2 clientes
-- 3 imagenes x casa
-- opiniones: primera casa: 1, segunda casa: 3
-- 3 mensajes x cliente
-- 2 alquileres
+- 2 casas --
+- 2 clientes --
+- 3 imagenes x casa--
+- opiniones: primera casa: 1, segunda casa: 3 --
+- 3 mensajes x cliente --
+- 2 alquileres --

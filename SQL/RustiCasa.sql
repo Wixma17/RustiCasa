@@ -49,6 +49,7 @@ CREATE TABLE Imagen (
     nombre_imagen VARCHAR(150) NOT NULL,
     id_casa INT,
     posicion_carrusel INT,
+    formato_imagen VARCHAR(5) NOT NULL,
     FOREIGN KEY (id_casa) REFERENCES Casa(id_casa)
 );
 
@@ -83,10 +84,16 @@ CREATE TABLE Alquila (
 );
 
 INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)
-VALUES ('testuser@example.com', 'password123', 'testuser', 'Test', 'User', false, '1990-01-01');
+VALUES ('testuser@gmail.com', 'password123', 'testuser', 'Test', 'User', false, '1990-01-01');
 
 INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)
 VALUES ('ismael@gmail.com', 'ismael', 'ismaelote10', 'Ismael', 'Jimenez Lopez', false, '2002-11-09');
+
+INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)
+VALUES ('pedro@gmail.com', 'pedro', 'pedroAngular', 'pedro', 'torres', false, '1990-01-01');
+
+INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)
+VALUES ('lola@gmail.com', 'lola', 'lolita', 'lola', 'verdu', false, '1990-11-09');
 
 
 INSERT INTO Provincia (`id_provincia`, `provincia`, `provincia_seo`, `provincia3`, `comunidad`) VALUES
@@ -8245,22 +8252,6 @@ INSERT INTO `MUNICIPIO` (`id_municipio`, `id_provincia`, `municipio`, `municipio
 (8173, 23, 'Melilla', 'melilla', 52001, 35.291248, -2.937910),
 (8174, 46, 'Agüero', 'aguero', 22808, 42.354290, -0.795170);
 
-
-INSERT INTO Casa (nombre_casa, descripcion, mascotas, gmail, id_municipio, precio_noche, numero_habitaciones, numero_inquilinos, piscina, wifi, jardin)
-VALUES (
-    'Casa Pepe', 
-    'Una casa muy bonita', 
-    TRUE, 
-    'testuser@example.com', 
-    4576, 
-    100, 
-    3, 
-    6,
-    FALSE, 
-    TRUE,  
-    FALSE  
-);
-
 INSERT INTO Casa (nombre_casa, descripcion, mascotas, gmail, id_municipio, precio_noche, numero_habitaciones, numero_inquilinos, piscina, wifi, jardin)
 VALUES (
     'Casa Ismael', 
@@ -8275,3 +8266,49 @@ VALUES (
     TRUE,  
     FALSE  
 );
+
+INSERT INTO Casa (nombre_casa, descripcion, mascotas, gmail, id_municipio, precio_noche, numero_habitaciones, numero_inquilinos, piscina, wifi, jardin)
+VALUES (
+    'Cortijo Pedro', 
+    'Disfruta de una escapada perfecta en nuestro acogedor cortijo rural. Con capacidad para 10 personas, esta propiedad ofrece amplias habitaciones, cocina equipada, y una encantadora piscina privada. Rodeado de naturaleza y con vistas impresionantes, es ideal para desconectar y relajarse. Perfecto para familias y grupos, con fácil acceso a rutas de senderismo y actividades al aire libre. ¡Reserva ahora y vive una experiencia inolvidable en el corazón del campo andaluz!', 
+    TRUE, 
+    'pedro@gmail.com', 
+    4513, 
+    200, 
+    4, 
+    4,
+    TRUE, 
+    TRUE,  
+    TRUE  
+);
+
+INSERT INTO Imagen (nombre_imagen, id_casa, posicion_carrusel)
+VALUES
+('casa3-2.jpg', 1, 0),
+('casa3.jpg', 1, 1),
+('casaExterior.jpg', 1, 2);
+
+INSERT INTO Imagen (nombre_imagen, id_casa, posicion_carrusel)
+VALUES
+('casa-rural-piscina.jpeg', 2, 0),
+('casimg2.jpeg', 2, 1),
+('IMG_07312.jpeg', 2, 2);
+
+INSERT INTO Opina (id_casa, gmail, texto_opinion, puntuacion_casa)
+VALUES
+(1, 'lola@gmail.com', 'Una experiencia increíble, muy recomendable.', 4.5),
+(2, 'lola@gmail.com', 'Lugar acogedor y bien equipado. Volveremos.', 4.8),
+(2, 'testuser@gmail.com', 'La casa es hermosa, pero el servicio podría mejorar.', 3.5),
+(2, 'ismael@gmail.com', 'Excelente ubicación y vistas impresionantes.', 5.0);
+
+INSERT INTO Mensaje (texto_mensaje, emisor, receptor, fecha_mensaje)
+VALUES
+('Hola, ¿cuándo podemos agendar la visita a la casa?', 'lola@gmail.com', 'ismael@gmail.com', '2024-07-15'),
+('Buenas tardes, podemos el próximo lunes.', 'ismael@gmail.com', 'lola@gmail.com', '2024-07-16'),
+('Perfecto, nos vemos el lunes entonces. Gracias.', 'lola@gmail.com', 'ismael@gmail.com', '2024-07-17');
+
+
+INSERT INTO Alquila (gmail, id_casa, fecha_entrada, fecha_salida)
+VALUES
+('lola@gmail.com', 1, '2024-08-01', '2024-08-10'),
+('testuser@gmail.com', 2, '2024-09-15', '2024-09-20');

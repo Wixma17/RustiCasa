@@ -34,7 +34,6 @@ public class ImagenEntity {
     @Column(name = "posicion_carrusel")
     private int posicionCarrusel;
 
-
     @ManyToOne
     @JoinColumn(name = "id_casa")
     private CasaEntity casaImagen;
