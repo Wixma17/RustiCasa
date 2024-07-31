@@ -14,6 +14,6 @@ import { UploadHouseModule } from './containers/upload-house/upload-house.module
   declarations: [AppComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, HeaderModule, FooterModule,WelcomeModule,FullSearchModule,UploadHouseModule],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

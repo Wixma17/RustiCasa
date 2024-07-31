@@ -15,6 +15,8 @@ export class HouseComponent implements OnInit {
 
   listaImagenes: ImagenResponse[];
 
+  showMore:boolean = false;
+
   constructor(private casaServicio:CasaService, private sanitizer:DomSanitizer) {}
 
   ngOnInit(): void {
@@ -49,4 +51,7 @@ export class HouseComponent implements OnInit {
         },
       });
   }
+
+
+
 }

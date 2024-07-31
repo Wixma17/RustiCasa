@@ -1,18 +1,25 @@
-<div class="card mb-3">
-  <div class="row g-0 d-flex align-items-center">
+<div class="card mb-3 m-0 p-0 g-0" style="height: 300px;">
+  <div class="row g-0 align-items-center">
     <div class="col-12 order-2 col-md-6 order-md-1">
       <div class="card-body">
         <h5 class="card-title">{{ datosCasa.nombreCasa }}</h5>
-        <p class="card-text">
-          {{ datosCasa.descripcion }}
+        <p class="card-text mb-1">
+          {{ (datosCasa.descripcion | truncate: 60) }}
         </p>
+        <div>
+          <a href="#" (click)="showMore = !showMore" class="btn btn-success m-1 w-100">
+            {{ showMore ? 'Ver menos' : 'Ver más' }}
+          </a>
+          <span class="accesibilidad"> datos sobre la casa {{datosCasa.nombreCasa}}</span>
+        </div>
+
         <p class="card-text">
           <small class="text-body-secondary">Last updated 3 mins ago</small>
         </p>
       </div>
     </div>
     <div class="col-12 order-1 col-md-6 order-md-2" *ngIf="listaImagenes">
-      <p-carousel [value]="listaImagenes" class="p-3">
+      <p-carousel [value]="listaImagenes" class="p-1">
         <ng-template let-imagen pTemplate="item">
           <img [src]="imagen.safeUrl"/>
         </ng-template>

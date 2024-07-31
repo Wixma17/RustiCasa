@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HouseComponent } from './house/house.component';
 import { CasaService } from '../shared/services/casa.service';
 import { CarouselModule } from 'primeng/carousel';
+import { PipesModule } from '../shared/pipes/pipes.module';
 
 
 
@@ -10,7 +11,8 @@ import { CarouselModule } from 'primeng/carousel';
   declarations: [HouseComponent],
   imports: [
     CommonModule,
-    CarouselModule
+    CarouselModule,
+    PipesModule
   ],
   exports:[
     HouseComponent
