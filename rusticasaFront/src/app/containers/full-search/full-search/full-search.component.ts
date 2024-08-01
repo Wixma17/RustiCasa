@@ -31,6 +31,7 @@ export class FullSearchComponent implements OnInit, OnDestroy {
       wifi: [false],
       jardin: [false],
       mascotas: [false],
+      precioValor:[[0,100]]
     });
     this.paramBusquedaSuscription = this.busquedaService
       .getParamBusqueda()
