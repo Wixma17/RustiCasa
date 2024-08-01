@@ -16,10 +16,9 @@
     ></button>
   </div>-->
 
-  <form [formGroup]="formuReact" *ngIf="formuReact">
+  <form [formGroup]="formuReact" *ngIf="formuReact" (submit)="cambiarParam()">
 
     <input type="text" [formControl]="formuReact.controls['nombreCasa']" />
-
     <p-checkbox [formControl]="formuReact.controls['piscina']"></p-checkbox>
     <p-checkbox [formControl]="formuReact.controls['wifi']"></p-checkbox>
     <p-checkbox [formControl]="formuReact.controls['jardin']"></p-checkbox>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder,Validators } from '@angular/forms';
+import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { BusquedasService } from 'src/app/shared/services/busquedas.service';
@@ -11,9 +11,8 @@ import { CasaService } from 'src/app/shared/services/casa.service';
   styleUrls: ['./full-search.component.scss'],
 })
 export class FullSearchComponent implements OnInit, OnDestroy {
-  valorBusqueda: string = '';
   listaCasas: CasaResponse[] = [];
-  formuReact: any;
+  formuReact: FormGroup;
 
   private paramBusquedaSuscription: Subscription;
 
@@ -21,14 +20,23 @@ export class FullSearchComponent implements OnInit, OnDestroy {
     private busquedaService: BusquedasService,
     private casaService: CasaService,
     private formubuild: FormBuilder
-  ) {}
+  ) {
+
+  }
 
   ngOnInit(): void {
+    this.formuReact = this.formubuild.group({
+      nombreCasa: [''],
+      piscina: [false],
+      wifi: [false],
+      jardin: [false],
+      mascotas: [false],
+    });
     this.paramBusquedaSuscription = this.busquedaService
       .getParamBusqueda()
       .subscribe({
         next: (param) => {
-          this.valorBusqueda = param;
+          this.formuReact.get('nombreCasa')?.setValue(param);
           if (param != '') {
             this.buscarCasa();
           }
@@ -39,14 +47,6 @@ export class FullSearchComponent implements OnInit, OnDestroy {
         complete: () => {},
       });
 
-      this.formuReact = this.formubuild.group({
-        nombreCasa: [''],
-        piscina: [false],
-        wifi: [false],
-        jardin: [false],
-        mascotas: [false],
-      });
-
   }
 
   ngOnDestroy(): void {
@@ -55,7 +55,7 @@ export class FullSearchComponent implements OnInit, OnDestroy {
   }
 
   buscarCasa(): void {
-    this.casaService.getListaCasasPorNombre(this.valorBusqueda).subscribe({
+    this.casaService.getListaCasasPorNombre(this.formuReact.get('nombreCasa').value).subscribe({
       next: (listaCasas) => {
         this.listaCasas = listaCasas;
         console.log(listaCasas);
@@ -65,13 +65,13 @@ export class FullSearchComponent implements OnInit, OnDestroy {
       },
       complete: () => {
         console.info(
-          `Carga de casas según el parámetro de búsqueda ${this.valorBusqueda} completado`
+          `Carga de casas según el parámetro de búsqueda ${this.formuReact.get('nombreCasa').value} completado`
         );
       },
     });
   }
 
   cambiarParam(): void {
-    this.busquedaService.setParamBusqueda(this.valorBusqueda);
+    this.busquedaService.setParamBusqueda(this.formuReact.get('nombreCasa').value);
   }
 }

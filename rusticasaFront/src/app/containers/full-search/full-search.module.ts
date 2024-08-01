@@ -6,6 +6,7 @@ import {ButtonModule} from 'primeng/button';
 import {RippleModule} from 'primeng/ripple';
 import { InputTextModule } from 'primeng/inputtext';
 import { CommonComponentsModule } from 'src/app/common-components/common-components.module';
+import {CheckboxModule} from 'primeng/checkbox';
 
 
 
@@ -17,6 +18,7 @@ import { CommonComponentsModule } from 'src/app/common-components/common-compone
     ButtonModule,
     RippleModule,
     InputTextModule,
+    CheckboxModule,
     CommonComponentsModule,
     ReactiveFormsModule
   ]
