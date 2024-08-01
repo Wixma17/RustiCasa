@@ -1,5 +1,5 @@
-<div>
-  <div class="p-inputgroup">
+<div class="container-fluid">
+  <!--<div class="p-inputgroup">
     <input
       type="text"
       pInputText
@@ -14,7 +14,20 @@
       (click)="cambiarParam()"
       icon="pi pi-search"
     ></button>
-  </div>
+  </div>-->
+
+  <form [formGroup]="formuReact" *ngIf="formuReact">
+
+    <input type="text" [formControl]="formuReact.controls['nombreCasa']" />
+
+    <p-checkbox [formControl]="formuReact.controls['piscina']"></p-checkbox>
+    <p-checkbox [formControl]="formuReact.controls['wifi']"></p-checkbox>
+    <p-checkbox [formControl]="formuReact.controls['jardin']"></p-checkbox>
+    <p-checkbox [formControl]="formuReact.controls['mascotas']"></p-checkbox>
+
+    <button class="button" type="submit">Buscar</button>
+    <button class="button" type="reset">Limpiar</button>
+  </form>
 
   <div *ngIf="listaCasas.length != 0">
     <div *ngFor="let casa of listaCasas">

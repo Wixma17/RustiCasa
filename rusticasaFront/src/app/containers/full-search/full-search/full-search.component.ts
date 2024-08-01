@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder,Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { BusquedasService } from 'src/app/shared/services/busquedas.service';
@@ -12,12 +13,14 @@ import { CasaService } from 'src/app/shared/services/casa.service';
 export class FullSearchComponent implements OnInit, OnDestroy {
   valorBusqueda: string = '';
   listaCasas: CasaResponse[] = [];
+  formuReact: any;
 
   private paramBusquedaSuscription: Subscription;
 
   constructor(
     private busquedaService: BusquedasService,
-    private casaService: CasaService
+    private casaService: CasaService,
+    private formubuild: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +38,15 @@ export class FullSearchComponent implements OnInit, OnDestroy {
         },
         complete: () => {},
       });
+
+      this.formuReact = this.formubuild.group({
+        nombreCasa: [''],
+        piscina: [false],
+        wifi: [false],
+        jardin: [false],
+        mascotas: [false],
+      });
+
   }
 
   ngOnDestroy(): void {
