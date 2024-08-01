@@ -1,12 +1,24 @@
 <div>
-
   <div class="p-inputgroup">
-    <input type="text" pInputText [(ngModel)]="valorBusqueda" placeholder="Buscar..." aria-placeholder="Buscar por nombre de casa">
-    <button type="button" pButton pRipple (click)="buscarCasa()" icon="pi pi-search"></button>
+    <input
+      type="text"
+      pInputText
+      [(ngModel)]="valorBusqueda"
+      placeholder="Buscar..."
+      aria-placeholder="Buscar por nombre de casa"
+    />
+    <button
+      type="button"
+      pButton
+      pRipple
+      (click)="cambiarParam()"
+      icon="pi pi-search"
+    ></button>
   </div>
 
-  <div>
-
+  <div *ngIf="listaCasas.length != 0">
+    <div *ngFor="let casa of listaCasas">
+      <app-house [datosCasa]="casa"></app-house>
+    </div>
   </div>
-
 </div>

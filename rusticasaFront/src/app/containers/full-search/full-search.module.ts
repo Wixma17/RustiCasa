@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {RippleModule} from 'primeng/ripple';
 import { InputTextModule } from 'primeng/inputtext';
+import { CommonComponentsModule } from 'src/app/common-components/common-components.module';
 
 
 
@@ -15,7 +16,8 @@ import { InputTextModule } from 'primeng/inputtext';
     FormsModule,
     ButtonModule,
     RippleModule,
-    InputTextModule
+    InputTextModule,
+    CommonComponentsModule
   ]
 })
 export class FullSearchModule { }

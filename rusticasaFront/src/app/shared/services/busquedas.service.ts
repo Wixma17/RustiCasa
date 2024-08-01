@@ -1,26 +1,43 @@
 import { Injectable } from '@angular/core';
 import { CasaService } from './casa.service';
 import { Router } from '@angular/router';
-import { CasaResponse } from '../model/responses/casa-response.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BusquedasService {
-  resultados: CasaResponse[] = [];
+  private muestraBusquedaCabeceraSubject: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(true);
+  private paramBusquedaSubject: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
-  muestraBusquedaCabecera: boolean = true;
+  private muestraBusquedaCabecera$: Observable<boolean>;
+  private paramBusqueda$: Observable<string>;
 
-  constructor(private casaS: CasaService, private router: Router) {}
+  constructor(private casaS: CasaService, private router: Router) {
+    this.muestraBusquedaCabecera$ =
+      this.muestraBusquedaCabeceraSubject.asObservable();
+    this.paramBusqueda$ = this.paramBusquedaSubject.asObservable();
+  }
 
-  buscar(nombreCasa: string): void {
-    this.casaS.getListaCasasPorNombre(nombreCasa).subscribe({
-      next: (casa) => {
-        console.log(casa);
-      },
-      complete: () => {
-        this.router.navigate(['/full-search']);
-      },
-    });
+  goBuscar(): void {
+    this.router.navigate(['/full-search']);
+  }
+
+  getMuestraBusquedaCabecera(): Observable<boolean> {
+    return this.muestraBusquedaCabecera$;
+  }
+
+  setMuestraBusquedaCabecera(state: boolean): void{
+    this.muestraBusquedaCabeceraSubject.next(state);
+  }
+
+  getParamBusqueda(): Observable<string> {
+    return this.paramBusqueda$;
+  }
+
+  setParamBusqueda(param: string): void {
+    this.paramBusquedaSubject.next(param);
   }
 }

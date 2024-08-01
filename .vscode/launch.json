@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-RusticasabackApplication<rusticasaback>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.rusticasaback.rusticasaback.RusticasabackApplication",
+            "projectName": "rusticasaback",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

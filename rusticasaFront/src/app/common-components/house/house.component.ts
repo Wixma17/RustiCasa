@@ -20,6 +20,7 @@ export class HouseComponent implements OnInit {
   constructor(private casaServicio:CasaService, private sanitizer:DomSanitizer) {}
 
   ngOnInit(): void {
+    console.log(this.datosCasa)
     this.casaServicio
       .getFotosCasas(this.datosCasa.idCasa)
       .pipe(
