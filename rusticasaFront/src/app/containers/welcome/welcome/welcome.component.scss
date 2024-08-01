@@ -1,1 +1,11 @@
+.centrar {
+  display: flex;
+  align-items: center;
+}
 
+@media screen and (min-width: 992px) {
+  .centrar {
+     display: flex;
+     align-items: stretch;
+  }
+}

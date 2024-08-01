@@ -33,14 +33,14 @@
 
       <div class="collapse navbar-collapse order-0 col-auto" id="navToggle">
 
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-between headerMen">
-          <li class="nav-item me-5 col-lg-3 text-center">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 justify-content-center justify-content-lg-between headerMen d-flex align-items-center">
+          <li class="nav-item me-auto col-12 col-lg-3 text-center">
             <a class="nav-link active transicion" aria-current="page" [routerLink]="['/welcome']" routerLinkActive="active"> <i class="bi bi-house-door"></i> Inicio</a>
           </li>
-          <li class="nav-item me-5 col-lg-3 text-center">
+          <li class="nav-item me-auto col-12 col-lg-3 text-center">
             <a class="nav-link transicion" [routerLink]="['/full-search']"> <i class="bi bi-search"></i> Búsquedas</a>
           </li>
-          <li class="nav-item me-5 col-lg-3 text-center">
+          <li class="nav-item me-auto col-12 col-lg-3 text-center">
             <a class="nav-link transicion" [routerLink]="['/upload-house']"> <i class="bi bi-house-up"></i> Publica tu Casa</a>
           </li>
           <!--<li class="nav-item">
@@ -52,7 +52,7 @@
         </ul>
       </div>
 
-      <div class="p-col-12 p-md-4">
+      <div class="col-12 col-lg-3 p-md-4">
         <div class="p-inputgroup">
             <input type="text" pInputText [(ngModel)]="nombreCasa" placeholder="Buscar..." aria-placeholder="Buscar por nombre de casa">
             <button type="button" pButton pRipple (click)="buscarCasa()" icon="pi pi-search"></button>

@@ -4,25 +4,23 @@ import { Router } from '@angular/router';
 import { CasaResponse } from '../model/responses/casa-response.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BusquedasService {
-
   resultados: CasaResponse[] = [];
 
-  constructor(private casaS:CasaService,private router:Router) { }
+  muestraBusquedaCabecera: boolean = true;
 
-  buscar(nombreCasa:string): void {
+  constructor(private casaS: CasaService, private router: Router) {}
 
+  buscar(nombreCasa: string): void {
     this.casaS.getListaCasasPorNombre(nombreCasa).subscribe({
-      next:(casa)=>{
-          console.log(casa)
+      next: (casa) => {
+        console.log(casa);
       },
-      complete:()=>{
+      complete: () => {
         this.router.navigate(['/full-search']);
-      }
+      },
     });
-
   }
-
 }

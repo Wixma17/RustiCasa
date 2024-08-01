@@ -23,7 +23,7 @@ figure figcaption img{
 }
 
 .posMen{
-  left: -80px;
+  left: -120px;
 }
 
 /*--subrayado y funcionamiento del subrayado--*/
@@ -79,7 +79,7 @@ figure figcaption img{
   }
 
   .posMen{
-    left: -40px;
+    left: -80px;
   }
 
   .transicion:hover{
@@ -87,4 +87,10 @@ figure figcaption img{
     transform: scale(1.1);
   }
 
+}
+
+@media screen and (min-width: 1800px) {
+  .posMen{
+    left: -40px;
+  }
 }

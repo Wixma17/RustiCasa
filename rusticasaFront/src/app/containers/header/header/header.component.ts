@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BusquedasService } from 'src/app/shared/services/busquedas.service';
 
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -19,7 +20,6 @@ export class HeaderComponent implements OnInit {
 
   buscarCasa(): void {
     console.log(this.busqueda.buscar(this.nombreCasa));
-
   }
 
 }

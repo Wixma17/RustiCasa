@@ -1,10 +1,13 @@
-<div class="card mb-3 m-0 p-0 g-0" style="height: 300px;">
+<div class="card mb-3 m-0 p-0 g-0 d-flex align-items-center justify-content-center" style="height: 90%;">
   <div class="row g-0 align-items-center">
     <div class="col-12 order-2 col-md-6 order-md-1">
       <div class="card-body">
-        <h5 class="card-title">{{ datosCasa.nombreCasa }}</h5>
+        <h2 class="card-title fs-3">{{ datosCasa.nombreCasa }}</h2>
+
+        <p class="card-text negrita fs-4">Precio por noche: {{datosCasa.precioNoche}} €</p>
+
         <p class="card-text mb-1">
-          {{ (datosCasa.descripcion | truncate: 60) }}
+          {{ (datosCasa.descripcion | truncate: 70) }}
         </p>
         <div>
           <a href="#" (click)="showMore = !showMore" class="btn btn-success m-1 w-100">
@@ -12,10 +15,6 @@
           </a>
           <span class="accesibilidad"> datos sobre la casa {{datosCasa.nombreCasa}}</span>
         </div>
-
-        <p class="card-text">
-          <small class="text-body-secondary">Last updated 3 mins ago</small>
-        </p>
       </div>
     </div>
     <div class="col-12 order-1 col-md-6 order-md-2" *ngIf="listaImagenes">
