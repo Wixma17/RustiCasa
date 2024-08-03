@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   constructor(private busqueda: BusquedasService, private router: Router) {}
 
   ngOnInit(): void {
-    this.busqueda.getMuestraBusquedaCabecera().subscribe((state) => {
+   /* this.busqueda.getMuestraBusquedaCabecera().subscribe((state) => {
       this.muestraBusqueda = state;
     });
     this.busqueda.getParamBusqueda().subscribe((param) => {
@@ -33,11 +33,11 @@ export class HeaderComponent implements OnInit {
           this.nombreCasa = '';
         }
         this.busqueda.setMuestraBusquedaCabecera(mostrar);
-      });
+      });*/
   }
 
   buscarCasa(): void {
-    this.busqueda.setParamBusqueda(this.nombreCasa);
+   /* this.busqueda.setParamBusqueda(this.nombreCasa);*/
     this.busqueda.goBuscar();
   }
 }

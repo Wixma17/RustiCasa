@@ -33,7 +33,7 @@ export class FullSearchComponent implements OnInit, OnDestroy {
       mascotas: [false],
       precioValor:[[0,100]]
     });
-    this.paramBusquedaSuscription = this.busquedaService
+    /*this.paramBusquedaSuscription = this.busquedaService
       .getParamBusqueda()
       .subscribe({
         next: (param) => {
@@ -46,13 +46,13 @@ export class FullSearchComponent implements OnInit, OnDestroy {
           console.error(err);
         },
         complete: () => {},
-      });
+      });*/
 
   }
 
   ngOnDestroy(): void {
-    this.busquedaService.setParamBusqueda('');
-    this.paramBusquedaSuscription.unsubscribe();
+   /* this.busquedaService.setParamBusqueda('');
+    this.paramBusquedaSuscription.unsubscribe();*/
   }
 
   buscarCasa(): void {
@@ -72,7 +72,7 @@ export class FullSearchComponent implements OnInit, OnDestroy {
     });
   }
 
-  cambiarParam(): void {
+ /* cambiarParam(): void {
     this.busquedaService.setParamBusqueda(this.formuReact.get('nombreCasa').value);
-  }
+  }*/
 }

@@ -1,6 +1,6 @@
-<div class="d-flex flex-lg-row flex-column justify-content-around centrar">
-  <div *ngFor="let casa of listaCasaGenerica" class="w-50 m-3">
-    <!-- <div class="card mb-3">
+<div class="d-flex flex-column container-fluid">
+  <!--<div *ngFor="let casa of listaCasaGenerica" class="w-50 m-3">
+    <-- <div class="card mb-3">
       <div class="row g-0">
         <div class="col-12 order-2 col-md-6 order-md-1">
           <div class="card-body">
@@ -21,7 +21,21 @@
           </p-carousel>
         </div>
       </div>
-    </div> -->
+    </div> --
     <app-house [datosCasa]="casa"></app-house>
-  </div>
+  </div>-->
+  <h1 class="text-center m-2">¡Bienvenido a Rusticasa!</h1>
+  <h2>¡Alquila tu casa ideal ahora!</h2>
+
+  <form [formGroup]="buscaFormu" *ngIf="buscaFormu" (submit)="buscarCasaSimple()" class="d-flex flex-column">
+
+    <p-dropdown  styleClass="col-6" [options]="ListadoProvincias" [formControl]="buscaFormu.controls['provinciasS']" class="m-1" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" itemSize="30" ></p-dropdown>
+
+
+    <button class="btn btn-success m-1 col-4" type="submit"><i class="bi bi-binoculars"></i> Buscar</button>
+
+  </form>
+
+  <h2>{{buscaFormu.controls['provinciasS'].value}}</h2>
+
 </div>

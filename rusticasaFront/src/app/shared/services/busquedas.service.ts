@@ -7,25 +7,25 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class BusquedasService {
-  private muestraBusquedaCabeceraSubject: BehaviorSubject<boolean> =
+ /* private muestraBusquedaCabeceraSubject: BehaviorSubject<boolean> =
     new BehaviorSubject<boolean>(true);
   private paramBusquedaSubject: BehaviorSubject<string> =
     new BehaviorSubject<string>('');
 
   private muestraBusquedaCabecera$: Observable<boolean>;
-  private paramBusqueda$: Observable<string>;
+  private paramBusqueda$: Observable<string>;*/
 
   constructor(private casaS: CasaService, private router: Router) {
-    this.muestraBusquedaCabecera$ =
+   /* this.muestraBusquedaCabecera$ =
       this.muestraBusquedaCabeceraSubject.asObservable();
-    this.paramBusqueda$ = this.paramBusquedaSubject.asObservable();
+    this.paramBusqueda$ = this.paramBusquedaSubject.asObservable();*/
   }
 
   goBuscar(): void {
     this.router.navigate(['/full-search']);
   }
 
-  getMuestraBusquedaCabecera(): Observable<boolean> {
+  /*getMuestraBusquedaCabecera(): Observable<boolean> {
     return this.muestraBusquedaCabecera$;
   }
 
@@ -39,5 +39,5 @@ export class BusquedasService {
 
   setParamBusqueda(param: string): void {
     this.paramBusquedaSubject.next(param);
-  }
+  }*/
 }
