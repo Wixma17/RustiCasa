@@ -1,14 +1,11 @@
+import { MunicipioService } from './../../../shared/services/municipio.service';
 import { ProvinciaService } from './../../../shared/services/provincia.service';
-import { CasaService } from 'src/app/shared/services/casa.service';
 import { Component, OnInit, Sanitizer } from '@angular/core';
-import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
-import { ImagenResponse } from 'src/app/shared/model/responses/imagen-response.model';
-import { DomSanitizer } from '@angular/platform-browser';
-import { map } from 'rxjs/operators';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { MunicipioResponse } from 'src/app/shared/model/responses/municipio-response.model';
 import { ProvinciaResponse } from 'src/app/shared/model/responses/provincia-response.model';
+import { FiltroService } from 'src/app/shared/services/filtro.service';
 
 @Component({
   selector: 'app-welcome',
@@ -16,31 +13,43 @@ import { ProvinciaResponse } from 'src/app/shared/model/responses/provincia-resp
   styleUrls: ['./welcome.component.scss'],
 })
 export class WelcomeComponent implements OnInit {
-  constructor(
-    private casaServicio: CasaService,
-    private sanitizer: DomSanitizer,
-    private formubuild: FormBuilder,
-    private provinciaService: ProvinciaService
-  ) {}
-
   buscaFormu: FormGroup;
   ListadoProvincias: SelectItem[] = [];
-  municipio: MunicipioResponse;
+  listadoPueblos: SelectItem[] = [];
+  listaMunicipio: MunicipioResponse[];
   listaProv: ProvinciaResponse[];
-  provinciaSelect:string='';
+  idProv: number;
+  checkIn: Date;
+  checkOut: Date;
 
-  listaCasaResultado: CasaResponse[];
-  listaImagenes: ImagenResponse[][] = [];
+  constructor(
+    private formubuild: FormBuilder,
+    private provinciaService: ProvinciaService,
+    private municipioService:MunicipioService
+  ) {
+    this.buscaFormu = this.formubuild.group({
+      provinciasS: [0, [Validators.required]],
+      fechas: [null],
+      pueblos: [0],
+    });
+  }
 
   ngOnInit(): void {
     this.provinciaService.getListaProvincias().subscribe({
       next: (prov) => {
+        this.listaProv=[];
         this.listaProv = prov;
       },
       error: (err) => {
         console.error('Error=> ' + err);
       },
       complete: () => {
+
+        this.ListadoProvincias.push({
+          label: "--Selecciona la provincia--",
+          value: null,
+        });
+
         this.listaProv.forEach((prov) => {
           this.ListadoProvincias.push({
             label: prov.nombreProvincia,
@@ -50,14 +59,40 @@ export class WelcomeComponent implements OnInit {
         console.info(this.ListadoProvincias);
       },
     });
-
-    this.buscaFormu = this.formubuild.group({
-      provinciasS: [this.provinciaSelect],
-    });
   }
 
-  buscarCasaSimple(): void {
-    const provinciaSeleccionada = this.buscaFormu.get('provinciasS').value;
-    console.log('Provincia seleccionada:', provinciaSeleccionada);
+  cargaPueblos(): void {
+    this.idProv= this.buscaFormu.value.provinciasS;
+
+    this.municipioService.getListaMunicipio(this.idProv).subscribe({
+      next:(mun)=>{
+        this.listaMunicipio=[];
+          this.listaMunicipio=mun;
+      },
+      error:(err)=>{
+        console.error(err)
+      },
+      complete:()=>{
+
+        this.listadoPueblos.push({
+          label: "--Selecciona la provincia--",
+          value: null,
+        });
+
+        this.listaMunicipio.forEach((muni) => {
+          this.listadoPueblos.push({
+            label: muni.municipio,
+            value: muni.idMunicipio,
+          });
+        });
+        console.info("Cargado pueblos de la provincia con id=> "+this.idProv);
+      }
+    })
+
+    /*this.checkIn= this.buscaFormu.value.fechas[0];
+    this.checkOut = this.buscaFormu.value.fechas[1];*/
+
   }
+
+  validaForm(): void {}
 }

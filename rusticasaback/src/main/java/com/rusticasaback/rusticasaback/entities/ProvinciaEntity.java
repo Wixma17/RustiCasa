@@ -24,7 +24,7 @@ public class ProvinciaEntity {
 
     @Id
     @Column(name = "id_provincia", nullable = false)
-    private int idPronvincia;
+    private int idProvincia;
 
     @Column(name = "provincia")
     private String nombreProvincia;

@@ -111,11 +111,12 @@ public class CasaService {
     }
 
     public ResponseEntity<?> getCasaPorNombre(String nombreCasa) {
-        List<CasaEntity>  listaCasa = casaRepository.findLikeNombreCasa(nombreCasa);
+        List<CasaEntity> listaCasa = casaRepository.findByNombreCasa(nombreCasa);
         ArrayList<CasaDTO> listaCasaResp = new ArrayList<CasaDTO>();
         for (CasaEntity casa : listaCasa) {
             listaCasaResp.add(new CasaDTO(casa));
         }
         return new ResponseEntity<>(listaCasaResp, HttpStatus.CREATED);
     }
+
 }

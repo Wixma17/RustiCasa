@@ -18,7 +18,7 @@ public class ProvinciaDTO {
     private String comunidad;
 
     public ProvinciaDTO(ProvinciaEntity provinciaEntity) {
-        idPronvincia = provinciaEntity.getIdPronvincia();
+        idPronvincia = provinciaEntity.getIdProvincia();
         nombreProvincia = provinciaEntity.getNombreProvincia();
         nombreProvinciaSeo = provinciaEntity.getNombreProvinciaSeo();
         nombreProvincia3 = provinciaEntity.getNombreProvincia3();
