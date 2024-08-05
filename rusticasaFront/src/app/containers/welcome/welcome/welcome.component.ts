@@ -31,6 +31,7 @@ export class WelcomeComponent implements OnInit {
       provinciasS: [0, [Validators.required]],
       fechas: [null],
       pueblos: [0],
+      nInquilinos:[]
     });
   }
 
@@ -62,12 +63,16 @@ export class WelcomeComponent implements OnInit {
   }
 
   cargaPueblos(): void {
+    this.listaMunicipio = [];
+    this.listadoPueblos = [];
     this.idProv= this.buscaFormu.value.provinciasS;
+
+    console.info(this.listaMunicipio)
 
     this.municipioService.getListaMunicipio(this.idProv).subscribe({
       next:(mun)=>{
-        this.listaMunicipio=[];
-          this.listaMunicipio=mun;
+        this.listaMunicipio=mun;
+        console.info(this.listaMunicipio)
       },
       error:(err)=>{
         console.error(err)

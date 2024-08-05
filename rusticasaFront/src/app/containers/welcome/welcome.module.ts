@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'primeng/carousel';
+import {InputNumberModule} from 'primeng/inputnumber';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { CarouselModule } from 'primeng/carousel';
     NoopAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    CalendarModule
+    CalendarModule,
+    InputNumberModule
   ],
   providers: [CasaService],
 })

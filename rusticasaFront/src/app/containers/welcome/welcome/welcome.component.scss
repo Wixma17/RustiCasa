@@ -3,14 +3,49 @@
   align-items: center;
 }
 
-.formu{
+.formu {
   border: 1px solid rgba(112, 128, 144, 0.4);
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
+}
+
+.contenedor-cristalizado {
+  background: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+  backdrop-filter: blur(10px); /* Desenfoque de fondo */
+  border-radius: 15px; /* Bordes redondeados para un mejor efecto */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde ligero para resaltar */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Color del texto dentro del contenedor */
+  text-align: center;
+}
+
+#fondo {
+  background-image: url(../../../../assets/fondoCasa.jpg);
+  background-size: cover;
+  background-position: 0 70%;
+  background-repeat: no-repeat;
+  padding: 40px;
+}
+
+#fondo h1 {
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5),
+    -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
+  color: white;
 }
 
 @media screen and (min-width: 992px) {
   .centrar {
-     display: flex;
-     align-items: stretch;
+    display: flex;
+    align-items: stretch;
+  }
+
+  #fondo h1 {
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5),
+      -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 40px;
   }
 }
