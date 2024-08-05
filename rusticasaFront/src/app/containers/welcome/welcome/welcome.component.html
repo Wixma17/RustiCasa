@@ -4,7 +4,7 @@
   <div class="col-12 d-flex flex-column align-items-center">
     <h2 class="text-center m-2">¡Alquila tu casa ideal ahora!</h2>
 
-    <form [formGroup]="buscaFormu" *ngIf="buscaFormu" class="col-lg-10 formu d-flex flex-column contenedor-cristalizado ">
+    <form [formGroup]="buscaFormu" *ngIf="buscaFormu" class="col-lg-10 formu d-flex flex-column contenedor-cristalizado p-3">
 
       <fieldset class="row row-cols-1 row-cols-lg-2 text-center col-12">
         <p-dropdown styleClass="col-10 m-2" placeholder="1º Selecciona una Provincia" (onChange)="cargaPueblos()" [options]="ListadoProvincias" formControlName="provinciasS" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona una provincia" ></p-dropdown>
@@ -12,11 +12,14 @@
         <p-dropdown styleClass="col-10 m-2" placeholder="2º Selecciona un pueblo" [options]="listadoPueblos" formControlName="pueblos"  [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio" ></p-dropdown>
       </fieldset>
 
-      <fieldset class="text-center col-12 p-1">
+      <div class="row row-cols-1 row-cols-lg-2 text-center col-12">
+        <p-inputNumber styleClass="col-10 m-2" placeholder="Numero de inquilinos" formControlName="nInquilinos" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+        <p-inputNumber styleClass="col-10 m-2" placeholder="Numero de habitaciones" formControlName="nHabitaciones" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+      </div>
+
+      <fieldset class="text-center col-12 p-1 m-1">
         <p-calendar styleClass="col-11 text-center" placeholder="Fecha entrada - Fecha Salida" formControlName="fechas" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
       </fieldset>
-
-      <p-inputNumber formControlName="nInquilinos" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
 
       <fieldset class="d-flex justify-content-center col-10">
         <button class="btn btn-success m-2 col-11" type="button" (click)="validaForm()"><i class="bi bi-binoculars"></i> Buscar</button>

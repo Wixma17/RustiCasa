@@ -1,3 +1,11 @@
+
+@font-face {
+  font-family: 'MiFuente';
+  src: url(../../../../assets/sunday_best/fuente.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .centrar {
   display: flex;
   align-items: center;
@@ -30,10 +38,11 @@
   padding: 40px;
 }
 
-#fondo h1 {
+#fondo h1 ,div h2{
   text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5),
     -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
   color: white;
+  //font-family: 'MiFuente', sans-serif; cambiar fuente
 }
 
 @media screen and (min-width: 992px) {

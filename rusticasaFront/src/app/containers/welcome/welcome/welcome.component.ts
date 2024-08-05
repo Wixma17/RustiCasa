@@ -31,7 +31,8 @@ export class WelcomeComponent implements OnInit {
       provinciasS: [0, [Validators.required]],
       fechas: [null],
       pueblos: [0],
-      nInquilinos:[]
+      nInquilinos:[],
+      nHabitaciones:[]
     });
   }
 
