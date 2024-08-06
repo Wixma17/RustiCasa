@@ -47,6 +47,9 @@ public class ClienteEntity {
     @Column(name = "fecha_nacimiento")
     private Date fechaNacimiento;
 
+    @Column(name = "imagen")
+    private String imagen;
+
     @OneToMany(mappedBy = "clienteEmisor")
     private List<MensajeEntity> listaMensajeEnviados;
 

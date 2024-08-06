@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { BusquedasService } from 'src/app/shared/services/busquedas.service';
 import { CasaService } from 'src/app/shared/services/casa.service';
+import { FiltroService } from 'src/app/shared/services/filtro.service';
 
 @Component({
   selector: 'app-full-search',
@@ -13,46 +14,32 @@ import { CasaService } from 'src/app/shared/services/casa.service';
 export class FullSearchComponent implements OnInit, OnDestroy {
   listaCasas: CasaResponse[] = [];
   formuReact: FormGroup;
-
-  private paramBusquedaSuscription: Subscription;
+  listaResultCasa: CasaResponse[] = [];
 
   constructor(
-    private busquedaService: BusquedasService,
     private casaService: CasaService,
-    private formubuild: FormBuilder
+    private formubuild: FormBuilder,
+    private filterService:FiltroService
   ) {
 
   }
 
   ngOnInit(): void {
     this.formuReact = this.formubuild.group({
-      nombreCasa: [''],
       piscina: [false],
       wifi: [false],
       jardin: [false],
       mascotas: [false],
       precioValor:[[0,100]]
     });
-    /*this.paramBusquedaSuscription = this.busquedaService
-      .getParamBusqueda()
-      .subscribe({
-        next: (param) => {
-          this.formuReact.get('nombreCasa')?.setValue(param);
-          if (param != '') {
-            this.buscarCasa();
-          }
-        },
-        error: (err) => {
-          console.error(err);
-        },
-        complete: () => {},
-      });*/
 
+    this.filterService.listaCasa$.subscribe(data => {
+      this.listaResultCasa = data;
+    });
   }
 
   ngOnDestroy(): void {
-   /* this.busquedaService.setParamBusqueda('');
-    this.paramBusquedaSuscription.unsubscribe();*/
+    /*this.listaCasa.unsubscribe();*/
   }
 
   buscarCasa(): void {

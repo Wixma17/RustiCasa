@@ -19,6 +19,7 @@ public class ClienteDTO {
     private String nickname;
     private boolean administrador;
     private Date fechaNacimiento;
+    private String imagen;
 
     public ClienteDTO(ClienteEntity clienteEntity) {
         gmail = clienteEntity.getGmail();
@@ -31,11 +32,11 @@ public class ClienteDTO {
     }
 
     public ClienteEntity createClienteEntity(){
-        return new ClienteEntity(gmail, nombre, apellido, passwd, nickname, administrador, fechaNacimiento, null, null, null, null, null);
+        return new ClienteEntity(gmail, nombre, apellido, passwd, nickname, administrador, fechaNacimiento, null, null, null, null, null,null);
     }
 
     public static ClienteEntity createClienteEntity(ClienteDTO cli){
-        return new ClienteEntity(cli.gmail, cli.nombre, cli.apellido, cli.passwd, cli.nickname, cli.administrador, cli.fechaNacimiento, null, null, null, null, null);
+        return new ClienteEntity(cli.gmail, cli.nombre, cli.apellido, cli.passwd, cli.nickname, cli.administrador, cli.fechaNacimiento, null, null, null, null, null,null);
     }
 
     public static List<ClienteEntity> convertFromDtoList(List<ClienteDTO> listaDTO) {

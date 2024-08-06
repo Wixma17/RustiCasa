@@ -12,13 +12,18 @@
         <p-dropdown styleClass="col-10 m-2" placeholder="2º Selecciona un pueblo" [options]="listadoPueblos" formControlName="pueblos"  [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio" ></p-dropdown>
       </fieldset>
 
-      <div class="row row-cols-1 row-cols-lg-2 text-center col-12">
+      <div class="row row-cols-1 row-cols-lg-2 text-center col-12 ">
         <p-inputNumber styleClass="col-10 m-2" placeholder="Numero de inquilinos" formControlName="nInquilinos" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
         <p-inputNumber styleClass="col-10 m-2" placeholder="Numero de habitaciones" formControlName="nHabitaciones" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
       </div>
 
-      <fieldset class="text-center col-12 p-1 m-1">
+      <fieldset class="text-center col-12  p-1">
         <p-calendar styleClass="col-11 text-center" placeholder="Fecha entrada - Fecha Salida" formControlName="fechas" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+        <div *ngIf="buscaFormu.get('fechas').invalid && buscaFormu.get('fechas').touched" class="d-flex justify-content-center m-3">
+          <div *ngIf="buscaFormu.get('fechas').errors.required" class="bg-white col-4 text-danger rounded-4">
+            <span class="fs-3">* La Fecha es obligatoria.</span>
+          </div>
+        </div>
       </fieldset>
 
       <fieldset class="d-flex justify-content-center col-10">

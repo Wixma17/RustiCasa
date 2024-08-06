@@ -12,4 +12,6 @@ public class CasaSimpleRequest {
     private int codMun;
     private Date checkIn;
     private Date checkOut;
+    private int numInqui;
+    private int numHab;    
 }

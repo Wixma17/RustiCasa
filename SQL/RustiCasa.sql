@@ -5,7 +5,8 @@ CREATE OR REPLACE TABLE Cliente (
     nombre VARCHAR(50),
     apellido VARCHAR(100),
     administrador BOOLEAN,
-    fecha_nacimiento DATE
+    fecha_nacimiento DATE,
+    imagen VARCHAR(150) DEFAULT 'defaultImg.jpg'
 );
 
 CREATE OR REPLACE TABLE Provincia (
@@ -83,17 +84,17 @@ CREATE OR REPLACE TABLE Alquila (
     FOREIGN KEY (id_casa) REFERENCES Casa(id_casa)
 );
 
-INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)
-VALUES ('testuser@gmail.com', 'password123', 'testuser', 'Test', 'User', false, '1990-01-01');
+INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento,imagen)
+VALUES ('testuser@gmail.com', 'password123', 'testuser', 'Test', 'User', false, '1990-01-01','imagenPerfil.png');
 
-INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)
-VALUES ('ismael@gmail.com', 'ismael', 'ismaelote10', 'Ismael', 'Jimenez Lopez', false, '2002-11-09');
+INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento,imagen)
+VALUES ('ismael@gmail.com', 'ismael', 'ismaelote10', 'Ismael', 'Jimenez Lopez', false, '2002-11-09','imagenIsmael.png');
 
-INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)
-VALUES ('pedro@gmail.com', 'pedro', 'pedroAngular', 'pedro', 'torres', false, '1990-01-01');
+INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento,imagen)
+VALUES ('pedro@gmail.com', 'pedro', 'pedroAngular', 'pedro', 'torres', false, '1990-01-01','imagenPedro.png');
 
-INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento)
-VALUES ('lola@gmail.com', 'lola', 'lolita', 'lola', 'verdu', false, '1990-11-09');
+INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento,imagen)
+VALUES ('lola@gmail.com', 'lola', 'lolita', 'lola', 'verdu', false, '1990-11-09','imagenLola.png');
 
 
 INSERT INTO Provincia (`id_provincia`, `provincia`, `provincia_seo`, `provincia3`, `comunidad`) VALUES

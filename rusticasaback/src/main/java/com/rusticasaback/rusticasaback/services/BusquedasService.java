@@ -37,9 +37,4 @@ public class BusquedasService {
         }
         return new ResponseEntity<>(listaCasaResp, HttpStatus.CREATED);
     }
-
-    public List<CasaEntity> getCasasDisponibles(Date fechaEntrada, Date fechaSalida) {
-        return casaRepository.findCasasDisponiblesByFechas(fechaEntrada, fechaSalida);
-    }
-
 }

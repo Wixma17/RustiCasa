@@ -3,6 +3,7 @@ package com.rusticasaback.rusticasaback.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.rusticasaback.rusticasaback.DTOs.CasaDTO;
@@ -30,11 +31,9 @@ public class FilterController {
         return listaDTO;
     }
 
-
-    @GetMapping("/busquedaSimple")
-    public List<CasaDTO> getCasasBusquedaSimple(@RequestBody CasaSimpleRequest request) {        
-        List<CasaDTO> listaDTO = CasaDTO.convertFromEntityList(busquedasService.getCasasDisponibles(request.getCheckIn(), request.getCheckOut()));
-        return listaDTO;
+    @PostMapping("/busquedaSimple")    
+    public ResponseEntity<?> getCasasBusquedaSimple(@RequestBody CasaSimpleRequest request) {
+        return busquedasService.getCasasByFecha(request.getCheckIn(), request.getCheckOut());        
     }
 
 }

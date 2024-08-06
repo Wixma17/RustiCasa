@@ -37,7 +37,7 @@ public class AuthController {
                 registerRequest.getClienteDTO().getNombre(),
                 registerRequest.getClienteDTO().getApellido(), registerRequest.getClienteDTO().getPasswd(),
                 registerRequest.getClienteDTO().getNickname(),
-                registerRequest.getClienteDTO().isAdministrador(), registerRequest.getClienteDTO().getFechaNacimiento(),
+                registerRequest.getClienteDTO().isAdministrador(), registerRequest.getClienteDTO().getFechaNacimiento(),registerRequest.getClienteDTO().getImagen(),
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
         return new ResponseEntity<>(clienteService.guardaCliente(nuevoCliente), HttpStatus.CREATED);

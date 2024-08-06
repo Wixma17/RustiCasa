@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CasaResponse } from '../model/responses/casa-response.model';
 import { environment } from 'src/environments/environment';
 import { RequestCasaSimple } from '../model/requests/request-casa-simple.model';
@@ -10,11 +10,19 @@ import { RequestCasaSimple } from '../model/requests/request-casa-simple.model';
 })
 export class FiltroService {
 
+  private casaSubject = new BehaviorSubject<CasaResponse[]>([]);
+  listaCasa$ = this.casaSubject.asObservable();
+
   constructor(private httpClient: HttpClient) { }
 
-  getListaProvincias(request:RequestCasaSimple): Observable<CasaResponse[]> {
+  getListaCasaProvincias(request:RequestCasaSimple): Observable<CasaResponse[]> {
+    console.info(request);
     let url = `${environment.urlApiFiltro}busquedaSimple`;
-    return this.httpClient.get<CasaResponse[]>(url);
+    return this.httpClient.post<CasaResponse[]>(url,request);
+  }
+
+  setListaCasa(data: CasaResponse[]): void {
+    this.casaSubject.next(data);
   }
 
 }
