@@ -8,10 +8,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CasaSimpleRequest {
-    private int codProv;
-    private int codMun;
+    private Integer codProv;
+    private Integer codMun;
     private Date checkIn;
     private Date checkOut;
-    private int numInqui;
-    private int numHab;    
+    private Integer numInqui;
+    private Integer numHab;
 }
