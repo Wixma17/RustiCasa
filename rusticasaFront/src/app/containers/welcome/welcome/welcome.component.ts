@@ -129,7 +129,7 @@ export class WelcomeComponent implements OnInit {
       numHab: this.numHabi,
     };
 
-    this.filtroService.getListaCasaProvincias(requestCasa).subscribe({
+    this.filtroService.getBusquedaSimple(requestCasa).subscribe({
       next: (casa) => {
         this.listaResultCasa = casa;
         this.filtroService.setListaCasa(this.listaResultCasa);

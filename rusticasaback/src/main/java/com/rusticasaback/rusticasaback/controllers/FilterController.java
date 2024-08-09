@@ -33,7 +33,7 @@ public class FilterController {
 
     @PostMapping("/busquedaSimple")    
     public ResponseEntity<?> getCasasBusquedaSimple(@RequestBody CasaSimpleRequest request) {
-        return busquedasService.getCasasByFecha(request.getCheckIn(), request.getCheckOut());        
+        return busquedasService.getCasasByRequest(request);      
     }
 
 }

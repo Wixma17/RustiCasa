@@ -11,10 +11,9 @@ import { FiltroService } from 'src/app/shared/services/filtro.service';
   templateUrl: './full-search.component.html',
   styleUrls: ['./full-search.component.scss'],
 })
-export class FullSearchComponent implements OnInit, OnDestroy {
+export class FullSearchComponent implements OnInit {
   listaCasas: CasaResponse[] = [];
   formuReact: FormGroup;
-  listaResultCasa: CasaResponse[] = [];
 
   constructor(
     private casaService: CasaService,
@@ -34,32 +33,8 @@ export class FullSearchComponent implements OnInit, OnDestroy {
     });
 
     this.filterService.listaCasa$.subscribe(data => {
-      this.listaResultCasa = data;
+      this.listaCasas = data;
     });
   }
 
-  ngOnDestroy(): void {
-    /*this.listaCasa.unsubscribe();*/
-  }
-
-  buscarCasa(): void {
-    this.casaService.getListaCasasPorNombre(this.formuReact.get('nombreCasa').value).subscribe({
-      next: (listaCasas) => {
-        this.listaCasas = listaCasas;
-        console.log(listaCasas);
-      },
-      error: (err) => {
-        console.error(err);
-      },
-      complete: () => {
-        console.info(
-          `Carga de casas según el parámetro de búsqueda ${this.formuReact.get('nombreCasa').value} completado`
-        );
-      },
-    });
-  }
-
- /* cambiarParam(): void {
-    this.busquedaService.setParamBusqueda(this.formuReact.get('nombreCasa').value);
-  }*/
 }

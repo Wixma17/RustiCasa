@@ -27,7 +27,8 @@ public interface CasaRepository extends JpaRepository<CasaEntity, Long> {
 
         @Query("SELECT c FROM CasaEntity c WHERE c.idCasa NOT IN (" +
                         "SELECT a.casa.idCasa FROM AlquilaEntity a WHERE " +
-                        "(:checkIn <= a.fechaSalida AND :checkOut >= a.alquilaEntityPK.fechaEntrada)) " +
+                        "(:checkIn <= a.fechaSalida AND :checkOut >= a.alquilaEntityPK.fechaEntrada)) "
+                        +
                         "AND (:codProv IS NULL OR c.municipio.provincia.idProvincia = :codProv) " +
                         "AND (:codMun IS NULL OR c.municipio.idMunicipio = :codMun) " +
                         "AND (:numInqui IS NULL OR c.numeroInquilinos >= :numInqui) " +

@@ -15,7 +15,7 @@ export class FiltroService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getListaCasaProvincias(request:RequestCasaSimple): Observable<CasaResponse[]> {
+  getBusquedaSimple(request:RequestCasaSimple): Observable<CasaResponse[]> {
     let url = `${environment.urlApiFiltro}busquedaSimple`;
     return this.httpClient.post<CasaResponse[]>(url,request);
   }
