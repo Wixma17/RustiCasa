@@ -4,6 +4,7 @@ import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model
 import { ImagenResponse } from 'src/app/shared/model/responses/imagen-response.model';
 import { CasaService } from 'src/app/shared/services/casa.service';
 import { map } from 'rxjs/operators';
+import { OpinionResponse } from 'src/app/shared/model/responses/opinion-response.model';
 
 @Component({
   selector: 'app-house',
@@ -14,13 +15,17 @@ export class HouseComponent implements OnInit {
   @Input() datosCasa: CasaResponse;
 
   listaImagenes: ImagenResponse[];
+  listaOpinionCasa: OpinionResponse[];
 
-  showMore:boolean = false;
+  showMore: boolean = false;
 
-  constructor(private casaServicio:CasaService, private sanitizer:DomSanitizer) {}
+  constructor(
+    private casaServicio: CasaService,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.datosCasa)
+    console.log(this.datosCasa);
     this.casaServicio
       .getFotosCasas(this.datosCasa.idCasa)
       .pipe(
@@ -39,7 +44,8 @@ export class HouseComponent implements OnInit {
         next: (imagenes) => {
           this.listaImagenes = [];
           for (const imagen in imagenes) {
-            this.listaImagenes[imagenes[imagen].posicionCarrusel] = imagenes[imagen];
+            this.listaImagenes[imagenes[imagen].posicionCarrusel] =
+              imagenes[imagen];
           }
         },
         error: (error) => {
@@ -51,8 +57,19 @@ export class HouseComponent implements OnInit {
           );
         },
       });
+
+    /*------------------------------------------*/
+
+    this.casaServicio.getListaOpinionCasa(this.datosCasa.idCasa).subscribe({
+      next: (op) => {
+        this.listaOpinionCasa = op;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        console.info("opiniones=> "+this.listaOpinionCasa);
+      },
+    });
   }
-
-
-
 }

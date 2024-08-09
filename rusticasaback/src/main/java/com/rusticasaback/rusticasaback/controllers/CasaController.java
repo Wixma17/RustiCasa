@@ -55,6 +55,11 @@ public class CasaController {
     public ResponseEntity<?> fotosCasa(@PathVariable(name = "idCasa") Long idCasa) {
         return imagenService.getListaImagenesDeCasa(idCasa);
     }
+
+    @GetMapping("/opinionCasa/{idCasa}")
+    public ResponseEntity<?> OpinionesCasa(@PathVariable(name = "idCasa") Long idCasa) {
+        return opinaService.getListaOpinionCasa(idCasa);
+    }
     
 
     /*

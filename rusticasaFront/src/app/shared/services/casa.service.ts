@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CasaResponse } from '../model/responses/casa-response.model';
 import { ImagenResponse } from '../model/responses/imagen-response.model';
+import { OpinionResponse } from '../model/responses/opinion-response.model';
 
 @Injectable()
 export class CasaService {
@@ -23,4 +24,10 @@ export class CasaService {
     let url = `${environment.urlApiCasas}listaCasasPorNombre/${nombreCasa}`;
     return this.httpClient.get<CasaResponse[]>(url);
   }
+
+  getListaOpinionCasa(idCasa:number): Observable<OpinionResponse[]> {
+    let url = `${environment.urlApiCasas}opinionCasa/${idCasa}`;
+    return this.httpClient.get<OpinionResponse[]>(url);
+  }
+
 }

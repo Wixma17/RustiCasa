@@ -1,8 +1,15 @@
 package com.rusticasaback.rusticasaback.services;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
+import com.rusticasaback.rusticasaback.DTOs.OpinaDTO;
 import com.rusticasaback.rusticasaback.Request.OpinaRequest;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import com.rusticasaback.rusticasaback.entities.ClienteEntity;
@@ -39,6 +46,17 @@ public class OpinaService {
                 clienteOpinion, casaOpinion);
 
         return guardaOpinion(opinion);
+    }
+
+    public ResponseEntity<?> getListaOpinionCasa(Long idCasa){
+        List<OpinaEntity> listCasa= opinaRepository.findByOpinaEntityPK_IdCasa(idCasa);
+        ArrayList<OpinaDTO> listaOpinion=new ArrayList<OpinaDTO>();
+
+        for (OpinaEntity op : listCasa) {
+            listaOpinion.add(new OpinaDTO(op));
+        }
+
+        return new ResponseEntity<>(listaOpinion, HttpStatus.CREATED);
     }
 
 }
