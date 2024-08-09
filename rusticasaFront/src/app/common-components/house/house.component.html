@@ -1,4 +1,4 @@
-<div class="card mb-3 m-0 p-0 g-0 d-flex align-items-center justify-content-center" style="height: 90%;">
+<div class="card mb-3 mt-3 p-0 g-0 d-flex align-items-center justify-content-center col-12">
   <div class="row g-0 align-items-center">
     <div class="col-12 order-2 col-md-6 order-md-1">
       <div class="card-body">
@@ -7,7 +7,7 @@
         <p class="card-text negrita fs-4">Precio por noche: {{datosCasa.precioNoche}} €</p>
 
         <p class="card-text mb-1">
-          {{ (datosCasa.descripcion | truncate: 70) }}
+          {{ (datosCasa.descripcion | truncate: 120) }}
         </p>
         <div>
           <a href="#" (click)="showMore = !showMore" class="btn btn-success m-1 w-100">
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="col-12 order-1 col-md-6 order-md-2" *ngIf="listaImagenes">
-      <p-carousel [value]="listaImagenes" class="p-1">
+      <p-carousel [value]="listaImagenes" class="p-1 col-10">
         <ng-template let-imagen pTemplate="item">
           <img [src]="imagen.safeUrl"/>
         </ng-template>

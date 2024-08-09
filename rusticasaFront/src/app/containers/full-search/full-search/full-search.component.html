@@ -1,16 +1,19 @@
-<div class="container-fluid d-flex flex-column ">
-  <aside class="col-lg-3 d-flex justify-content-center p-2">
-      <form [formGroup]="formuReact" *ngIf="formuReact" (submit)="cambiarParam()" class="d-flex flex-column">
+<div class="container-fluid col-12 row row-cols-lg-2 justify-content-between" style="height: 90%;">
+  <aside class="col-12 col-lg-3 d-flex justify-content-center p-2">
+      <form [formGroup]="formuReact" *ngIf="formuReact" class="col-12">
 
-        <p-checkbox [formControl]="formuReact.controls['piscina']" label="Piscina"></p-checkbox>
+        <div class="col d-flex flex-column justify-content-center">
+          <p-checkbox styleClass="m-1" [formControl]="formuReact.controls['piscina']" label="Piscina"></p-checkbox>
 
-        <p-checkbox [formControl]="formuReact.controls['wifi']" label="Wifi"></p-checkbox>
+          <p-checkbox styleClass="m-1" [formControl]="formuReact.controls['wifi']" label="Wifi"></p-checkbox>
 
-        <p-checkbox [formControl]="formuReact.controls['jardin']" label="Jardín"></p-checkbox>
+          <p-checkbox styleClass="m-1" [formControl]="formuReact.controls['jardin']" label="Jardín"></p-checkbox>
 
-        <p-checkbox [formControl]="formuReact.controls['mascotas']" label="Mascotas"></p-checkbox>
+          <p-checkbox styleClass="m-1" [formControl]="formuReact.controls['mascotas']" label="Mascotas"></p-checkbox>
+        </div>
 
-        <div class="col-4 d-flex align-items-center">
+
+        <div class="col-10 d-flex align-items-center justify-content-around">
           <label class="me-2">{{formuReact.controls['precioValor'].value[0]}}</label>
           <p-slider [formControl]="formuReact.controls['precioValor']" [range]="true" class="col-12 me-1 ms-1"></p-slider>
           <label class="ms-2">{{formuReact.controls['precioValor'].value[1]}}</label>
@@ -18,21 +21,28 @@
 
 
         <div class="d-flex  justify-content-center align-items-center">
-          <button class="btn btn-success m-1 col-4" type="submit"><i class="bi bi-binoculars"></i> Buscar</button>
-          <button class="btn btn-danger m-1 col-4" type="reset"><i class="bi bi-trash3"></i> Limpiar</button>
+          <button class="btn btn-success m-1 col-5" type="submit"><i class="bi bi-binoculars"></i> Buscar</button>
+          <button class="btn btn-danger m-1 col-5" type="reset"><i class="bi bi-trash3"></i> Limpiar</button>
         </div>
       </form>
   </aside>
 
-  <section *ngIf="listaCasas.length == 0" class="col-9">
-   <p class=""> Ningun resultado encontrado</p>
+  <section *ngIf="listaCasas.length == 0" class="col d-flex flex-column justify-content-center">
+   <p class="fs-2 text-body-tertiary text-center"> Ningún resultado encontrado <i class="bi bi-emoji-frown-fill"></i></p>
   </section>
 
 
-  <section *ngIf="listaCasas.length != 0" class="col-9">
-    <div *ngFor="let casa of listaCasas">
+  <section *ngIf="listaCasas.length != 0" class="col-12 col-lg-9 p-2 d-flex flex-column justify-content-center">
+    <div *ngFor="let casa of casasPaginadas" class="col-12">
       <app-house [datosCasa]="casa"></app-house>
     </div>
+    <p-paginator
+      [rows]="rows"
+      [totalRecords]="listaCasas.length"
+      [pageLinkSize]="3"
+      (onPageChange)="onPageChange($event)">
+    </p-paginator>
   </section>
+
 
 </div>

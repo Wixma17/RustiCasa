@@ -105,6 +105,7 @@ export class WelcomeComponent implements OnInit {
 
   validaForm(): void {
     this.buscaFormu.markAllAsTouched();
+    localStorage.removeItem('listaCasas');
 
     // Verifica si el formulario es válido
     if (this.buscaFormu.invalid) {

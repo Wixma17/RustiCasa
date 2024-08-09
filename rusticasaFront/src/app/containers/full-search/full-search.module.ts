@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonComponentsModule } from 'src/app/common-components/common-components.module';
 import {CheckboxModule} from 'primeng/checkbox';
 import {SliderModule} from 'primeng/slider';
+import {PaginatorModule} from 'primeng/paginator';
 
 
 
@@ -22,7 +23,8 @@ import {SliderModule} from 'primeng/slider';
     CheckboxModule,
     CommonComponentsModule,
     ReactiveFormsModule,
-    SliderModule
+    SliderModule,
+    PaginatorModule
   ]
 })
 export class FullSearchModule { }

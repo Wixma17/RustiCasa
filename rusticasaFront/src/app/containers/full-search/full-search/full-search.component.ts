@@ -1,8 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder,FormGroup,Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
-import { BusquedasService } from 'src/app/shared/services/busquedas.service';
 import { CasaService } from 'src/app/shared/services/casa.service';
 import { FiltroService } from 'src/app/shared/services/filtro.service';
 
@@ -14,14 +12,15 @@ import { FiltroService } from 'src/app/shared/services/filtro.service';
 export class FullSearchComponent implements OnInit {
   listaCasas: CasaResponse[] = [];
   formuReact: FormGroup;
+  casasPaginadas: any[] = []; // La lista filtrada para mostrar en la página actual
+  rows: number = 10; // Número de elementos por página
+  currentPage: number = 0; // Página actual
 
   constructor(
     private casaService: CasaService,
     private formubuild: FormBuilder,
-    private filterService:FiltroService
-  ) {
-
-  }
+    private filterService: FiltroService
+  ) {}
 
   ngOnInit(): void {
     this.formuReact = this.formubuild.group({
@@ -29,12 +28,35 @@ export class FullSearchComponent implements OnInit {
       wifi: [false],
       jardin: [false],
       mascotas: [false],
-      precioValor:[[0,100]]
+      precioValor: [[0, 100]],
     });
 
-    this.filterService.listaCasa$.subscribe(data => {
+    /* this.filterService.listaCasa$.subscribe(data => {
       this.listaCasas = data;
-    });
+    });*/
+
+    let casasGuardadas = localStorage.getItem('listaCasas');
+
+    if (casasGuardadas) {
+      this.listaCasas = JSON.parse(casasGuardadas);
+    } else {
+      this.filterService.listaCasa$.subscribe((data) => {
+        this.listaCasas = data;
+        localStorage.setItem('listaCasas', JSON.stringify(data));
+      });
+    }
+    this.actualizarCasasPaginadas();
+  }
+
+  onPageChange(event: any) {
+    this.currentPage = event.page;
+    this.actualizarCasasPaginadas();
+  }
+
+  actualizarCasasPaginadas() {
+    const start = this.currentPage * this.rows;
+    const end = start + this.rows;
+    this.casasPaginadas = this.listaCasas.slice(start, end);
   }
 
 }
