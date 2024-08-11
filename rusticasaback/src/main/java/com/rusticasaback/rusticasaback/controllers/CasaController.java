@@ -14,8 +14,6 @@ import com.rusticasaback.rusticasaback.services.AlquilaService;
 import com.rusticasaback.rusticasaback.services.CasaService;
 import com.rusticasaback.rusticasaback.services.ImagenService;
 import com.rusticasaback.rusticasaback.services.OpinaService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -61,6 +59,15 @@ public class CasaController {
         return opinaService.getListaOpinionCasa(idCasa);
     }
     
+    @GetMapping("/precioMaximo")
+    public ResponseEntity<?> obtenerPrecioMaximo() {
+        return casaService.obtenerPrecioMaximo();
+    }
+
+    @GetMapping("/precioMinimo")
+    public ResponseEntity<?> obtenerPrecioMinimo() {
+        return casaService.obtenerPrecioMinimo();
+    }
 
     /*
      * @PostMapping("/registrarCasa")

@@ -30,4 +30,14 @@ export class CasaService {
     return this.httpClient.get<OpinionResponse[]>(url);
   }
 
+  getPrecioAltoNoche(): Observable<number> {
+    let url = `${environment.urlApiCasas}precioMaximo`;
+    return this.httpClient.get<number>(url);
+  }
+
+  getPrecioBajoNoche(): Observable<number> {
+    let url = `${environment.urlApiCasas}precioMinimo`;
+    return this.httpClient.get<number>(url);
+  }
+
 }

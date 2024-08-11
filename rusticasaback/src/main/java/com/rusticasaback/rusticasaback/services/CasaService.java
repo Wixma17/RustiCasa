@@ -119,4 +119,14 @@ public class CasaService {
         return new ResponseEntity<>(listaCasaResp, HttpStatus.CREATED);
     }
 
+    public ResponseEntity<?> obtenerPrecioMaximo() {
+        int precioMaximo =casaRepository.findMaxPrecioNoche();    
+        return new ResponseEntity<>(precioMaximo, HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<?> obtenerPrecioMinimo() {
+        int precioMin =casaRepository.findMinPrecioNoche();    
+        return new ResponseEntity<>(precioMin, HttpStatus.CREATED);
+    }
+
 }

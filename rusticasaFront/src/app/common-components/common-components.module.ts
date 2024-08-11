@@ -4,6 +4,8 @@ import { HouseComponent } from './house/house.component';
 import { CasaService } from '../shared/services/casa.service';
 import { CarouselModule } from 'primeng/carousel';
 import { PipesModule } from '../shared/pipes/pipes.module';
+import {RatingModule} from 'primeng/rating';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -12,7 +14,9 @@ import { PipesModule } from '../shared/pipes/pipes.module';
   imports: [
     CommonModule,
     CarouselModule,
-    PipesModule
+    PipesModule,
+    RatingModule,
+    FormsModule
   ],
   exports:[
     HouseComponent

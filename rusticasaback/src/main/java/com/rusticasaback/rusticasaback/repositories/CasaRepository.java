@@ -41,4 +41,9 @@ public interface CasaRepository extends JpaRepository<CasaEntity, Long> {
                         @Param("numInqui") Integer numInqui,
                         @Param("numHab") Integer numHab);
 
+        @Query("SELECT MAX(c.precioNoche) FROM CasaEntity c")
+        Integer findMaxPrecioNoche();
+
+        @Query("SELECT Min(c.precioNoche) FROM CasaEntity c")
+        Integer findMinPrecioNoche();
 }
