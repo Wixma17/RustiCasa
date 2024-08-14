@@ -6,13 +6,35 @@ import { UploadHouseComponent } from './containers/upload-house/upload-house/upl
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
-  { path: 'welcome', component: WelcomeComponent },
-  { path: 'full-search', component: FullSearchComponent },
-  { path: 'upload-house', component: UploadHouseComponent },
+  {
+    path: 'welcome',
+    component: WelcomeComponent,
+    data: { breadcrumb: [{ label: 'Inicio', routerLink: '/welcome' }] },
+  },
+  {
+    path: 'full-search',
+    component: FullSearchComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Busquedas', routerLink: '/full-search' },
+      ],
+    },
+  },
+  {
+    path: 'upload-house',
+    component: UploadHouseComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Subir Casa', routerLink: '/upload-house' },
+      ]
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

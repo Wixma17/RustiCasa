@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
+import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 import { CasaService } from 'src/app/shared/services/casa.service';
 import { FiltroService } from 'src/app/shared/services/filtro.service';
 
@@ -21,7 +22,8 @@ export class FullSearchComponent implements OnInit {
   constructor(
     private casaService: CasaService,
     private formubuild: FormBuilder,
-    private filterService: FiltroService
+    private filterService: FiltroService,
+    private breadcrumbService:BreadcrumbService
   ) {
     this.formuReact = this.formubuild.group({
       piscina: [false],
@@ -33,6 +35,9 @@ export class FullSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
+
     this.casaService.getPrecioAltoNoche().subscribe({
       next: (maxPrecio) => {
         console.info('precio maximo=> ' + maxPrecio);
