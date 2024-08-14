@@ -11,6 +11,7 @@ export class AppComponent implements OnInit {
   title = 'rusticasaFront';
 
   items:Array<{ label: string, routerLink?: string }> = [];
+  home:MenuItem={icon:"pi pi-home", routerLink:"/welcome"}
 
   constructor(private breadcrumbService: BreadcrumbService) {}
 

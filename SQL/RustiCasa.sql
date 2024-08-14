@@ -8275,7 +8275,7 @@ VALUES (
     TRUE, 
     'pedro@gmail.com', 
     4513, 
-    200, 
+    100, 
     4, 
     4,
     TRUE, 
