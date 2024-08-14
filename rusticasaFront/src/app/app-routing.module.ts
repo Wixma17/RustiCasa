@@ -17,7 +17,7 @@ const routes: Routes = [
     data: {
       breadcrumb: [
         { label: 'Inicio', routerLink: '/welcome' },
-        { label: 'Busquedas', routerLink: '/full-search' },
+        { label: 'Búsquedas', routerLink: '/full-search' },
       ],
     },
   },
@@ -27,7 +27,7 @@ const routes: Routes = [
     data: {
       breadcrumb: [
         { label: 'Inicio', routerLink: '/welcome' },
-        { label: 'Subir Casa', routerLink: '/upload-house' },
+        { label: 'Subir tu Casa', routerLink: '/upload-house' },
       ]
     },
   },

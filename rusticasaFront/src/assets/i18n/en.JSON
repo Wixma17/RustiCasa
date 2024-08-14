@@ -1,0 +1,14 @@
+{
+  "welcome": {
+    "WELCOME": "Welcome to Rusticasa!",
+    "RENTING": "Rent your ideal house now!",
+    "SELECTPROV": "1st Select a Province",
+    "SELECTMUN": "2nd Select a town",
+    "NUMINQUI": "Number of tenants",
+    "NUMHAB": "Number of rooms",
+    "REQUREDATE": "* The date is required.",
+    "SEARCH": "Search",
+    "DESCWEB": "RustiCasa is a website dedicated to renting rural houses, providing users with an intuitive platform to find and book accommodations in natural settings. The site features a wide selection of properties in rural areas, with details about each house including photos, descriptions, and available services. Users can search by location, dates, and specific features, and easily book online. RustiCasa is designed to offer those seeking a peaceful escape in nature a combination of comfort and authenticity."
+  }
+
+}
