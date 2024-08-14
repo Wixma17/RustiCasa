@@ -8313,3 +8313,51 @@ INSERT INTO Alquila (gmail, id_casa, fecha_entrada, fecha_salida)
 VALUES
 ('lola@gmail.com', 1, '2024-08-01', '2024-08-10'),
 ('testuser@gmail.com', 2, '2024-09-15', '2024-09-20');
+
+INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento, imagen) VALUES
+('juan.perez@gmail.com', 'juan2024', 'juano', 'Juan', 'Pérez', FALSE, '1985-05-15', 'defaultImg.jpg'),
+('maria.garcia@gmail.com', 'maria2024', 'mariag', 'María', 'García', FALSE, '1986-06-20', 'defaultImg.jpg'),
+('pedro.lopez@gmail.com', 'pedro2024', 'pedrol', 'Pedro', 'López', FALSE, '1987-07-25', 'defaultImg.jpg'),
+('laura.martin@gmail.com', 'laura2024', 'lauram', 'Laura', 'Martín', FALSE, '1988-08-30', 'defaultImg.jpg'),
+('jose.ramirez@gmail.com', 'jose2024', 'jose_r', 'José', 'Ramírez', FALSE, '1989-09-10', 'defaultImg.jpg'),
+('ana.morales@gmail.com', 'ana2024', 'anam', 'Ana', 'Morales', FALSE, '1990-10-05', 'defaultImg.jpg'),
+('david.gonzalez@gmail.com', 'david2024', 'davidg', 'David', 'González', FALSE, '1991-11-15', 'defaultImg.jpg'),
+('elena.lopez@gmail.com', 'elena2024', 'elenal', 'Elena', 'López', FALSE, '1992-12-20', 'defaultImg.jpg'),
+('luis.sanchez@gmail.com', 'luis2024', 'luiss', 'Luis', 'Sánchez', FALSE, '1993-01-25', 'defaultImg.jpg'),
+('carmen.fernandez@gmail.com', 'carmen2024', 'carmenf', 'Carmen', 'Fernández', FALSE, '1994-02-10', 'defaultImg.jpg');
+
+
+INSERT INTO Casa (nombre_casa, descripcion, mascotas, gmail, id_municipio, precio_noche, numero_habitaciones, numero_inquilinos, piscina, wifi, jardin) VALUES
+('Villa Los Olivos', 'Encantadora villa con vistas a los olivos y al campo. Ideal para una escapada tranquila.', TRUE, 'juan.perez@gmail.com', 4576, 120, 4, 8, TRUE, TRUE, TRUE),
+('Casa del Río', 'Casa acogedora junto al río con amplias zonas verdes. Perfecta para familias.', TRUE, 'maria.garcia@gmail.com', 4576, 100, 3, 6, TRUE, TRUE, TRUE),
+('Cottage de la Sierra', 'Cottage rústico en las colinas con fantásticas vistas y una gran chimenea.', FALSE, 'pedro.lopez@gmail.com', 4576, 130, 5, 10, TRUE, FALSE, TRUE),
+('Apartamento Centro Ronda', 'Moderno apartamento en el centro de Ronda, ideal para explorar la ciudad.', FALSE, 'laura.martin@gmail.com', 4576, 90, 2, 4, FALSE, TRUE, FALSE),
+('Finca El Castaño', 'Hermosa finca con jardín y piscina, rodeada de castaños.', TRUE, 'jose.ramirez@gmail.com', 4576, 140, 6, 12, TRUE, TRUE, TRUE),
+('Casa El Encanto', 'Casa con encanto y estilo tradicional, con un hermoso jardín y área de barbacoa.', TRUE, 'ana.morales@gmail.com', 4576, 110, 4, 8, TRUE, TRUE, TRUE),
+('Villa del Sol', 'Villa luminosa con grandes ventanales y una piscina desbordante.', FALSE, 'david.gonzalez@gmail.com', 4576, 160, 8, 16, TRUE, TRUE, TRUE),
+('Casa El Mirador', 'Casa con una increíble vista panorámica de las montañas y un cómodo patio.', TRUE, 'elena.lopez@gmail.com', 4576, 115, 3, 6, TRUE, TRUE, FALSE),
+('La Casita Blanca', 'Pequeña y acogedora casa blanca con un hermoso jardín y zona de descanso.', FALSE, 'luis.sanchez@gmail.com', 4576, 85, 2, 4, FALSE, TRUE, TRUE),
+('Rincón de la Alegría', 'Casa alegre con colores vivos y un gran espacio para disfrutar al aire libre.', TRUE, 'carmen.fernandez@gmail.com', 4576, 95, 3, 6, TRUE, TRUE, TRUE),
+
+('Casa Las Palmas', 'Casa espaciosa rodeada de palmas con área de barbacoa y zona de relax.', FALSE, 'juan.perez@gmail.com', 4576, 125, 4, 8, TRUE, TRUE, TRUE),
+('Villa El Roble', 'Impresionante villa con robles centenarios, piscina privada y grandes espacios.', TRUE, 'maria.garcia@gmail.com', 4576, 150, 5, 10, TRUE, TRUE, TRUE),
+('Casa de la Estrella', 'Casa con un diseño único, ideal para observar las estrellas desde el balcón.', TRUE, 'pedro.lopez@gmail.com', 4576, 135, 4, 8, TRUE, FALSE, TRUE),
+('El Refugio de los Sueños', 'Refugio encantador en un entorno natural con jacuzzi y gran jardín.', FALSE, 'laura.martin@gmail.com', 4576, 145, 6, 12, TRUE, TRUE, TRUE),
+('Casa de las Flores', 'Casa rodeada de flores y plantas exóticas, ideal para amantes de la naturaleza.', TRUE, 'jose.ramirez@gmail.com', 4576, 105, 3, 6, TRUE, TRUE, TRUE),
+('La Casa del Pozo', 'Casa tradicional con un pozo antiguo y un hermoso patio para disfrutar al aire libre.', FALSE, 'ana.morales@gmail.com', 4576, 80, 2, 4, TRUE, TRUE, FALSE),
+('Villa del Campo', 'Villa en medio del campo con amplias áreas verdes y una piscina grande.', TRUE, 'david.gonzalez@gmail.com', 4576, 160, 7, 14, TRUE, TRUE, TRUE),
+('Casa del Viento', 'Casa en una colina con brisas frescas y vistas espectaculares, con una amplia terraza.', FALSE, 'elena.lopez@gmail.com', 4576, 125, 4, 8, TRUE, TRUE, TRUE),
+('La Casa del Lago', 'Casa junto a un pequeño lago, con un entorno sereno y una gran terraza.', TRUE, 'luis.sanchez@gmail.com', 4576, 130, 5, 10, TRUE, FALSE, TRUE),
+('Villa El Jardín Secreto', 'Villa con un jardín privado y zonas de relax escondidas, perfecta para desconectar.', TRUE, 'carmen.fernandez@gmail.com', 4576, 140, 6, 12, TRUE, TRUE, TRUE),
+
+('Casa del Vino', 'Casa con bodega privada y área de degustación, ideal para los amantes del vino.', FALSE, 'juan.perez@gmail.com', 4576, 100, 3, 6, TRUE, TRUE, TRUE),
+('Villa El Olivo Dorado', 'Lujosa villa con olivos dorados y una vista impresionante del paisaje.', TRUE, 'maria.garcia@gmail.com', 4576, 170, 8, 16, TRUE, TRUE, TRUE),
+('La Casa del Reloj', 'Casa con una antigüedad notable, con reloj antiguo en la pared y un ambiente histórico.', TRUE, 'pedro.lopez@gmail.com', 4576, 115, 4, 8, TRUE, TRUE, FALSE),
+('Casa de la Montaña', 'Casa en las montañas con vistas panorámicas y una acogedora chimenea.', FALSE, 'laura.martin@gmail.com', 4576, 130, 5, 10, TRUE, FALSE, TRUE),
+('Finca del Valle', 'Finca con amplios espacios y un valle verde, ideal para eventos y reuniones familiares.', TRUE, 'jose.ramirez@gmail.com', 4576, 140, 6, 12, TRUE, TRUE, TRUE),
+('Casa del Rio Azul', 'Casa moderna con decoración en tonos azules y vista al río.', FALSE, 'ana.morales@gmail.com', 4576, 95, 3, 6, TRUE, TRUE, TRUE),
+('Villa de las Palomas', 'Elegante villa con piscina y zonas de relax, rodeada de palomas y naturaleza.', TRUE, 'david.gonzalez@gmail.com', 4576, 160, 7, 14, TRUE, TRUE, TRUE),
+('Casa del Arco', 'Casa con un arco antiguo en la entrada y un gran jardín.', FALSE, 'elena.lopez@gmail.com', 4576, 120, 4, 8, TRUE, TRUE, FALSE),
+('El Refugio del Viento', 'Refugio encantador con vistas a la sierra y un entorno natural tranquilo.', TRUE, 'luis.sanchez@gmail.com', 4576, 105, 5, 10, TRUE, TRUE, TRUE),
+('Casa del Alcornoque', 'Casa con un alcornoque centenario en el jardín y una gran terraza.', FALSE, 'carmen.fernandez@gmail.com', 4576, 90, 3, 6, TRUE, TRUE, TRUE);
+
