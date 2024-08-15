@@ -1,3 +1,12 @@
 body{
-  min-width: 300px;
+  min-width: 400px;
+}
+
+#fondo > div > form > fieldset.text-center.col-12.p-1 > p-calendar > span > div > div{
+  display: flex !important;
+  justify-content: space-around !important;
+}
+
+#fondo > div > form > fieldset.text-center.col-12.p-1 > p-calendar > span > div > div > div:nth-child(1){
+  border: none;
 }

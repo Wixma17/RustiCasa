@@ -18,7 +18,7 @@
       </div>
 
       <fieldset class="text-center col-12  p-1">
-        <p-calendar styleClass="col-11 text-center" placeholder="Fecha entrada - Fecha Salida" formControlName="fechas" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+        <p-calendar styleClass="col-11 text-center" placeholder="Fecha entrada - Fecha Salida" formControlName="fechas" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="2"></p-calendar>
         <div *ngIf="buscaFormu.get('fechas').invalid && buscaFormu.get('fechas').touched" class="d-flex justify-content-center m-3">
           <div *ngIf="buscaFormu.get('fechas').errors.required" class="bg-white col-4 text-danger rounded-4">
             <span class="fs-3">{{ 'welcome.REQUREDATE' | translate }}</span>

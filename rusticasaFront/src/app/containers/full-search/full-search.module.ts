@@ -9,6 +9,10 @@ import { CommonComponentsModule } from 'src/app/common-components/common-compone
 import {CheckboxModule} from 'primeng/checkbox';
 import {SliderModule} from 'primeng/slider';
 import {PaginatorModule} from 'primeng/paginator';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule } from 'primeng/calendar';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 
@@ -24,7 +28,14 @@ import {PaginatorModule} from 'primeng/paginator';
     CommonComponentsModule,
     ReactiveFormsModule,
     SliderModule,
-    PaginatorModule
+    PaginatorModule,
+    NoopAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CalendarModule,
+    InputNumberModule,
+    DropdownModule,
+    BrowserAnimationsModule,
   ]
 })
 export class FullSearchModule { }

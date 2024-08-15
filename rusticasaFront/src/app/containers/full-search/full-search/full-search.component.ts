@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 import { CasaService } from 'src/app/shared/services/casa.service';
@@ -31,6 +31,11 @@ export class FullSearchComponent implements OnInit {
       jardin: [false],
       mascotas: [false],
       precioValor: [[0, this.precioMax]],
+      provinciasS: [0],
+      fechas: [null,[Validators.required]],
+      pueblos: [0],
+      nInquilinos: [],
+      nHabitaciones: [],
     });
   }
 
