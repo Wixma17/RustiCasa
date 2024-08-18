@@ -10,14 +10,14 @@ import { RequestCasaSimple } from '../model/requests/request-casa-simple.model';
 })
 export class FiltroService {
 
-  private casaSubject = new BehaviorSubject<CasaResponse[]>([]);
+  private casaSubject = new BehaviorSubject<any>([]);
   listaCasa$ = this.casaSubject.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
-  getBusquedaSimple(request:RequestCasaSimple): Observable<CasaResponse[]> {
+  getBusquedaSimple(request:RequestCasaSimple): Observable<any> {
     let url = `${environment.urlApiFiltro}busquedaSimple`;
-    return this.httpClient.post<CasaResponse[]>(url,request);
+    return this.httpClient.post<any>(url,request);
   }
 
   setListaCasa(data: CasaResponse[]): void {

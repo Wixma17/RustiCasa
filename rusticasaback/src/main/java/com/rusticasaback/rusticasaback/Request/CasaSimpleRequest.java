@@ -14,4 +14,5 @@ public class CasaSimpleRequest {
     private Date checkOut;
     private Integer numInqui;
     private Integer numHab;
+    private Integer page;
 }

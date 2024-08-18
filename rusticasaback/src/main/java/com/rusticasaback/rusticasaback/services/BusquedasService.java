@@ -11,6 +11,8 @@ import com.rusticasaback.rusticasaback.DTOs.CasaDTO;
 import com.rusticasaback.rusticasaback.Request.CasaSimpleRequest;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import com.rusticasaback.rusticasaback.repositories.CasaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class BusquedasService {
@@ -35,22 +37,20 @@ public class BusquedasService {
         return new ResponseEntity<>(listaCasaResp, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<?> getCasasByRequest(CasaSimpleRequest request) {
-        // Llamar al repositorio con los parámetros
-        List<CasaEntity> listaCasa = casaRepository.findAvailableHouses(request.getCheckIn(),
+    public ResponseEntity<Page<CasaDTO>> getCasasByRequest(CasaSimpleRequest request, Pageable pageable) {
+
+        Page<CasaEntity> pageCasa = casaRepository.findAvailableHouses(
+                request.getCheckIn(),
                 request.getCheckOut(),
                 request.getCodProv(),
                 request.getCodMun(),
                 request.getNumInqui(),
-                request.getNumHab());
+                request.getNumHab(),
+                pageable);
 
         // Convertir a DTO
-        ArrayList<CasaDTO> listaCasaResp = new ArrayList<CasaDTO>();
-
-        for (CasaEntity casa : listaCasa) {
-            listaCasaResp.add(new CasaDTO(casa));
-        }
-
-        return new ResponseEntity<>(listaCasaResp, HttpStatus.OK);
+        Page<CasaDTO> pageCasaDTO = pageCasa.map(CasaDTO::new);
+        
+        return new ResponseEntity<>(pageCasaDTO, HttpStatus.OK);
     }
 }

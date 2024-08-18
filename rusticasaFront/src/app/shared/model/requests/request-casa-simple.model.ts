@@ -5,4 +5,5 @@ export class RequestCasaSimple {
   checkOut: Date;
   numInqui?:number;
   numHab?:number;
+  page?:number
 }

@@ -38,7 +38,7 @@ export class WelcomeComponent implements OnInit {
   ) {
     this.buscaFormu = this.formubuild.group({
       provinciasS: [0],
-      fechas: [null,[Validators.required]],
+      fechas: [null, [Validators.required]],
       pueblos: [0],
       nInquilinos: [],
       nHabitaciones: [],
@@ -105,7 +105,7 @@ export class WelcomeComponent implements OnInit {
 
   validaForm(): void {
     this.buscaFormu.markAllAsTouched();
-    localStorage.removeItem('listaCasas');
+    sessionStorage.removeItem('listaCasas');
 
     // Verifica si el formulario es válido
     if (this.buscaFormu.invalid) {
@@ -113,22 +113,22 @@ export class WelcomeComponent implements OnInit {
       return;
     }
 
-    this.checkIn = this.buscaFormu.value.fechas[0];
-    this.checkOut = this.buscaFormu.value.fechas[1];
-
-    this.idProv = this.buscaFormu.value.provinciasS !== 0 ? this.buscaFormu.value.provinciasS : null;
-    this.idMun = this.buscaFormu.value.pueblos !== 0 ? this.buscaFormu.value.pueblos : null;
-    this.numInqui = this.buscaFormu.value.nInquilinos;
-    this.numHabi = this.buscaFormu.value.nHabitaciones;
-
     let requestCasa: RequestCasaSimple = {
-      codProv: this.idProv,
-      codMun: this.idMun,
-      checkIn: this.checkIn,
-      checkOut: this.checkOut,
-      numInqui: this.numInqui,
-      numHab: this.numHabi,
+      codProv:
+        this.buscaFormu.value.provinciasS !== 0
+          ? this.buscaFormu.value.provinciasS
+          : null,
+      codMun:
+        this.buscaFormu.value.pueblos !== 0
+          ? this.buscaFormu.value.pueblos
+          : null,
+      checkIn: this.buscaFormu.value.fechas[0],
+      checkOut: this.buscaFormu.value.fechas[1],
+      numInqui: this.buscaFormu.value.nInquilinos,
+      numHab: this.buscaFormu.value.nHabitaciones,
     };
+
+    sessionStorage.setItem('busquedaCasa', JSON.stringify(requestCasa));
 
     this.filtroService.getBusquedaSimple(requestCasa).subscribe({
       next: (casa) => {
@@ -140,8 +140,7 @@ export class WelcomeComponent implements OnInit {
       },
       complete: () => {
         this.router.navigate(['/full-search']);
-      }
+      },
     });
   }
-
 }

@@ -27,7 +27,7 @@
           <p-dropdown styleClass="col-12 mt-2" placeholder="--Selecciona municipio--" [options]="listadoPueblos" [formControl]="formuReact.controls['pueblos']"  [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio" ></p-dropdown>
 
           <p-inputNumber styleClass="col-12 mt-2" placeholder="Numero Inquilinos" [formControl]="formuReact.controls['nInquilinos']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
-          <p-inputNumber styleClass="col-12 mt-2" placeholder="Numero de habiataciones" [formControl]="formuReact.controls['nHabitaciones']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+          <p-inputNumber styleClass="col-12 mt-2" placeholder="Numero de habitaciones" [formControl]="formuReact.controls['nHabitaciones']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
 
           <p-calendar styleClass="col-12 text-center mt-2" placeholder="Fecha entrada - Fecha Salida" [formControl]="formuReact.controls['fechas']" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="2"></p-calendar>
           <div *ngIf="formuReact.get('fechas').invalid && formuReact.get('fechas').touched" class="d-flex justify-content-center m-3">
@@ -46,18 +46,18 @@
       </form>
   </aside>
 
-  <section *ngIf="listaCasas.length == 0" class="col d-flex flex-column justify-content-center">
+  <section *ngIf="casasPaginadas.length == 0" class="col d-flex flex-column justify-content-center">
    <p class="fs-2 text-body-tertiary text-center"> Ningún resultado encontrado <i class="bi bi-emoji-frown-fill"></i></p>
   </section>
 
 
-  <section *ngIf="listaCasas.length != 0" class="col-12 col-lg-8 p-2 d-flex flex-column justify-content-center p-2 align-items-center">
+  <section *ngIf="casasPaginadas.length != 0" class="col-12 col-lg-8 p-2 d-flex flex-column justify-content-center p-2 align-items-center">
     <div *ngFor="let casa of casasPaginadas" class="col-10">
       <app-house [datosCasa]="casa"></app-house>
     </div>
     <p-paginator
       [rows]="rows"
-      [totalRecords]="listaCasas.length"
+      [totalRecords]="pageCasa.totalElements"
       [pageLinkSize]="3"
       (onPageChange)="onPageChange($event)">
     </p-paginator>
