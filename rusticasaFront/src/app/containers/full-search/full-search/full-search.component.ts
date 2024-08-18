@@ -29,6 +29,8 @@ export class FullSearchComponent implements OnInit {
   listaMunicipio: MunicipioResponse[];
   listadoPueblos: SelectItem[] = [];
   idProv: number;
+  provSele: String;
+  muniSele: String;
 
   constructor(
     private casaService: CasaService,
@@ -37,7 +39,7 @@ export class FullSearchComponent implements OnInit {
     private provinciaService: ProvinciaService,
     private municipioService: MunicipioService
   ) {
-  /* this.formuReact = this.formubuild.group({
+    /* this.formuReact = this.formubuild.group({
       piscina: [false],
       wifi: [false],
       jardin: [false],
@@ -106,6 +108,34 @@ export class FullSearchComponent implements OnInit {
       this.actualizarCasasPaginadas();
       const datosBusquedas = JSON.parse(sessionStorage.getItem('busquedaCasa'));
 
+      //------------Poner Municipio y Provincia---------------
+
+      this.municipioService.getNombreMunicipio(datosBusquedas.codMun).subscribe({
+        next:(municipio)=>{
+          this.muniSele=municipio.nombre;
+        },
+        error:(err)=>{
+          console.error(err)
+        },
+        complete:()=>{
+          console.info("nombre Mun=> "+this.muniSele)
+        }
+      });
+
+      this.provinciaService.getNombreProvincia(datosBusquedas.codProv).subscribe({
+        next:(provincia)=>{
+          this.provSele=provincia.nombre;
+        },
+        error:(err)=>{
+          console.error(err)
+        },
+        complete:()=>{
+          console.info("nombre Prov=> "+this.provSele)
+        }
+      });
+
+      //------------------------------------------------------
+
       this.formuReact = this.formubuild.group({
         piscina: [false],
         wifi: [false],
@@ -114,11 +144,8 @@ export class FullSearchComponent implements OnInit {
         precioValor: [[this.precioMin, this.precioMax]],
         provinciasS: [datosBusquedas.codProv || null],
         fechas: [
-          [
-            new Date(datosBusquedas.checkIn),
-            new Date(datosBusquedas.checkOut)
-          ],
-          [Validators.required]
+          [new Date(datosBusquedas.checkIn), new Date(datosBusquedas.checkOut)],
+          [Validators.required],
         ],
         pueblos: [datosBusquedas.codMun || null],
         nInquilinos: [datosBusquedas.numInqui || null],
@@ -149,19 +176,18 @@ export class FullSearchComponent implements OnInit {
     );
     paramBusqueda.page = this.currentPage;
     this.filterService.getBusquedaSimple(paramBusqueda).subscribe({
-      next:(data)=>{
-        this.pageCasa=data;
-        this.casasPaginadas=this.pageCasa.content
+      next: (data) => {
+        this.pageCasa = data;
+        this.casasPaginadas = this.pageCasa.content;
       },
-      error:(err)=>{
-        console.error(err)
+      error: (err) => {
+        console.error(err);
       },
-      complete:()=>{
-        console.info("Pagination ok");
-      }
+      complete: () => {
+        console.info('Pagination ok');
+      },
     });
   }
-
 
   cargaPueblos(): void {
     this.listaMunicipio = [];
@@ -212,8 +238,10 @@ export class FullSearchComponent implements OnInit {
       'Provincia=> ' + this.formuReact.controls['provinciasS'].value
     );
 
-    console.info(
-      'Provincia=> ' + this.formuReact.controls['pueblos'].value
-    );
+    console.info('Provincia=> ' + this.formuReact.controls['pueblos'].value);
+
+    console.info('numInqui=> ' + this.formuReact.controls['nInquilinos'].value);
+
+    console.info('numHab=> ' + this.formuReact.controls['nHabitaciones'].value);
   }
 }

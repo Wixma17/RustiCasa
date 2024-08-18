@@ -27,5 +27,15 @@ public class ProvinciaMunicipioController {
     public ResponseEntity<?> listaMunicipio(@PathVariable(name = "idProv") int idProv) {
         return municipioService.getListaMunicipio(idProv);
     }
+
+    @GetMapping("/prov/{idProv}")
+    public ResponseEntity<?> getNombreProv(@PathVariable(name = "idProv") int idProv) {
+        return provinciaService.getNombreProv(idProv);
+    }
+
+    @GetMapping("/mun/{idMun}")
+    public ResponseEntity<?> getNombreMun(@PathVariable(name = "idMun") int idMun) {
+        return municipioService.getNombreMun(idMun);
+    }
     
 }

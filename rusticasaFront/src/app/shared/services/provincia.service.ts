@@ -15,4 +15,9 @@ export class ProvinciaService {
     let url = `${environment.urlApiMunicipioProv}listaProvincias`;
     return this.httpClient.get<ProvinciaResponse[]>(url);
   }
+
+  getNombreProvincia(idProv:number): Observable<any> {
+    let url = `${environment.urlApiMunicipioProv}prov/`+idProv;
+    return this.httpClient.get<any>(url);
+  }
 }

@@ -1,7 +1,9 @@
 package com.rusticasaback.rusticasaback.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,20 +15,26 @@ import com.rusticasaback.rusticasaback.repositories.ProvinciaRepository;
 
 @Service
 public class ProvinciaService {
-    
+
     @Autowired
     private ProvinciaRepository provinciaRepository;
 
-
-    public ResponseEntity<?> getListaProvincias(){
-        List<ProvinciaEntity> listaProv= provinciaRepository.findAll();
-        ArrayList<ProvinciaDTO> listaProvDTO=new ArrayList<ProvinciaDTO>();
+    public ResponseEntity<?> getListaProvincias() {
+        List<ProvinciaEntity> listaProv = provinciaRepository.findAll();
+        ArrayList<ProvinciaDTO> listaProvDTO = new ArrayList<ProvinciaDTO>();
 
         for (ProvinciaEntity prov : listaProv) {
             listaProvDTO.add(new ProvinciaDTO(prov));
         }
 
         return new ResponseEntity<>(listaProvDTO, HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<?> getNombreProv(int idProv) {
+        String nombreProv = provinciaRepository.findById(idProv).get().getNombreProvincia();
+        Map<String, String> response = new HashMap<>();
+        response.put("nombre", nombreProv);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }
