@@ -29,8 +29,8 @@ export class FullSearchComponent implements OnInit {
   listaMunicipio: MunicipioResponse[];
   listadoPueblos: SelectItem[] = [];
   idProv: number;
-  provSele: String;
-  muniSele: String;
+  provSele: String = "--Selecciona la provincia--";
+  muniSele: String = "--Selecciona el municipio--";
 
   constructor(
     private casaService: CasaService,
@@ -104,7 +104,7 @@ export class FullSearchComponent implements OnInit {
       },
     });
 
-    if (sessionStorage.getItem('busquedaCasa') !== undefined) {
+    if (sessionStorage.getItem('busquedaCasa') !== null) {
       this.actualizarCasasPaginadas();
       const datosBusquedas = JSON.parse(sessionStorage.getItem('busquedaCasa'));
 
@@ -151,6 +151,24 @@ export class FullSearchComponent implements OnInit {
         nInquilinos: [datosBusquedas.numInqui || null],
         nHabitaciones: [datosBusquedas.numHab || null],
       });
+    }else{
+
+      this.formuReact = this.formubuild.group({
+        piscina: [false],
+        wifi: [false],
+        jardin: [false],
+        mascotas: [false],
+        precioValor: [[this.precioMin, this.precioMax]],
+        provinciasS: [ null],
+        fechas: [
+          [new Date(), new Date()],
+          [Validators.required],
+        ],
+        pueblos: [ null],
+        nInquilinos: [ null],
+        nHabitaciones: [ null],
+      });
+
     }
 
     let casasGuardadas = sessionStorage.getItem('listaCasas');
