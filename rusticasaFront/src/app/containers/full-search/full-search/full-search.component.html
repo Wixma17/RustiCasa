@@ -22,9 +22,9 @@
 
         <!--Formu welcome-->
         <div class="col-12 d-flex flex-column">
-          <p-dropdown styleClass="col-12 mt-2" placeholder="--Selecciona Provicia--" (onChange)="cargaPueblos()" [options]="ListadoProvincias" [formControl]="formuReact.controls['provinciasS']" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona una provincia" ></p-dropdown>
+          <p-dropdown styleClass="col-12 mt-2" placeholder="--Selecciona Provicia--" (onChange)="cargaPueblos()" [showClear]="true" [options]="ListadoProvincias" [formControl]="formuReact.controls['provinciasS']" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona una provincia" ></p-dropdown>
 
-          <p-dropdown styleClass="col-12 mt-2" placeholder="--Selecciona municipio--" [options]="listadoPueblos" [formControl]="formuReact.controls['pueblos']"  [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio" ></p-dropdown>
+          <p-dropdown styleClass="col-12 mt-2" placeholder="--Selecciona municipio--" [showClear]="true" [options]="listadoPueblos" [formControl]="formuReact.controls['pueblos']"  [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio" ></p-dropdown>
 
           <p-inputNumber styleClass="col-12 mt-2" placeholder="Numero Inquilinos" [formControl]="formuReact.controls['nInquilinos']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
           <p-inputNumber styleClass="col-12 mt-2" placeholder="Numero de habitaciones" [formControl]="formuReact.controls['nHabitaciones']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>

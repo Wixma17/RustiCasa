@@ -7,9 +7,9 @@
     <form [formGroup]="buscaFormu" *ngIf="buscaFormu" class="col-lg-10 formu d-flex flex-column contenedor-cristalizado p-3">
 
       <fieldset class="row row-cols-1 row-cols-lg-2 text-center col-12">
-        <p-dropdown styleClass="col-10 m-2" placeholder="{{ 'welcome.SELECTPROV' | translate }}" (onChange)="cargaPueblos()" [options]="ListadoProvincias" formControlName="provinciasS" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona una provincia" ></p-dropdown>
+        <p-dropdown styleClass="col-10 m-2" placeholder="{{ 'welcome.SELECTPROV' | translate }}" (onChange)="cargaPueblos()" [showClear]="true" [options]="ListadoProvincias" formControlName="provinciasS" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona una provincia" ></p-dropdown>
 
-        <p-dropdown styleClass="col-10 m-2" placeholder="{{ 'welcome.SELECTMUN' | translate }}" [options]="listadoPueblos" formControlName="pueblos"  [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio" ></p-dropdown>
+        <p-dropdown styleClass="col-10 m-2" placeholder="{{ 'welcome.SELECTMUN' | translate }}" [showClear]="true" [options]="listadoPueblos" formControlName="pueblos"  [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio" ></p-dropdown>
       </fieldset>
 
       <div class="row row-cols-1 row-cols-lg-2 text-center col-12 ">

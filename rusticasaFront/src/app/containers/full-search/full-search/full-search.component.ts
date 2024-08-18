@@ -80,9 +80,9 @@ export class FullSearchComponent implements OnInit {
     //-----------------------------------
     this.casaService.getPrecioAltoNoche().subscribe({
       next: (maxPrecio) => {
-        console.info('precio maximo=> ' + maxPrecio);
         this.precioMax = maxPrecio;
-       // this.formuReact.get('precioValor').setValue([0, this.precioMax]);
+        console.info('precio maximo=> ' + this.precioMax);
+        this.formuReact.get('precioValor').setValue([0, this.precioMax]);
       },
       error: (err) => {
         console.error('Error al obtener el precio máximo', err);
@@ -91,11 +91,11 @@ export class FullSearchComponent implements OnInit {
 
     this.casaService.getPrecioBajoNoche().subscribe({
       next: (minPrecio) => {
-        console.info('precio minimo=> ' + minPrecio);
         this.precioMin = minPrecio;
-        /*this.formuReact
+        console.info('precio minimo=> ' + this.precioMin);
+        this.formuReact
           .get('precioValor')
-          .setValue([this.precioMin, this.precioMax]);*/
+          .setValue([this.precioMin, this.precioMax]);
       },
       error: (err) => {
         console.error('Error al obtener el precio minimo', err);
@@ -206,6 +206,14 @@ export class FullSearchComponent implements OnInit {
     );
     console.info(
       'precioMin=> ' + this.formuReact.controls['precioValor'].value[1]
+    );
+
+    console.info(
+      'Provincia=> ' + this.formuReact.controls['provinciasS'].value
+    );
+
+    console.info(
+      'Provincia=> ' + this.formuReact.controls['pueblos'].value
     );
   }
 }
