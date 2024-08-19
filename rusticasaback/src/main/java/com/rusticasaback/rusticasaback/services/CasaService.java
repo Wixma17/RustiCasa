@@ -58,7 +58,7 @@ public class CasaService {
         return casaRepository.save(casa);
     }
 
-    public ResponseEntity<Page<CasaEntity>> getCasasFiltradas(
+    public ResponseEntity<Page<CasaDTO>> getCasasFiltradas(
             Boolean mascotas,
             Boolean wifi,
             Boolean jardin,
@@ -90,7 +90,9 @@ public class CasaService {
                 pageable);
 
         // Devolver la lista filtrada envuelta en un ResponseEntity
-        return new ResponseEntity<>(listaCasaFiltrada, HttpStatus.OK);
+        Page<CasaDTO> pageCasaDTO = listaCasaFiltrada.map(CasaDTO::new);
+
+        return new ResponseEntity<>(pageCasaDTO, HttpStatus.OK);
     }
 
     public CasaEntity crearCasa(CasaRequest casaRequest) {

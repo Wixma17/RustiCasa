@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { CasaResponse } from '../model/responses/casa-response.model';
 import { environment } from 'src/environments/environment';
 import { RequestCasaSimple } from '../model/requests/request-casa-simple.model';
+import { RequestCasaAvanzada } from '../model/requests/request-casa-avanzada.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,12 @@ export class FiltroService {
 
   setListaCasa(data: CasaResponse[]): void {
     this.casaSubject.next(data);
+  }
+
+  getBusquedaAvanzada(request:RequestCasaAvanzada): Observable<any> {
+    let url = `${environment.urlApiFiltro}busquedasAvanzada`;
+    console.log('Request JSON:', request);
+    return this.httpClient.post<any>(url,request);
   }
 
 }

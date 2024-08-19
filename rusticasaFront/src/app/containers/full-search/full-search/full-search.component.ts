@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
+import { RequestCasaAvanzada } from 'src/app/shared/model/requests/request-casa-avanzada.model';
 import { RequestCasaSimple } from 'src/app/shared/model/requests/request-casa-simple.model';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { MunicipioResponse } from 'src/app/shared/model/responses/municipio-response.model';
@@ -29,8 +30,9 @@ export class FullSearchComponent implements OnInit {
   listaMunicipio: MunicipioResponse[];
   listadoPueblos: SelectItem[] = [];
   idProv: number;
-  provSele: String = "--Selecciona la provincia--";
-  muniSele: String = "--Selecciona el municipio--";
+  provSele: String = '--Selecciona la provincia--';
+  muniSele: String = '--Selecciona el municipio--';
+  listaResultCasa: CasaResponse[];
 
   constructor(
     private casaService: CasaService,
@@ -110,29 +112,33 @@ export class FullSearchComponent implements OnInit {
 
       //------------Poner Municipio y Provincia---------------
 
-      this.municipioService.getNombreMunicipio(datosBusquedas.codMun).subscribe({
-        next:(municipio)=>{
-          this.muniSele=municipio.nombre;
-        },
-        error:(err)=>{
-          console.error(err)
-        },
-        complete:()=>{
-          console.info("nombre Mun=> "+this.muniSele)
-        }
-      });
+      this.municipioService
+        .getNombreMunicipio(datosBusquedas.codMun)
+        .subscribe({
+          next: (municipio) => {
+            this.muniSele = municipio.nombre;
+          },
+          error: (err) => {
+            console.error(err);
+          },
+          complete: () => {
+            console.info('nombre Mun=> ' + this.muniSele);
+          },
+        });
 
-      this.provinciaService.getNombreProvincia(datosBusquedas.codProv).subscribe({
-        next:(provincia)=>{
-          this.provSele=provincia.nombre;
-        },
-        error:(err)=>{
-          console.error(err)
-        },
-        complete:()=>{
-          console.info("nombre Prov=> "+this.provSele)
-        }
-      });
+      this.provinciaService
+        .getNombreProvincia(datosBusquedas.codProv)
+        .subscribe({
+          next: (provincia) => {
+            this.provSele = provincia.nombre;
+          },
+          error: (err) => {
+            console.error(err);
+          },
+          complete: () => {
+            console.info('nombre Prov=> ' + this.provSele);
+          },
+        });
 
       //------------------------------------------------------
 
@@ -151,24 +157,19 @@ export class FullSearchComponent implements OnInit {
         nInquilinos: [datosBusquedas.numInqui || null],
         nHabitaciones: [datosBusquedas.numHab || null],
       });
-    }else{
-
+    } else {
       this.formuReact = this.formubuild.group({
-        piscina: [false],
-        wifi: [false],
-        jardin: [false],
-        mascotas: [false],
-        precioValor: [[this.precioMin, this.precioMax]],
-        provinciasS: [ null],
-        fechas: [
-          [new Date(), new Date()],
-          [Validators.required],
-        ],
-        pueblos: [ null],
-        nInquilinos: [ null],
-        nHabitaciones: [ null],
+        piscina: [false], // Booleano
+        wifi: [false], // Booleano
+        jardin: [false], // Booleano
+        mascotas: [false], // Booleano
+        precioValor: [[this.precioMin, this.precioMax]], // Array de dos números
+        provinciasS: [null], // ID de la provincia (número o null)
+        fechas: [[new Date(), new Date()], [Validators.required]], // Array de dos fechas
+        pueblos: [null], // ID del municipio (número o null)
+        nInquilinos: [null], // Número de inquilinos
+        nHabitaciones: [null], // Número de habitaciones
       });
-
     }
 
     let casasGuardadas = sessionStorage.getItem('listaCasas');
@@ -240,26 +241,47 @@ export class FullSearchComponent implements OnInit {
   }
 
   buscaFiltro() {
-    console.info('piscina=> ' + this.formuReact.controls['piscina'].value);
-    console.info('wifi=> ' + this.formuReact.controls['wifi'].value);
-    console.info('jardin=> ' + this.formuReact.controls['jardin'].value);
-    console.info('mascotas=> ' + this.formuReact.controls['mascotas'].value);
+    let casasGuardadas = sessionStorage.getItem('busquedaCasa');
+    let listaCasasGuardadas = sessionStorage.getItem('listaCasas');
 
-    console.info(
-      'precioMax=> ' + this.formuReact.controls['precioValor'].value[0]
-    );
-    console.info(
-      'precioMin=> ' + this.formuReact.controls['precioValor'].value[1]
-    );
+    if (casasGuardadas !== null) {
+      sessionStorage.removeItem('busquedaCasa');
+    }
 
-    console.info(
-      'Provincia=> ' + this.formuReact.controls['provinciasS'].value
-    );
+    if (listaCasasGuardadas !== null) {
+      sessionStorage.removeItem('listaCasas');
+    }
 
-    console.info('Provincia=> ' + this.formuReact.controls['pueblos'].value);
+    let requestAvanzada: RequestCasaAvanzada = {
+      mascotas: !!this.formuReact.controls['mascotas'].value, // Asegúrate de que sea un booleano
+      wifi: !!this.formuReact.controls['wifi'].value, // Asegúrate de que sea un booleano
+      jardin: !!this.formuReact.controls['jardin'].value, // Asegúrate de que sea un booleano
+      piscina: !!this.formuReact.controls['piscina'].value, // Asegúrate de que sea un booleano
+      precioMin: this.formuReact.controls['precioValor'].value[0], // Valor mínimo
+      precioMax: this.formuReact.controls['precioValor'].value[1], // Valor máximo
+      inquilinos: this.formuReact.controls['nInquilinos'].value,
+      numHab: this.formuReact.controls['nHabitaciones'].value,
+      checkIn: this.formuReact.controls['fechas'].value[0], // Fecha de check-in
+      checkOut: this.formuReact.controls['fechas'].value[1], // Fecha de check-out
+      codProv: this.formuReact.controls['provinciasS'].value,
+      codMun: this.formuReact.controls['pueblos'].value,
+    };
 
-    console.info('numInqui=> ' + this.formuReact.controls['nInquilinos'].value);
+    sessionStorage.setItem('busquedaCasa', JSON.stringify(requestAvanzada));
 
-    console.info('numHab=> ' + this.formuReact.controls['nHabitaciones'].value);
+    this.filterService.getBusquedaAvanzada(requestAvanzada).subscribe({
+      next: (casa) => {
+        this.listaResultCasa = casa;
+        this.filterService.setListaCasa(this.listaResultCasa);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        console.info('COMPLETADA LA CARGA CON FILTRO AVANZADO');
+      },
+    });
+
+    this.actualizarCasasPaginadas();
   }
 }

@@ -20,4 +20,5 @@ public class BusquedaAvanzadaRequest {
     private Date checkOut;
     private Integer codProv;
     private Integer codMun;
+    private Integer page;
 }
