@@ -40,7 +40,7 @@
         <!--Fin Formu welcome-->
 
         <div class="d-flex  justify-content-center align-items-center">
-          <button class="btn btn-success m-1 col-5" type="button" (click)="buscaFiltro()"><i class="bi bi-binoculars"></i> Buscar</button>
+          <button type="button" class="btn btn-success m-1 col-5" id="liveToastBtn" (click)="buscaFiltro()"><i class="bi bi-binoculars"></i> Buscar</button>
           <!--<button class="btn btn-danger m-1 col-5" type="reset"><i class="bi bi-trash3"></i> Limpiar</button>-->
         </div>
       </form>
@@ -63,5 +63,19 @@
     </p-paginator>
   </section>
 
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img src="../../../../assets/LogoSimple.PNG" class="rounded me-2 col-2">
+        <strong class="me-auto">RustiCasa Búsquedas</strong>
+        <small>Ahora mismo</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body text-light">
+        Actualizando tu Búsqueda...
+      </div>
+    </div>
+  </div>
 
 </div>

@@ -11,6 +11,7 @@ import { CasaService } from 'src/app/shared/services/casa.service';
 import { FiltroService } from 'src/app/shared/services/filtro.service';
 import { MunicipioService } from 'src/app/shared/services/municipio.service';
 import { ProvinciaService } from 'src/app/shared/services/provincia.service';
+import { Toast } from 'bootstrap';
 
 @Component({
   selector: 'app-full-search',
@@ -283,5 +284,10 @@ export class FullSearchComponent implements OnInit {
     });
 
     this.actualizarCasasPaginadas();
+    const toastElement = document.getElementById('liveToast');
+    if (toastElement) {
+      const toast = new Toast(toastElement);
+      toast.show(); // Muestra el toast
+    }
   }
 }
