@@ -1,6 +1,7 @@
 package com.rusticasaback.rusticasaback.services;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,8 @@ import com.rusticasaback.rusticasaback.entities.MunicipioEntity;
 import com.rusticasaback.rusticasaback.repositories.CasaRepository;
 import com.rusticasaback.rusticasaback.repositories.ClienteRepository;
 import com.rusticasaback.rusticasaback.repositories.MunicipioRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 public class CasaService {
@@ -55,30 +58,39 @@ public class CasaService {
         return casaRepository.save(casa);
     }
 
-    public List<CasaEntity> getCasasFiltradas(boolean mascotas, boolean wifi, boolean jardin, boolean piscina,
-            int precioMin, int precioMax, int inquilinos, int numHab) {
+    public ResponseEntity<Page<CasaEntity>> getCasasFiltradas(
+            Boolean mascotas,
+            Boolean wifi,
+            Boolean jardin,
+            Boolean piscina,
+            Integer precioMin,
+            Integer precioMax,
+            Integer inquilinos,
+            Integer numHab,
+            Date checkIn,
+            Date checkOut,
+            Integer codProv,
+            Integer codMun,
+            Pageable pageable) {
 
-        List<CasaEntity> listaCasaFiltrada = casaRepository.findFiltrados(mascotas, wifi, jardin, piscina);
+        // Llamar al método en el repositorio con todos los parámetros
+        Page<CasaEntity> listaCasaFiltrada = casaRepository.findAvailableHouses(
+                checkIn,
+                checkOut,
+                codProv,
+                codMun,
+                inquilinos,
+                numHab,
+                mascotas,
+                wifi,
+                jardin,
+                piscina,
+                precioMin,
+                precioMax,
+                pageable);
 
-        if (inquilinos != 0) {
-            listaCasaFiltrada = listaCasaFiltrada.stream()
-                    .filter(c -> c.getNumeroInquilinos() == inquilinos)
-                    .toList();
-        }
-
-        if (numHab != 0) {
-            listaCasaFiltrada = listaCasaFiltrada.stream()
-                    .filter(c -> c.getNumeroHabitaciones() == numHab)
-                    .toList();
-        }
-
-        if (precioMax != 0) {
-            listaCasaFiltrada = listaCasaFiltrada.stream()
-                    .filter(c -> c.getPrecioNoche() >= precioMin && c.getPrecioNoche() <= precioMax)
-                    .toList();
-        }
-
-        return listaCasaFiltrada;
+        // Devolver la lista filtrada envuelta en un ResponseEntity
+        return new ResponseEntity<>(listaCasaFiltrada, HttpStatus.OK);
     }
 
     public CasaEntity crearCasa(CasaRequest casaRequest) {
@@ -120,12 +132,12 @@ public class CasaService {
     }
 
     public ResponseEntity<?> obtenerPrecioMaximo() {
-        int precioMaximo =casaRepository.findMaxPrecioNoche();    
+        int precioMaximo = casaRepository.findMaxPrecioNoche();
         return new ResponseEntity<>(precioMaximo, HttpStatus.CREATED);
     }
 
     public ResponseEntity<?> obtenerPrecioMinimo() {
-        int precioMin =casaRepository.findMinPrecioNoche();    
+        int precioMin = casaRepository.findMinPrecioNoche();
         return new ResponseEntity<>(precioMin, HttpStatus.CREATED);
     }
 

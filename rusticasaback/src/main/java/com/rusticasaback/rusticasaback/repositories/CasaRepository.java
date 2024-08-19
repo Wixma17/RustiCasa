@@ -13,8 +13,33 @@ import java.util.List;
 public interface CasaRepository extends JpaRepository<CasaEntity, Long> {
         List<CasaEntity> findByClientePublicador(ClienteEntity clientePublicador);
 
-        @Query("Select c From CasaEntity c where c.mascotas=:mascotas and c.piscina=:piscina and c.wifi=:wifi and c.jardin=:jardin")
-        List<CasaEntity> findFiltrados(boolean mascotas, boolean wifi, boolean jardin, boolean piscina);
+        @Query("SELECT c FROM CasaEntity c WHERE c.idCasa NOT IN (" +
+                        "SELECT a.casa.idCasa FROM AlquilaEntity a WHERE " +
+                        "(:checkIn <= a.fechaSalida AND :checkOut >= a.alquilaEntityPK.fechaEntrada)) " +
+                        "AND (:codProv IS NULL OR c.municipio.provincia.idProvincia = :codProv) " +
+                        "AND (:codMun IS NULL OR c.municipio.idMunicipio = :codMun) " +
+                        "AND (:numInqui IS NULL OR c.numeroInquilinos >= :numInqui) " +
+                        "AND (:numHab IS NULL OR c.numeroHabitaciones >= :numHab) " +
+                        "AND (:mascotas IS NULL OR c.mascotas = :mascotas) " +
+                        "AND (:wifi IS NULL OR c.wifi = :wifi) " +
+                        "AND (:jardin IS NULL OR c.jardin = :jardin) " +
+                        "AND (:piscina IS NULL OR c.piscina = :piscina) " +
+                        "AND (:precioMin IS NULL OR c.precioNoche >= :precioMin) " +
+                        "AND (:precioMax IS NULL OR c.precioNoche <= :precioMax)")
+        Page<CasaEntity> findAvailableHouses(
+                        @Param("checkIn") Date checkIn,
+                        @Param("checkOut") Date checkOut,
+                        @Param("codProv") Integer codProv,
+                        @Param("codMun") Integer codMun,
+                        @Param("numInqui") Integer numInqui,
+                        @Param("numHab") Integer numHab,
+                        @Param("mascotas") Boolean mascotas,
+                        @Param("wifi") Boolean wifi,
+                        @Param("jardin") Boolean jardin,
+                        @Param("piscina") Boolean piscina,
+                        @Param("precioMin") Integer precioMin,
+                        @Param("precioMax") Integer precioMax,
+                        Pageable pageable);
 
         List<CasaEntity> findByNombreCasa(String nombreCasa);
 
