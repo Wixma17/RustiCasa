@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { RequestCasaAvanzada } from 'src/app/shared/model/requests/request-casa-avanzada.model';
@@ -12,6 +12,7 @@ import { FiltroService } from 'src/app/shared/services/filtro.service';
 import { MunicipioService } from 'src/app/shared/services/municipio.service';
 import { ProvinciaService } from 'src/app/shared/services/provincia.service';
 import { Toast } from 'bootstrap';
+import { Dropdown } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-full-search',
@@ -19,6 +20,8 @@ import { Toast } from 'bootstrap';
   styleUrls: ['./full-search.component.scss'],
 })
 export class FullSearchComponent implements OnInit {
+  @ViewChild('selectPueblos') selectPueblos!: Dropdown;
+
   pageCasa: any;
   formuReact: FormGroup;
   casasPaginadas: any[] = []; // La lista filtrada para mostrar en la página actual
@@ -31,8 +34,8 @@ export class FullSearchComponent implements OnInit {
   listaMunicipio: MunicipioResponse[];
   listadoPueblos: SelectItem[] = [];
   idProv: number;
-  provSele: String = '--Selecciona la provincia--';
-  muniSele: String = '--Selecciona el municipio--';
+  provSele: String = '-- Selecciona la provincia --';
+  muniSele: String = '-- Selecciona el municipio --';
   listaResultCasa: CasaResponse[];
 
   constructor(
@@ -68,7 +71,7 @@ export class FullSearchComponent implements OnInit {
       },
       complete: () => {
         this.ListadoProvincias.push({
-          label: '--Selecciona la provincia--',
+          label: '-- Selecciona la provincia --',
           value: null,
         });
 
@@ -111,36 +114,6 @@ export class FullSearchComponent implements OnInit {
       this.actualizarCasasPaginadas();
       const datosBusquedas = JSON.parse(sessionStorage.getItem('busquedaCasa'));
 
-      //------------Poner Municipio y Provincia---------------
-
-      this.municipioService
-        .getNombreMunicipio(datosBusquedas.codMun)
-        .subscribe({
-          next: (municipio) => {
-            this.muniSele = municipio.nombre;
-          },
-          error: (err) => {
-            console.error(err);
-          },
-          complete: () => {
-            console.info('nombre Mun=> ' + this.muniSele);
-          },
-        });
-
-      this.provinciaService
-        .getNombreProvincia(datosBusquedas.codProv)
-        .subscribe({
-          next: (provincia) => {
-            this.provSele = provincia.nombre;
-          },
-          error: (err) => {
-            console.error(err);
-          },
-          complete: () => {
-            console.info('nombre Prov=> ' + this.provSele);
-          },
-        });
-
       //------------------------------------------------------
 
       this.formuReact = this.formubuild.group({
@@ -158,6 +131,34 @@ export class FullSearchComponent implements OnInit {
         nInquilinos: [datosBusquedas.numInqui || null],
         nHabitaciones: [datosBusquedas.numHab || null],
       });
+
+      //------------Poner Municipio y Provincia---------------
+      this.provinciaService
+        .getNombreProvincia(datosBusquedas.codProv)
+        .subscribe({
+          next: (provincia) => {
+            this.provSele = provincia.nombre;
+            this.municipioService
+              .getNombreMunicipio(datosBusquedas.codMun)
+              .subscribe({
+                next: (municipio) => {
+                  this.muniSele = municipio.nombre;
+                },
+                error: (err) => {
+                  console.error(err);
+                },
+                complete: () => {
+                  console.info('nombre Mun=> ' + this.muniSele);
+                },
+              });
+          },
+          error: (err) => {
+            console.error(err);
+          },
+          complete: () => {
+            console.info('nombre Prov=> ' + this.provSele);
+          },
+        });
     } else {
       this.formuReact = this.formubuild.group({
         piscina: [false], // Booleano
@@ -213,32 +214,41 @@ export class FullSearchComponent implements OnInit {
     this.listaMunicipio = [];
     this.listadoPueblos = [];
     this.idProv = this.formuReact.value.provinciasS;
-
-    console.info(this.listaMunicipio);
-
-    this.municipioService.getListaMunicipio(this.idProv).subscribe({
-      next: (mun) => {
-        this.listaMunicipio = mun;
-        console.info(this.listaMunicipio);
-      },
-      error: (err) => {
-        console.error(err);
-      },
-      complete: () => {
-        this.listadoPueblos.push({
-          label: '--Selecciona la provincia--',
-          value: null,
-        });
-
-        this.listaMunicipio.forEach((muni) => {
+    if (this.idProv) {
+      this.municipioService.getListaMunicipio(this.idProv).subscribe({
+        next: (mun) => {
+          this.listaMunicipio = mun;
+          console.info(this.listaMunicipio);
+        },
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          this.selectPueblos.setDisabledState(false);
+          this.muniSele = '-- Seleccione el municipio --'
           this.listadoPueblos.push({
-            label: muni.municipio,
-            value: muni.idMunicipio,
+            label: '-- Selecciona el municipio --',
+            value: null,
           });
-        });
-        console.info('Cargado pueblos de la provincia con id=> ' + this.idProv);
-      },
-    });
+
+          this.listaMunicipio.forEach((muni) => {
+            this.listadoPueblos.push({
+              label: muni.municipio,
+              value: muni.idMunicipio,
+            });
+          });
+          console.info(
+            'Cargado pueblos de la provincia con id=> ' + this.idProv
+          );
+        },
+      });
+    } else {
+      this.provSele = '-- Selecciona la provincia --';
+      this.muniSele = '-- Selecciona el municipio --';
+      this.formuReact.value.provinciasS = null;
+      this.formuReact.value.pueblos = null;
+      this.selectPueblos.setDisabledState(true);
+    }
   }
 
   buscaFiltro() {
