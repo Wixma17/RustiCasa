@@ -24,6 +24,7 @@ public class CasaDTO {
     private boolean piscina;
     private boolean wifi;
     private boolean jardin;
+    private MunicipioDTO municipio;
 
     public CasaDTO(CasaEntity casaEntity) {
         idCasa = casaEntity.getIdCasa();
@@ -36,6 +37,7 @@ public class CasaDTO {
         piscina = casaEntity.isPiscina();
         wifi = casaEntity.isWifi();
         jardin = casaEntity.isJardin();
+        municipio = new MunicipioDTO(casaEntity.getMunicipio());
     }
 
 

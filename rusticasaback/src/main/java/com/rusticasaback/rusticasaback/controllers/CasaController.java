@@ -15,8 +15,6 @@ import com.rusticasaback.rusticasaback.services.CasaService;
 import com.rusticasaback.rusticasaback.services.ImagenService;
 import com.rusticasaback.rusticasaback.services.OpinaService;
 
-
-
 @RestController
 @CrossOrigin
 @RequestMapping("/api/casa")
@@ -58,7 +56,7 @@ public class CasaController {
     public ResponseEntity<?> OpinionesCasa(@PathVariable(name = "idCasa") Long idCasa) {
         return opinaService.getListaOpinionCasa(idCasa);
     }
-    
+
     @GetMapping("/precioMaximo")
     public ResponseEntity<?> obtenerPrecioMaximo() {
         return casaService.obtenerPrecioMaximo();
@@ -130,6 +128,11 @@ public class CasaController {
         alquilaService.creaReserva(alquilaRequest);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/datosCasa/{idCasa}")
+    public ResponseEntity<?> datosCasa(@PathVariable(name = "idCasa") Long idCasa) {
+        return casaService.obtenDatosCasa(idCasa);
     }
 
 }
