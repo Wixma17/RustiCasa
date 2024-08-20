@@ -18,8 +18,8 @@
           {{ (datosCasa.descripcion | truncate: 200) }}
         </p>
         <div>
-          <a href="#" (click)="showMore = !showMore" class="btn btn-success m-1 w-100">
-            {{ showMore ? 'Ver menos' : 'Ver más' }}
+          <a (click)="detalleCasa()" class="btn btn-success m-1 w-100">
+           Ver más
           </a>
           <span class="accesibilidad"> datos sobre la casa {{datosCasa.nombreCasa}}</span>
         </div>

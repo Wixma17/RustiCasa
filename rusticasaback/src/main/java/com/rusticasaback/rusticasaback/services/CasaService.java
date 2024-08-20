@@ -143,4 +143,11 @@ public class CasaService {
         return new ResponseEntity<>(precioMin, HttpStatus.CREATED);
     }
 
+    public ResponseEntity<?> obtenDatosCasa(Long idCasa) {
+
+        CasaDTO casa = new CasaDTO(casaRepository.findById(idCasa).get());
+
+        return new ResponseEntity<>(casa, HttpStatus.CREATED);
+    }
+
 }

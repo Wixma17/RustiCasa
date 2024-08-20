@@ -87,8 +87,9 @@
           console.info('media opiniones => ' + this.mediaOp);
         },
       });
+    }
 
-
+    detalleCasa(){
 
     }
   }
