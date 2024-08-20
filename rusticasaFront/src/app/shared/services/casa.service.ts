@@ -15,17 +15,17 @@ export class CasaService {
     return this.httpClient.get<CasaResponse[]>(url);
   }
 
-  getFotosCasas(idCasa: number): Observable<ImagenResponse[]>{
+  getFotosCasas(idCasa: number): Observable<ImagenResponse[]> {
     let url = `${environment.urlApiCasas}fotosCasa/${idCasa}`;
     return this.httpClient.get<ImagenResponse[]>(url);
   }
 
-  getListaCasasPorNombre(nombreCasa:string): Observable<CasaResponse[]> {
+  getListaCasasPorNombre(nombreCasa: string): Observable<CasaResponse[]> {
     let url = `${environment.urlApiCasas}listaCasasPorNombre/${nombreCasa}`;
     return this.httpClient.get<CasaResponse[]>(url);
   }
 
-  getListaOpinionCasa(idCasa:number): Observable<OpinionResponse[]> {
+  getListaOpinionCasa(idCasa: number): Observable<OpinionResponse[]> {
     let url = `${environment.urlApiCasas}opinionCasa/${idCasa}`;
     return this.httpClient.get<OpinionResponse[]>(url);
   }
@@ -40,4 +40,8 @@ export class CasaService {
     return this.httpClient.get<number>(url);
   }
 
+  getDatosCasaIdCasa(idCasa: number): Observable<CasaResponse> {
+    let url = `${environment.urlApiCasas}datosCasa/${idCasa}`;
+    return this.httpClient.get<CasaResponse>(url);
+  }
 }

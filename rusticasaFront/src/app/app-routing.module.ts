@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { WelcomeComponent } from './containers/welcome/welcome/welcome.component';
 import { FullSearchComponent } from './containers/full-search/full-search/full-search.component';
 import { UploadHouseComponent } from './containers/upload-house/upload-house/upload-house.component';
+import { DetailsHouseComponent } from './containers/details-house/details-house/details-house.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -29,6 +30,17 @@ const routes: Routes = [
         { label: 'Inicio', routerLink: '/welcome' },
         { label: 'Subir tu Casa', routerLink: '/upload-house' },
       ]
+    },
+  },
+  {
+    path: 'details-house/:idCasa',
+    component: DetailsHouseComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Búsquedas', routerLink: '/full-search' },
+        { label: 'Detalles Casa', routerLink: '/details-house/:idCasa' }
+      ],
     },
   },
 ];

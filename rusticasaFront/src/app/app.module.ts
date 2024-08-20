@@ -12,6 +12,7 @@ import { UploadHouseModule } from './containers/upload-house/upload-house.module
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { DetailsHouseModule } from './containers/details-house/details-house.module';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -25,6 +26,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    DetailsHouseModule,
     HeaderModule,
     FooterModule,
     WelcomeModule,

@@ -1,0 +1,56 @@
+<div *ngIf="casa" class="container-fluid">
+
+  <div class="d-flex justify-content-between">
+    <h1>{{casa.nombreCasa}}</h1>
+
+    <div *ngIf="listaOpinionCasa" class="d-flex align-items-center justify-content-end justify-content-md-end">
+      <p-rating [ngModel]="mediaOp" [readonly]="true" [cancel]="false" [stars]="5"></p-rating>
+      <span class="ms-1 mb-1">({{ listaOpinionCasa.length }})</span>
+    </div>
+  </div>
+
+  <h1 class="fs-2">Precio por noche: {{casa.precioNoche}} €</h1>
+  <h1 class="fs-3">Localizado en: {{casa.municipio.municipio}}</h1>
+
+  <div class="col-12" *ngIf="listaImagenes">
+    <p-carousel [value]="listaImagenes" class="p-1 col-10">
+      <ng-template let-imagen pTemplate="item">
+        <img [src]="imagen.safeUrl" class="w-100"/>
+      </ng-template>
+    </p-carousel>
+  </div>
+
+  <div class="d-flex flex-column">
+    <div class="border rounded p-2 m-2 d-flex flex-column justify-content-center">
+      <h1 class="fs-4">Esta casa cuenta con los siguientes servicios disponibles: </h1>
+      <p>
+        <i class="pi pi-check" style="font-size: 1rem; color: #75b77c;" *ngIf="casa.jardin"></i>
+        <i class="pi pi-times" style="font-size: 1rem; color: red;" *ngIf="!casa.jardin"></i>
+        <span *ngIf="!casa.jardin"> No </span> Tiene jardin
+      </p>
+
+      <p>
+        <i class="pi pi-check" style="font-size: 1rem; color: #75b77c" *ngIf="casa.wifi"></i>
+        <i class="pi pi-times" style="font-size: 1rem; color: red;" *ngIf="!casa.wifi"></i>
+        <span *ngIf="!casa.wifi"> No </span> Tiene Wifi
+      </p>
+      <p>
+        <i class="pi pi-check" style="font-size: 1rem; color: #75b77c" *ngIf="casa.piscina"></i>
+        <i class="pi pi-times" style="font-size: 1rem; color: red;" *ngIf="!casa.piscina"></i>
+        <span *ngIf="!casa.piscina"> No </span> Tiene piscina
+      </p>
+      <p>
+        <i class="pi pi-check" style="font-size: 1rem; color: #75b77c" *ngIf="casa.mascotas"></i>
+        <i class="pi pi-times" style="font-size: 1rem; color: red;" *ngIf="!casa.mascotas"></i>
+        <span *ngIf="!casa.mascotas"> No </span> Acepta mascotas
+      </p>
+    </div>
+
+
+    <p class="p-2">{{casa.descripcion}}</p>
+  </div>
+
+
+
+</div>
+

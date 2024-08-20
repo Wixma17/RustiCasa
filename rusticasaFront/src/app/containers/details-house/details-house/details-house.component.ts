@@ -1,21 +1,20 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { merge, Observable, Subject, Subscription } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { ImagenResponse } from 'src/app/shared/model/responses/imagen-response.model';
-import { CasaService } from 'src/app/shared/services/casa.service';
-import { map, takeUntil } from 'rxjs/operators';
 import { OpinionResponse } from 'src/app/shared/model/responses/opinion-response.model';
-import { merge, Observable, Subject, Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { CasaService } from 'src/app/shared/services/casa.service';
 
 @Component({
-  selector: 'app-house',
-  templateUrl: './house.component.html',
-  styleUrls: ['./house.component.scss'],
+  selector: 'app-details-house',
+  templateUrl: './details-house.component.html',
+  styleUrls: ['./details-house.component.scss'],
 })
-export class HouseComponent implements OnInit, OnDestroy {
-  @Input() datosCasa: CasaResponse;
-
+export class DetailsHouseComponent implements OnInit, OnDestroy {
+  casa: CasaResponse;
   listaImagenes: any[];
   listaOpinionCasa: any[];
   mediaOp: number = 0;
@@ -31,13 +30,29 @@ export class HouseComponent implements OnInit, OnDestroy {
   mainSubscription: Subscription;
 
   constructor(
-    private casaServicio: CasaService,
-    private sanitizer: DomSanitizer,
-    private router: Router
+    private route: ActivatedRoute,
+    private serviceHouse: CasaService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
-    this.fotos$ = this.casaServicio.getFotosCasas(this.datosCasa.idCasa).pipe(
+    const idCasaString = this.route.snapshot.paramMap.get('idCasa');
+    const idCasaLong = idCasaString ? parseInt(idCasaString, 10) : null;
+
+    this.serviceHouse.getDatosCasaIdCasa(idCasaLong).subscribe({
+      next: (casaR) => {
+        this.casa = casaR;
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        this.subscriptionPoint();
+        console.info('Datos cargado de la casa correctamente');
+      },
+    });
+
+    this.fotos$ = this.serviceHouse.getFotosCasas(idCasaLong).pipe(
       map((imagenes) =>
         imagenes.map((imagen) => {
           return {
@@ -49,33 +64,30 @@ export class HouseComponent implements OnInit, OnDestroy {
         })
       )
     );
-    this.opiniones$ = this.casaServicio
-      .getListaOpinionCasa(this.datosCasa.idCasa)
-      .pipe(
-        map((op) => {
-          this.listaOpinionCasa = op;
+    this.opiniones$ = this.serviceHouse.getListaOpinionCasa(idCasaLong).pipe(
+      map((op) => {
+        this.listaOpinionCasa = op;
 
-          // Inicializa la variable de la media
-          let sumaPuntuaciones = 0;
+        // Inicializa la variable de la media
+        let sumaPuntuaciones = 0;
 
-          // Suma todas las puntuaciones
-          this.listaOpinionCasa.forEach((opi) => {
-            sumaPuntuaciones += opi.puntuacion;
-          });
+        // Suma todas las puntuaciones
+        this.listaOpinionCasa.forEach((opi) => {
+          sumaPuntuaciones += opi.puntuacion;
+        });
 
-          // Calcula la media solo si hay opiniones
-          if (this.listaOpinionCasa.length > 0) {
-            this.mediaOp = Math.floor(
-              sumaPuntuaciones / this.listaOpinionCasa.length
-            );
-          } else {
-            this.mediaOp = 0;
-          }
+        // Calcula la media solo si hay opiniones
+        if (this.listaOpinionCasa.length > 0) {
+          this.mediaOp = Math.floor(
+            sumaPuntuaciones / this.listaOpinionCasa.length
+          );
+        } else {
+          this.mediaOp = 0;
+        }
 
-          return op;
-        })
-      );
-    this.subscriptionPoint();
+        return op;
+      })
+    );
   }
 
   subscriptionPoint(): void {
@@ -95,7 +107,7 @@ export class HouseComponent implements OnInit, OnDestroy {
               this.listaImagenes[imagen['posicionCarrusel']] = imagen;
             }
             console.log(
-              `Carga de datos de fotos de la casa [id: ${this.datosCasa.idCasa}, nombre: ${this.datosCasa.nombreCasa}] completa`
+              `Carga de datos de fotos de la casa [id: ${this.casa.idCasa}, nombre: ${this.casa.nombreCasa}] completa`
             );
           } else if (
             Array.isArray(result) &&
@@ -127,14 +139,13 @@ export class HouseComponent implements OnInit, OnDestroy {
         error: (error) => {
           console.error(error);
         },
+        complete:()=>{
+          console.info(this.listaImagenes);
+        }
       });
   }
 
   ngOnDestroy(): void {
     this.destroySubject.next();
-  }
-
-  detalleCasa() {
-    this.router.navigate(['/details-house/' + this.datosCasa.idCasa]);
   }
 }

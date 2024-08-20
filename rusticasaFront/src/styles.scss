@@ -10,3 +10,10 @@ body{
 #fondo > div > form > fieldset.text-center.col-12.p-1 > p-calendar > span > div > div > div:nth-child(1){
   border: none;
 }
+
+
+#pr_id_1 > div > div > div > div > div.p-carousel-item.p-carousel-item-active.p-carousel-item-start.p-carousel-item-end{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,3 +1,5 @@
+import { MunicipioResponse } from "./municipio-response.model"
+
 export interface CasaResponse {
   idCasa: number,
   descripcion: string,
@@ -9,4 +11,5 @@ export interface CasaResponse {
   piscina: boolean,
   wifi: boolean,
   jardin: boolean
+  municipio: MunicipioResponse
 }
