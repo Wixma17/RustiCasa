@@ -8,6 +8,7 @@ import { ImagenResponse } from 'src/app/shared/model/responses/imagen-response.m
 import { OpinionResponse } from 'src/app/shared/model/responses/opinion-response.model';
 import { CasaService } from 'src/app/shared/services/casa.service';
 
+
 @Component({
   selector: 'app-details-house',
   templateUrl: './details-house.component.html',
@@ -139,9 +140,9 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
         error: (error) => {
           console.error(error);
         },
-        complete:()=>{
+        complete: () => {
           console.info(this.listaImagenes);
-        }
+        },
       });
   }
 

@@ -5,16 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { RatingModule } from 'primeng/rating';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { CarouselModule } from 'primeng/carousel';
+import { CommonComponentsModule } from 'src/app/common-components/common-components.module';
 
 @NgModule({
   declarations: [DetailsHouseComponent],
   imports: [
     CommonModule,
-    CommonModule,
     CarouselModule,
     PipesModule,
     RatingModule,
-    FormsModule
+    FormsModule,
+    CommonComponentsModule
   ],
 })
 export class DetailsHouseModule {}

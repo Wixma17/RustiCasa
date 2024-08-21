@@ -6,11 +6,12 @@ import { CarouselModule } from 'primeng/carousel';
 import { PipesModule } from '../shared/pipes/pipes.module';
 import {RatingModule} from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
+import { MapaComponent } from './mapa/mapa.component';
 
 
 
 @NgModule({
-  declarations: [HouseComponent],
+  declarations: [HouseComponent, MapaComponent],
   imports: [
     CommonModule,
     CarouselModule,
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   exports:[
-    HouseComponent
+    HouseComponent,
+    MapaComponent
   ],
   providers:[
     CasaService
