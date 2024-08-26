@@ -20,16 +20,30 @@
         </div>
       </a>
 
-      <div class="dropdown order-lg-1 d-flex col-1 justify-content-center align-items-center">
+      <div class="dropdown order-lg-1 d-flex col-1 justify-content-center align-items-center" *ngIf="!datosUsu">
         <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false"  (click)="toggleDropdown()">
           <img src="../../../../assets/defaultImg.jpg" alt="mdo" width="40" height="40" class="rounded-circle">
         </a>
         <ul class="dropdown-menu text-small posMen" id="dropdown">
-          <li><a class="dropdown-item" href="#">Iniciar Sesión</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/login']">Iniciar Sesión</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">Registrarse</a></li>
+          <li><a class="dropdown-item"[routerLink]="['/register']">Registrarse</a></li>
         </ul>
       </div>
+
+      <!--Perfil-->
+      <div class="dropdown order-lg-1 d-flex col-1 justify-content-center align-items-center" *ngIf="datosUsu">
+        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false"  (click)="toggleDropdown()">
+          <img src="../../../../assets/LogoSimple.PNG" alt="mdo" width="40" height="40" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small posMen" id="dropdown">
+          <li><a class="dropdown-item pt-1" href="#">Ver tu perfil</a></li>
+          <li><a class="dropdown-item pt-1" [routerLink]="['/upload-house']">Sube tu Casa</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+        </ul>
+      </div>
+      <!--FinPerfil-->
 
       <div class="collapse navbar-collapse order-0 col-auto" id="navToggle">
 

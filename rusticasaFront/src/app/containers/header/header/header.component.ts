@@ -13,6 +13,7 @@ import { BusquedasService } from 'src/app/shared/services/busquedas.service';
 export class HeaderComponent implements OnInit,AfterViewInit {
   nombreCasa: string = '';
   muestraBusqueda: boolean = true;
+  datosUsu:any;
 
   constructor(private busqueda: BusquedasService, private router: Router) {}
 
@@ -50,25 +51,11 @@ export class HeaderComponent implements OnInit,AfterViewInit {
   }
 
   ngOnInit(): void {
-   /* this.busqueda.getMuestraBusquedaCabecera().subscribe((state) => {
-      this.muestraBusqueda = state;
-    });
-    this.busqueda.getParamBusqueda().subscribe((param) => {
-      this.nombreCasa = param
-    })
-    this.router.events
-      .pipe(
-        filter((event) => event instanceof NavigationEnd)
-      )
-      .subscribe((event: NavigationEnd) => {
-        console.log('Ruta actual:', event.urlAfterRedirects);
-        let mostrar = true;
-        if (event.urlAfterRedirects == "/full-search"){
-          mostrar = !mostrar;
-          this.nombreCasa = '';
-        }
-        this.busqueda.setMuestraBusquedaCabecera(mostrar);
-      });*/
+
+    // sessionStorage.setItem("datosUsu",JSON.stringify({usuario:"pedro@gmail.com",passwd:"1234"}));
+
+    // this.datosUsu=JSON.parse(sessionStorage.getItem("datosUsu"));
+
   }
 
   toggleDropdown() {
@@ -81,10 +68,5 @@ export class HeaderComponent implements OnInit,AfterViewInit {
         dropdown.show();
       }
     }
-  }
-
-  buscarCasa(): void {
-   /* this.busqueda.setParamBusqueda(this.nombreCasa);*/
-    this.busqueda.goBuscar();
   }
 }

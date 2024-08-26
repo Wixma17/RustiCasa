@@ -4,6 +4,8 @@ import { WelcomeComponent } from './containers/welcome/welcome/welcome.component
 import { FullSearchComponent } from './containers/full-search/full-search/full-search.component';
 import { UploadHouseComponent } from './containers/upload-house/upload-house/upload-house.component';
 import { DetailsHouseComponent } from './containers/details-house/details-house/details-house.component';
+import { LoginComponent } from './containers/login/login/login.component';
+import { RegisterComponent } from './containers/register/register/register.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -43,6 +45,26 @@ const routes: Routes = [
       ],
     },
   },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Resgistro', routerLink: '/register' },
+      ],
+    },
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Inicio Sesión', routerLink: '/login' },
+      ],
+    },
+  }
 ];
 
 @NgModule({

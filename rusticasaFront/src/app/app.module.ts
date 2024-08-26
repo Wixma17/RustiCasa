@@ -13,6 +13,9 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { DetailsHouseModule } from './containers/details-house/details-house.module';
+import { RegisterModule } from './containers/register/register.module';
+import { LoginModule } from './containers/login/login.module';
+import {ToggleButtonModule} from 'primeng/togglebutton';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -33,6 +36,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     FullSearchModule,
     UploadHouseModule,
     BreadcrumbModule,
+    RegisterModule,
+    LoginModule,
+    ToggleButtonModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
