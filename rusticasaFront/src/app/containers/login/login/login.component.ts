@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   PassForm: FormGroup;
   clienteIni: any;
   loginError: string | null = null; // Nueva propiedad para manejar el error
+  crendeSave: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,7 +34,20 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const credencialesGuardadas = localStorage.getItem('credenciales');
+
+    if (credencialesGuardadas) {
+      const credenciales = JSON.parse(credencialesGuardadas); // Convertir el string a objeto
+
+      // Configurar el formulario con las credenciales recuperadas
+      this.loginForm = this.formBuilder.group({
+        emailUsu: [credenciales.gmail, [Validators.required, Validators.email]],
+        passwd: [credenciales.passwd, [Validators.required]],
+        agreed: [false],
+      });
+    }
+  }
 
   loginUsu(): void {
     if (this.loginForm.valid) {
@@ -46,6 +60,10 @@ export class LoginComponent implements OnInit {
         next: (cli) => {
           if (this.loginForm.value.agreed) {
             localStorage.setItem('credenciales', JSON.stringify(cliente));
+          } else {
+            if (localStorage.getItem('credenciales')) {
+              localStorage.removeItem('credenciales');
+            }
           }
           this.clienteIni = cli;
         },
@@ -55,17 +73,16 @@ export class LoginComponent implements OnInit {
         },
         complete: () => {
           if (this.clienteIni != null) {
-            console.info("Inicio de sesión correcto=> " + cliente);
-            sessionStorage.setItem("datosUsu", JSON.stringify(this.clienteIni));
+            console.info('Inicio de sesión correcto=> ' + cliente);
+            sessionStorage.setItem('datosUsu', JSON.stringify(this.clienteIni));
             this.router.navigate(['/welcome']);
             this.authService.updateUserData(this.clienteIni);
           } else {
-            console.error("Cliente no existe");
+            console.error('Cliente no existe');
             this.loginError = 'Usuario o contraseña incorrectos.'; // Establecer el mensaje de error
           }
-        }
+        },
       });
-
     } else {
       console.log('Formulario inválido');
       // Manejar el caso cuando el formulario no es válido
