@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar navbar-expand-lg m-0 p-1">
     <div class="container-fluid d-flex">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navToggle" aria-controls="navToggle" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" aria-controls="navToggle" aria-expanded="false" aria-label="Toggle navigation"  (click)="toggleCollapse()">
         <span class="navbar-toggler-icon"></span>
       </button>
 
@@ -21,10 +21,10 @@
       </a>
 
       <div class="dropdown order-lg-1 d-flex col-1 justify-content-center align-items-center">
-        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false"  (click)="toggleDropdown()">
           <img src="../../../../assets/defaultImg.jpg" alt="mdo" width="40" height="40" class="rounded-circle">
         </a>
-        <ul class="dropdown-menu text-small posMen">
+        <ul class="dropdown-menu text-small posMen" id="dropdown">
           <li><a class="dropdown-item" href="#">Iniciar Sesión</a></li>
           <li><hr class="dropdown-divider"></li>
           <li><a class="dropdown-item" href="#">Registrarse</a></li>
