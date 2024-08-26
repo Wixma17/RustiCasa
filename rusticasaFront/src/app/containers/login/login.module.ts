@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
-import {ToggleButtonModule} from 'primeng/togglebutton';
+import {CheckboxModule} from 'primeng/checkbox';
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import {ToggleButtonModule} from 'primeng/togglebutton';
     ButtonModule,
     RippleModule,
     ReactiveFormsModule,
-    ToggleButtonModule
+    CheckboxModule
   ],
   exports:[LoginComponent]
 })

@@ -4,6 +4,7 @@ import { filter } from 'rxjs/operators';
 import { Dropdown } from 'bootstrap';
 import { Collapse } from 'bootstrap';
 import { BusquedasService } from 'src/app/shared/services/busquedas.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit,AfterViewInit {
   muestraBusqueda: boolean = true;
   datosUsu:any;
 
-  constructor(private busqueda: BusquedasService, private router: Router) {}
+  constructor(private busqueda: BusquedasService,private authService: AuthService,private router: Router,) {}
 
 
   private collapseElement!: HTMLElement;
@@ -52,9 +53,9 @@ export class HeaderComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {
 
-    // sessionStorage.setItem("datosUsu",JSON.stringify({usuario:"pedro@gmail.com",passwd:"1234"}));
-
-    // this.datosUsu=JSON.parse(sessionStorage.getItem("datosUsu"));
+    this.authService.userData$.subscribe((data) => {
+      this.datosUsu = data;
+    });
 
   }
 
@@ -68,5 +69,11 @@ export class HeaderComponent implements OnInit,AfterViewInit {
         dropdown.show();
       }
     }
+  }
+
+  logout() {
+    this.authService.clearUserData();
+    sessionStorage.removeItem("datosUsu");
+    this.router.navigate(['/login']);
   }
 }

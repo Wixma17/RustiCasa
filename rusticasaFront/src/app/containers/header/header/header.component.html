@@ -20,27 +20,31 @@
         </div>
       </a>
 
-      <div class="dropdown order-lg-1 d-flex col-1 justify-content-center align-items-center" *ngIf="!datosUsu">
-        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false"  (click)="toggleDropdown()">
-          <img src="../../../../assets/defaultImg.jpg" alt="mdo" width="40" height="40" class="rounded-circle">
+      <div class="dropdown order-lg-1 d-flex flex-column col-1 justify-content-center align-items-center" *ngIf="!datosUsu">
+        <a href="#" class="d-flex flex-column align-items-center justify-content-center link-body-emphasis text-decoration-none " data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false"  (click)="toggleDropdown()">
+          <img src="../../../../assets/defaultImg.jpg" width="40" height="40" class="rounded-circle">
+          <p class="p-0 m-0">Inicia Sesión <i class="bi bi-caret-down-fill text-center"></i></p>
         </a>
+
         <ul class="dropdown-menu text-small posMen" id="dropdown">
-          <li><a class="dropdown-item" [routerLink]="['/login']">Iniciar Sesión</a></li>
+          <li><a class="dropdown-item pt-1" [routerLink]="['/login']">Inicia Sesión</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item"[routerLink]="['/register']">Registrarse</a></li>
+          <li><a class="dropdown-item" [routerLink]="['/register']">Registrate</a></li>
         </ul>
       </div>
 
       <!--Perfil-->
-      <div class="dropdown order-lg-1 d-flex col-1 justify-content-center align-items-center" *ngIf="datosUsu">
-        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false"  (click)="toggleDropdown()">
-          <img src="../../../../assets/LogoSimple.PNG" alt="mdo" width="40" height="40" class="rounded-circle">
+      <div class="dropdown order-lg-1 d-flex flex-column col-1 justify-content-center align-items-center" *ngIf="datosUsu">
+        <a href="#" class="d-flex flex-column align-items-center justify-content-center link-body-emphasis text-decoration-none " data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false"  (click)="toggleDropdown()">
+          <img src="../../../../assets/{{datosUsu.imagen}}" alt="tu foto de perfil" width="40" height="40" class="rounded-circle">
+          <p class="p-0 m-0">{{datosUsu.nickname}} <i class="bi bi-caret-down-fill text-center"></i></p>
         </a>
+
         <ul class="dropdown-menu text-small posMen" id="dropdown">
           <li><a class="dropdown-item pt-1" href="#">Ver tu perfil</a></li>
           <li><a class="dropdown-item pt-1" [routerLink]="['/upload-house']">Sube tu Casa</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+          <li><a class="dropdown-item pointer" (click)="logout()">Cerrar Sesión</a></li>
         </ul>
       </div>
       <!--FinPerfil-->

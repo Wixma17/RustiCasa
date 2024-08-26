@@ -62,7 +62,9 @@ figure figcaption img{
   font-size: 20px;
   width: 100%;
 }
-
+.pointer{
+  cursor: pointer;
+}
 /*--Responsive--*/
 
 @media screen and (min-width: 992px) {
