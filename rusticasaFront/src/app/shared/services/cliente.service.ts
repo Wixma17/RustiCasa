@@ -10,8 +10,8 @@ export class ClienteService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getRutaFotoPerfil(gmail:string): Observable<string> {
-    let url = `${environment.urlApiCliente}listaCasas/${gmail}`;
-    return this.httpClient.get<string>(url);
+  getRutaFotoPerfil(gmail:string): Observable<any> {
+    let url = `${environment.urlApiCliente}fotoPerfil/${gmail}`;
+    return this.httpClient.get<any>(url);
   }
 }

@@ -1,3 +1,4 @@
+import { ClienteService } from './../../../shared/services/cliente.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -5,19 +6,24 @@ import { Dropdown } from 'bootstrap';
 import { Collapse } from 'bootstrap';
 import { BusquedasService } from 'src/app/shared/services/busquedas.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit,AfterViewInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
   nombreCasa: string = '';
   muestraBusqueda: boolean = true;
-  datosUsu:any;
+  datosUsu: any;
+  ruta: SafeResourceUrl;
 
-  constructor(private busqueda: BusquedasService,private authService: AuthService,private router: Router,) {}
-
+  constructor(
+    private busqueda: BusquedasService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   private collapseElement!: HTMLElement;
 
@@ -52,13 +58,13 @@ export class HeaderComponent implements OnInit,AfterViewInit {
   }
 
   ngOnInit(): void {
-
     this.authService.userData$.subscribe((data) => {
       this.datosUsu = data;
-      console.info(this.datosUsu.imagen)
     });
 
-
+    this.authService.rutaImg$.subscribe((url) => {
+      this.ruta = url;
+    });
   }
 
   toggleDropdown() {
@@ -75,7 +81,7 @@ export class HeaderComponent implements OnInit,AfterViewInit {
 
   logout() {
     this.authService.clearUserData();
-    sessionStorage.removeItem("datosUsu");
+    sessionStorage.removeItem('datosUsu');
     this.router.navigate(['/login']);
   }
 }

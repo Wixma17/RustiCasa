@@ -51,11 +51,11 @@ public class ImagenService {
         return ResponseEntity.ok(listaImagenesCasaRep);
     }
 
-    public ResponseEntity<?> getImagenPerfil(String gmail) {
+    public String getImagenPerfil(String gmail) {
         ClienteEntity cli = clienteRepository.findById(gmail).get();
         String ruta="http://localhost:8082/FotosUsuarios/"+gmail+"/"+cli.getImagen();
            
-        return ResponseEntity.ok(ruta);
+        return ruta;
     }
 
     public boolean subidaImagenPerfil(String gmail, List<MultipartFile> files) {

@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
         },
         complete: () => {
           if (this.clienteIni != null) {
-            console.info('Inicio de sesión correcto=> ' + cliente);
+
             sessionStorage.setItem('datosUsu', JSON.stringify(this.clienteIni));
             this.router.navigate(['/welcome']);
             this.authService.updateUserData(this.clienteIni);

@@ -1,45 +1,65 @@
 <div class="container-fluid d-flex flex-column align-items-center justify-content-center" style="height: 76vh;" id="fondo">
-
   <h1 class="text-light outline fuenteTitulo">Registro de Usuario</h1>
 
-  <form [formGroup]="registerForm" class="col-lg-6 p-2 col-10 rounded border border-1 d-flex flex-column justify-content-around align-items-center" style="background-color: rgb(228, 228, 228);">
+  <form [formGroup]="registerForm" class="col-lg-6 p-2 col-10 rounded border border-1 d-flex flex-column justify-content-around align-items-center" style="background-color: rgb(228, 228, 228);" (ngSubmit)="registerUsu()">
     <!-- Campos del formulario -->
     <div class="d-flex flex-column justify-content-around align-items-center col-12">
 
       <!-- Campo de email -->
       <div class="p-float-label col-11 p-1 mt-4">
-        <input id="email" type="text" pInputText formControlName="emailUsu" class="col-12">
+        <input id="email" type="text" pInputText formControlName="emailUsu" class="col-12" [ngClass]="{'is-invalid': registerForm.get('emailUsu').invalid && (registerForm.get('emailUsu').dirty || registerForm.get('emailUsu').touched)}">
         <label for="email"><i class="bi bi-envelope-at-fill"></i> Introduce tu Email </label>
+
       </div>
 
       <!-- Campo de contraseña -->
       <div class="p-float-label col-11 p-1 mt-4">
-        <input id="passwd-input" type="password" pInputText formControlName="passwd" class="col-12">
+        <input id="passwd-input" type="password" pInputText formControlName="passwd" class="col-12" [ngClass]="{'is-invalid': registerForm.get('passwd').invalid && (registerForm.get('passwd').dirty || registerForm.get('passwd').touched)}">
         <label for="passwd-input"><i class="bi bi-shield-lock-fill"></i> Introduce tu Contraseña </label>
+        <div *ngIf="registerForm.get('passwd').hasError('minlength') && (registerForm.get('passwd').dirty || registerForm.get('passwd').touched)">
+          <small class="text-danger">La contraseña debe tener al menos 8 caracteres.</small>
+        </div>
+        <div *ngIf="registerForm.get('passwd').hasError('passwordWeak') && (registerForm.get('passwd').dirty || registerForm.get('passwd').touched)">
+          <small class="text-danger">La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.</small>
+        </div>
       </div>
 
       <!-- Campo de fecha nacimiento -->
-      <div class="p-field col-11 p-1 mt-4">
-        <span class="p-float-label">
-            <p-calendar inputId="calendar" formControlName="fechaNa" styleClass="col-12"></p-calendar>
-            <label for="calendar"><i class="bi bi-calendar"></i> Introduce tu fecha de nacimiento </label>
-        </span>
+      <div class="p-float-label col-11 p-1 mt-4">
+        <p-calendar inputId="calendar" formControlName="fechaNa" styleClass="col-12"></p-calendar>
+        <label for="calendar"><i class="bi bi-calendar"></i> Introduce tu fecha de nacimiento </label>
+        <div *ngIf="registerForm.get('fechaNa').hasError('ageInvalid') && (registerForm.get('fechaNa').dirty || registerForm.get('fechaNa').touched)">
+          <small class="text-danger">Debes ser mayor de edad.</small>
+        </div>
       </div>
 
       <!-- Campo de nickname -->
-      <div class="p-field col-11 p-1 mt-4">
-        <span class="p-float-label">
-            <input type="text" id="inputtext" pInputText formControlName="nickname" class="col-12">
-            <label for="inputtext"> <i class="bi bi-person-fill"></i> Introduce tu nickname </label>
-        </span>
+      <div class="p-float-label col-11 p-1 mt-4">
+        <input type="text" id="inputtext" pInputText formControlName="nickname" class="col-12" [ngClass]="{'is-invalid': registerForm.get('nickname').invalid && (registerForm.get('nickname').dirty || registerForm.get('nickname').touched)}">
+        <label for="inputtext"><i class="bi bi-person-fill"></i> Introduce tu nickname </label>
+        <div *ngIf="registerForm.get('nickname').hasError('required') && (registerForm.get('nickname').dirty || registerForm.get('nickname').touched)">
+          <small class="text-danger">Debes ponerte un nickname</small>
+        </div>
       </div>
 
       <!-- Campo de foto -->
-      <div class="p-float-label col-11 p-1 mt-4">
-        <p-fileUpload name="myfile[]" url="./upload.php" accept="image/*" [auto]="true" chooseLabel="Subir imagen" formControlName="imagen"></p-fileUpload>
+      <div class="col-11 p-1 mt-4">
+        <p-fileUpload
+          accept="image/*"
+          [auto]="true"
+          chooseLabel="Subir imagen"
+          (onSelect)="onFileSelect($event)"
+          (onUpload)="onFileUpload($event)"
+          name="file"
+          [ngClass]="{'is-invalid': !selectedFile && (isFormSubmitted)}"
+        ></p-fileUpload>
+        <div *ngIf="!selectedFile && isFormSubmitted">
+          <small class="text-danger">Debes seleccionar una imagen.</small>
+        </div>
       </div>
     </div>
-    <button class="btn btn-success m-2 col-11" type="submit" (click)="registerUsu()"> <i class="bi bi-box-arrow-in-right"></i> Registrarse </button>
+    <button class="btn btn-success m-2 col-11" type="submit">
+      <i class="bi bi-box-arrow-in-right"></i> Registrarse
+    </button>
   </form>
 </div>
-
