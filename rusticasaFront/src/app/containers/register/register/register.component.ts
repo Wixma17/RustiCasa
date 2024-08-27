@@ -104,7 +104,6 @@ export class RegisterComponent implements OnInit {
       // Agrega lógica para enviar el archivo junto con los datos del formulario si es necesario.
     } else {
       this.registerForm.markAllAsTouched();
-      console.error('El formulario no es válido o no se ha cargado una imagen');
     }
   }
 }
