@@ -2,25 +2,29 @@
 
   <h1 class="text-light outline fuenteTitulo">Iniciar Sesión</h1>
 
-  <form [formGroup]="loginForm" class="col-lg-6 p-2 col-10 rounded border border-1 d-flex flex-column justify-content-around align-items-center" style="background-color: rgb(228, 228, 228);">
+  <form [formGroup]="loginForm" class="col-lg-6 p-2 col-10 rounded border border-1 d-flex flex-column justify-content-around align-items-center contenedor-cristalizado">
     <!-- Campos del formulario -->
     <div class="d-flex flex-column justify-content-around align-items-center col-12">
       <!-- Campo de email -->
-      <div class="p-float-label col-11 p-1 mt-4">
-        <input id="email" type="text" pInputText formControlName="emailUsu" class="col-12">
+      <div class="caja-input col-11 mt-2">
         <label for="email"><i class="bi bi-envelope-at-fill"></i> <span class="accesibilidad">Introduce tu</span> Email </label>
-        <div *ngIf="loginForm.get('emailUsu').touched && loginForm.get('emailUsu').invalid" class="text-danger">
-          <div *ngIf="loginForm.get('emailUsu').errors.required">El email es obligatorio.</div>
-          <div *ngIf="loginForm.get('emailUsu').errors.email">El email debe ser válido.</div>
+        <div class="col-12 p-1">
+          <input id="email" type="text" pInputText formControlName="emailUsu" class="col-12">
+          <div *ngIf="loginForm.get('emailUsu').touched && loginForm.get('emailUsu').invalid" class="text-danger">
+            <div *ngIf="loginForm.get('emailUsu').errors.required">El email es obligatorio.</div>
+            <div *ngIf="loginForm.get('emailUsu').errors.email">El email debe ser válido.</div>
+          </div>
         </div>
       </div>
 
       <!-- Campo de contraseña -->
-      <div class="p-float-label col-11 p-1 mt-4">
-        <input id="passwd-input" type="password" pInputText formControlName="passwd" class="col-12">
+      <div class="caja-input col-11 mt-2">
         <label for="passwd-input"><i class="bi bi-shield-lock-fill"></i> <span class="accesibilidad">Introduce tu</span> Contraseña </label>
-        <div *ngIf="loginForm.get('passwd').touched && loginForm.get('passwd').invalid" class="text-danger">
-          <div *ngIf="loginForm.get('passwd').errors.required">La contraseña es obligatoria.</div>
+        <div class="col-12 p-1">
+          <input id="passwd-input" type="password" pInputText formControlName="passwd" class="col-12">
+          <div *ngIf="loginForm.get('passwd').touched && loginForm.get('passwd').invalid" class="text-danger">
+            <div *ngIf="loginForm.get('passwd').errors.required">La contraseña es obligatoria.</div>
+          </div>
         </div>
       </div>
 

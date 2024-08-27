@@ -1,5 +1,7 @@
 package com.rusticasaback.rusticasaback.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,11 @@ public class ClienteService {
 
     public ClienteEntity guardaCliente(ClienteEntity cli) {
         return clienteRepository.save(cli);
+    }
+
+    public Optional<ClienteEntity> verClienteExistente(String email) {
+        Optional<ClienteEntity> cli=clienteRepository.findById(email);
+        return cli;      
     }
 
     public ResponseEntity<?> recuperarDatos(String gmail) {

@@ -14,4 +14,9 @@ export class ClienteService {
     let url = `${environment.urlApiCliente}fotoPerfil/${gmail}`;
     return this.httpClient.get<any>(url);
   }
+
+  isClienteExiste(gmail:string): Observable<any> {
+    let url = `${environment.urlApiCliente}cliente/${gmail}`;
+    return this.httpClient.get<any>(url);
+  }
 }
