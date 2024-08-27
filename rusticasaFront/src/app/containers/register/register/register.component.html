@@ -36,7 +36,7 @@
 
       <!-- Campo de foto -->
       <div class="p-float-label col-11 p-1 mt-4">
-        <p-fileUpload name="myfile[]" url="./upload.php" accept="image/*" [auto]="true" chooseLabel="Subir imagen"></p-fileUpload>
+        <p-fileUpload name="myfile[]" url="./upload.php" accept="image/*" [auto]="true" chooseLabel="Subir imagen" formControlName="imagen"></p-fileUpload>
       </div>
     </div>
     <button class="btn btn-success m-2 col-11" type="submit" (click)="registerUsu()"> <i class="bi bi-box-arrow-in-right"></i> Registrarse </button>

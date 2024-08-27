@@ -26,4 +26,5 @@ public class EmailController {
         response.put("message", "Revisa tu bandeja");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+    
 }

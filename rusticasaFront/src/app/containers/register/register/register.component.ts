@@ -14,7 +14,8 @@ export class RegisterComponent implements OnInit {
       emailUsu: ['', [Validators.required, Validators.email]],
       passwd: ['', [Validators.required]],
       fechaNa: ['', [Validators.required]],
-      nickname:['', [Validators.required]]
+      nickname:['', [Validators.required]],
+      imagen:[]
     });
   }
 
@@ -22,6 +23,9 @@ export class RegisterComponent implements OnInit {
   }
 
   registerUsu(){
-
+    console.log(this.registerForm.value.emailUsu);
+    console.log(this.registerForm.value.passwd);
+    console.log(this.registerForm.value.fechaNa);
+    console.log(this.registerForm.value.imagen);
   }
 }

@@ -55,7 +55,9 @@ export class HeaderComponent implements OnInit,AfterViewInit {
 
     this.authService.userData$.subscribe((data) => {
       this.datosUsu = data;
+      console.info(this.datosUsu.imagen)
     });
+
 
   }
 

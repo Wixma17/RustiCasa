@@ -51,6 +51,13 @@ public class ImagenService {
         return ResponseEntity.ok(listaImagenesCasaRep);
     }
 
+    public ResponseEntity<?> getImagenPerfil(String gmail) {
+        ClienteEntity cli = clienteRepository.findById(gmail).get();
+        String ruta="http://localhost:8082/FotosUsuarios/"+gmail+"/"+cli.getImagen();
+           
+        return ResponseEntity.ok(ruta);
+    }
+
     public boolean subidaImagenPerfil(String gmail, List<MultipartFile> files) {
         // Busca el cliente usando el gmail
         ClienteEntity clienteEntity = clienteRepository.findById(gmail).orElse(null);

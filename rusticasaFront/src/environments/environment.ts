@@ -8,7 +8,8 @@ export const environment = {
   urlApiMunicipioProv: `http://localhost:8082/api/ProvMuni/`,
   urlApiFiltro:`http://localhost:8082/api/filtro/`,
   urlApiAuth:`http://localhost:8082/api/auth/`,
-  urlApiEmail:`http://localhost:8082/api/email/`
+  urlApiEmail:`http://localhost:8082/api/email/`,
+  urlApiCliente:`http://localhost:8082/api/cliente/`
 };
 
 /*
