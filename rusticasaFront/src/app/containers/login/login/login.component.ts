@@ -1,8 +1,11 @@
+import { EmailResponse } from './../../../shared/model/responses/email-response.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RequestLogin } from 'src/app/shared/model/requests/request-login.model';
+import { ClienteResponse } from 'src/app/shared/model/responses/cliente-response.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { EmailService } from 'src/app/shared/services/email.service';
 import { RegisterLoginService } from 'src/app/shared/services/register-login.service';
 
 @Component({
@@ -16,12 +19,14 @@ export class LoginComponent implements OnInit {
   clienteIni: any;
   loginError: string | null = null; // Nueva propiedad para manejar el error
   crendeSave: any;
+  emailStatus: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private register: RegisterLoginService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private emailService: EmailService
   ) {
     this.loginForm = this.formBuilder.group({
       emailUsu: ['', [Validators.required, Validators.email]],
@@ -88,5 +93,36 @@ export class LoginComponent implements OnInit {
       // Manejar el caso cuando el formulario no es válido
       this.loginForm.markAllAsTouched();
     }
+  }
+
+  enviarPasswd() {
+    let clientePass: ClienteResponse;
+    this.authService
+      .getDatosUsuEmail(this.PassForm.value.emailUsuRecPass)
+      .subscribe((c) => {
+        clientePass = c;
+        let correo: EmailResponse = {
+          email: this.PassForm.value.emailUsuRecPass,
+          body: clientePass.passwd,
+        };
+        console.info(correo);
+        if (this.PassForm.valid) {
+          this.emailService.enviarEmail(correo).subscribe({
+            next: (mensaje) => {
+              this.emailStatus = mensaje;
+            },
+            error: (err) => {
+              console.error(err);
+            },
+            complete: () => {
+              console.info('completado');
+            },
+          });
+        } else {
+          console.log('Formulario inválido');
+          // Manejar el caso cuando el formulario no es válido
+          this.PassForm.markAllAsTouched();
+        }
+      });
   }
 }

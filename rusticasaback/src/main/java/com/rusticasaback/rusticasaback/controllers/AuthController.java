@@ -33,10 +33,15 @@ public class AuthController {
                 registerRequest.getNombre(),
                 registerRequest.getApellido(), registerRequest.getPasswd(),
                 registerRequest.getNickname(),
-                registerRequest.isAdministrador(), registerRequest.getFechaNacimiento(),registerRequest.getImagen(),
+                registerRequest.isAdministrador(), registerRequest.getFechaNacimiento(), registerRequest.getImagen(),
                 new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
 
         return new ResponseEntity<>(clienteService.guardaCliente(nuevoCliente), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/datosUsuario")
+    public ResponseEntity<?> getDatosUsuario(@RequestBody String email) {
+        return clienteService.recuperarDatos(email);
     }
 
 }

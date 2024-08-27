@@ -1,6 +1,8 @@
 package com.rusticasaback.rusticasaback.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.rusticasaback.rusticasaback.DTOs.ClienteDTO;
@@ -26,6 +28,12 @@ public class ClienteService {
 
     public ClienteEntity guardaCliente(ClienteEntity cli) {
         return clienteRepository.save(cli);
+    }
+
+    public ResponseEntity<?> recuperarDatos(String gmail) {
+        ClienteDTO cli = new ClienteDTO(clienteRepository.findById(gmail).orElse(null));
+
+        return new ResponseEntity<>(cli, HttpStatus.CREATED);
     }
 
 }

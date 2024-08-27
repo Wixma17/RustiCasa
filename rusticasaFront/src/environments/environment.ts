@@ -7,7 +7,8 @@ export const environment = {
   urlApiCasas: `http://localhost:8082/api/casa/`,
   urlApiMunicipioProv: `http://localhost:8082/api/ProvMuni/`,
   urlApiFiltro:`http://localhost:8082/api/filtro/`,
-  urlApiAuth:`http://localhost:8082/api/auth/`
+  urlApiAuth:`http://localhost:8082/api/auth/`,
+  urlApiEmail:`http://localhost:8082/api/email/`
 };
 
 /*

@@ -1,0 +1,27 @@
+#fondo{
+  background: url(../../../../assets/fondoLogin.jpg)no-repeat;
+}
+
+.fuenteTitulo{
+  font-size: 60px;
+}
+
+.outline {
+  position: relative;
+  color: #ffffff; /* Color del texto */
+  text-shadow:
+    -1px -1px 0 #272727,  /* Color gris claro del contorno */
+     1px -1px 0 #272727,
+    -1px  1px 0 #272727,
+     1px  1px 0 #272727; /* Ajusta el color según tus necesidades */
+}
+
+.text-danger {
+  color: red;
+  font-size: 0.875rem; // Puedes ajustar el tamaño según sea necesario
+}
+
+
+#linkPass:hover{
+  cursor: pointer;
+}

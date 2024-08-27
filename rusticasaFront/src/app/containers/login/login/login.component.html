@@ -60,11 +60,12 @@
                 <div *ngIf="PassForm.get('emailUsuRecPass').errors.required">El email es obligatorio.</div>
                 <div *ngIf="PassForm.get('emailUsuRecPass').errors.email">El email debe ser válido.</div>
               </div>
+              <div *ngIf="emailStatus" class="text-success">{{emailStatus.message}}</div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success">Enviar</button>
+          <button type="button" class="btn btn-success" (click)="enviarPasswd()">Enviar</button>
         </div>
       </div>
     </div>
