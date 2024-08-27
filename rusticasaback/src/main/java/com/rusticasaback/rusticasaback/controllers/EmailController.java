@@ -19,11 +19,11 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
-   @PostMapping("/sendEmail")
-public ResponseEntity<?> sendEmail(@RequestBody EmailResponse email) {
-    emailService.sendSimpleEmail(email.getEmail(), email.getBody());
-    Map<String, String> response = new HashMap<>();
-    response.put("message", "Revisa tu bandeja");
-    return new ResponseEntity<>(response, HttpStatus.CREATED);
-}
+    @PostMapping("/sendEmail")
+    public ResponseEntity<?> sendEmail(@RequestBody EmailResponse email) {
+        emailService.sendSimpleEmail(email.getEmail(), email.getBody());
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Revisa tu bandeja");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
 }

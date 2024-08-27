@@ -111,7 +111,7 @@ public class CasaController {
 
         imagenService.subidaImagenes(files, idCasa);
 
-        return casaService.getCasa(idCasa);// Cambiar la respuesta
+        return casaService.getCasa(idCasa);
     }
 
     @PostMapping("/subirOpinion")

@@ -18,8 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.rusticasaback.rusticasaback.DTOs.ImagenDTO;
 import com.rusticasaback.rusticasaback.Response.ImagenResponse;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
+import com.rusticasaback.rusticasaback.entities.ClienteEntity;
 import com.rusticasaback.rusticasaback.entities.ImagenEntity;
 import com.rusticasaback.rusticasaback.repositories.CasaRepository;
+import com.rusticasaback.rusticasaback.repositories.ClienteRepository;
 import com.rusticasaback.rusticasaback.repositories.ImagenRepository;
 
 @Service
@@ -30,6 +32,9 @@ public class ImagenService {
 
     @Autowired
     private CasaRepository casaRepository;
+
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     public ResponseEntity<?> getListaImagenesDeCasa(Long idCasa) {
         CasaEntity casa = casaRepository.findById(idCasa).get();
@@ -44,6 +49,52 @@ public class ImagenService {
         }
 
         return ResponseEntity.ok(listaImagenesCasaRep);
+    }
+
+    public boolean subidaImagenPerfil(String gmail, List<MultipartFile> files) {
+        // Busca el cliente usando el gmail
+        ClienteEntity clienteEntity = clienteRepository.findById(gmail).orElse(null);
+        if (clienteEntity == null) {
+            return false; // Cliente no encontrado
+        }
+    
+        // Define la ruta para guardar la imagen
+        String ruta = "FotosUsuarios/" + gmail + "/";
+        File uploadDirFile = new File(ruta);
+    
+        // Borra el contenido de la carpeta si existe
+        if (uploadDirFile.exists()) {
+            File[] filesInDir = uploadDirFile.listFiles();
+            if (filesInDir != null) {
+                for (File file : filesInDir) {
+                    file.delete(); // Elimina los archivos
+                }
+            }
+            uploadDirFile.delete(); // Elimina la carpeta
+        }
+    
+        // Crea una nueva carpeta
+        uploadDirFile.mkdirs();
+    
+        Path uploadDir = Paths.get(ruta);
+        try {
+            Files.createDirectories(uploadDir);
+    
+            // Supone que solo sube una imagen a la vez, pero se puede ajustar para múltiples archivos
+            MultipartFile file = files.get(0);
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            Path filePath = uploadDir.resolve(fileName);
+            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+    
+            // Actualiza la entidad del cliente con la imagen
+            clienteEntity.setImagen(fileName); // Guarda solo el nombre de la imagen
+            clienteRepository.save(clienteEntity);
+    
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace(); // Imprime la excepción para depuración
+            return false;
+        }
     }
 
     public boolean subidaImagenes(List<MultipartFile> files, Long idCasa) {
