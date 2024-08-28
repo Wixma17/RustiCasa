@@ -3,12 +3,12 @@ package com.rusticasaback.rusticasaback.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.rusticasaback.rusticasaback.DTOs.ClienteDTO;
 import com.rusticasaback.rusticasaback.Request.LoginRequest;
 import com.rusticasaback.rusticasaback.Request.RegisterRequest;
@@ -33,12 +33,19 @@ public class AuthController {
 
     @PostMapping("/registerUser")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-        return new ResponseEntity<>(clienteService.crearCliente(registerRequest), HttpStatus.CREATED);
+        clienteService.crearCliente(registerRequest);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Cliente Subido");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/subirImagenesUser")
-    public ResponseEntity<?> subirImagenes(@RequestParam("files") List<MultipartFile> files,
-            @RequestParam("gmail") String gmail) {
+    public ResponseEntity<?> subirImagenes(
+            @RequestParam("gmail") String gmail,
+            @RequestParam("files") List<MultipartFile> files) {
+
+        System.out.println("correo=> " + gmail);
+        System.out.println("Fotos=> " + files);
 
         imagenService.subidaImagenPerfil(gmail, files);
         Map<String, String> response = new HashMap<>();

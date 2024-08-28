@@ -1,10 +1,9 @@
 export interface RequestCliente {
   gmail: string;
-  nombre: string;
-  apellido: string;
+  nombre?: string;
+  apellido?: string;
   passwd: string;
   nickname: string;
-  administrador: boolean;
+  administrador?: boolean;
   fechaNacimiento: Date;
-  imagen: string;
 }

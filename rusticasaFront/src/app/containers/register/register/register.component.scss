@@ -3,7 +3,7 @@
 }
 
 .fuenteTitulo{
-  font-size: 60px;
+  font-size: 45px;
 }
 
 .outline {
@@ -33,4 +33,10 @@
   border: 1px solid rgba(255, 255, 255, 0.445); /* Borde ligero para resaltar */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
   color: rgb(27, 27, 27);
+}
+
+@media screen and (min-width: 992px) {
+  .fuenteTitulo{
+    font-size: 60px;
+  }
 }

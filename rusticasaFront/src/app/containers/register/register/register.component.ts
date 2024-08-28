@@ -9,6 +9,10 @@ import {
 import { ClienteService } from 'src/app/shared/services/cliente.service';
 import { Observable, of } from 'rxjs';
 import { map, catchError, debounceTime, switchMap } from 'rxjs/operators';
+import { RequestCliente } from 'src/app/shared/model/requests/request-register.model';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { SubidaImagenRequest } from 'src/app/shared/model/requests/request-subida-imagenesRequest.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -18,11 +22,16 @@ import { map, catchError, debounceTime, switchMap } from 'rxjs/operators';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   selectedFile: File | null = null;
-  isFormSubmitted = false; // Variable para controlar el estado del formulario
+  isFormSubmitted = false; // controla el estado del formulario
+  clienteRegister: RequestCliente;
+  mensajeCreador: any;
+  mensajeImagen: any;
 
   constructor(
     private formBuilder: FormBuilder,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,12 +46,15 @@ export class RegisterComponent implements OnInit {
         [Validators.required, Validators.minLength(8), this.passwordValidator],
       ],
       fechaNa: ['', [Validators.required, this.ageValidator]],
-      nickname: ['', [Validators.required]],
+      nickname: ['', [Validators.required, Validators.maxLength(7)]]
     });
   }
 
+  // validador de si el cliente existe
   existeCliente(clienteService: ClienteService): AsyncValidatorFn {
-    return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+    return (
+      control: AbstractControl
+    ): Observable<{ [key: string]: any } | null> => {
       const email = control.value;
 
       if (!email) {
@@ -57,6 +69,7 @@ export class RegisterComponent implements OnInit {
     };
   }
 
+  // validador de contraseña
   passwordValidator(
     control: AbstractControl
   ): { [key: string]: boolean } | null {
@@ -73,6 +86,7 @@ export class RegisterComponent implements OnInit {
       : { passwordWeak: true };
   }
 
+  // Validador edad
   ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const dob = new Date(control.value);
     const today = new Date();
@@ -86,22 +100,57 @@ export class RegisterComponent implements OnInit {
 
   onFileSelect(event: any) {
     this.selectedFile = event.files[0];
-  }
-
-  onFileUpload(event: any) {
-    console.log('Archivo subido:', this.selectedFile);
+    console.log(this.selectedFile);
   }
 
   registerUsu() {
     this.isFormSubmitted = true; // Indica que el formulario ha sido enviado
 
     if (this.registerForm.valid && this.selectedFile) {
-      console.log('Email:', this.registerForm.value.emailUsu);
-      console.log('Contraseña:', this.registerForm.value.passwd);
-      console.log('Fecha de Nacimiento:', this.registerForm.value.fechaNa);
-      console.log('Nickname:', this.registerForm.value.nickname);
-      console.log('Imagen:', this.selectedFile);
-      // Agrega lógica para enviar el archivo junto con los datos del formulario si es necesario.
+      this.clienteRegister = {
+        gmail: this.registerForm.value.emailUsu,
+        passwd: this.registerForm.value.passwd,
+        nickname: this.registerForm.value.nickname,
+        administrador: false,
+        fechaNacimiento: this.registerForm.value.fechaNa,
+      };
+
+      this.authService.registrarUsuario(this.clienteRegister).subscribe({
+        next: (mess) => {
+          this.mensajeCreador = mess;
+        },
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          console.info('Registro Completado=> ' + this.clienteRegister);
+        },
+      });
+
+      //------------------------------------------------------
+
+      let datosImg: SubidaImagenRequest = {
+        files: this.selectedFile,
+        gmail: this.clienteRegister.gmail,
+      };
+
+      this.authService.subirImagenPerfil(datosImg).subscribe({
+        next: (mess) => {
+          this.mensajeImagen = mess;
+        },
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          console.info('Imagen Subida=> ' + datosImg);
+          sessionStorage.setItem(
+            'datosUsu',
+            JSON.stringify(this.clienteRegister)
+          );
+          this.authService.updateUserData(this.clienteRegister);
+          this.router.navigate(['/welcome']);
+        },
+      });
     } else {
       this.registerForm.markAllAsTouched();
     }

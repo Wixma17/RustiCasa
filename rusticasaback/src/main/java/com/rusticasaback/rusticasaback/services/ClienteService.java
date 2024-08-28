@@ -28,9 +28,11 @@ public class ClienteService {
         }
     }
 
-    public ClienteEntity crearCliente(RegisterRequest register){
+    public ClienteDTO crearCliente(RegisterRequest register){
         ClienteEntity cli= new ClienteDTO(register.getGmail(), register.getNombre(), register.getApellido(), register.getPasswd(), register.getNickname(), register.isAdministrador(), register.getFechaNacimiento(), null).createClienteEntity();           
-        return guardaCliente(cli);
+        guardaCliente(cli);
+        ClienteDTO clienteAux=new ClienteDTO(cli);
+        return clienteAux;
     }
 
     public ClienteEntity guardaCliente(ClienteEntity cli) {

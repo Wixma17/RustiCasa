@@ -78,10 +78,9 @@ export class LoginComponent implements OnInit {
         },
         complete: () => {
           if (this.clienteIni != null) {
-
             sessionStorage.setItem('datosUsu', JSON.stringify(this.clienteIni));
-            this.router.navigate(['/welcome']);
             this.authService.updateUserData(this.clienteIni);
+            this.router.navigate(['/welcome']);
           } else {
             console.error('Cliente no existe');
             this.loginError = 'Usuario o contraseña incorrectos.'; // Establecer el mensaje de error
