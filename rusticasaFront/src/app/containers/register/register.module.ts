@@ -9,6 +9,8 @@ import { RouterModule } from '@angular/router';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import {FileUploadModule} from 'primeng/fileupload';
+import {PasswordModule} from 'primeng/password';
+import {ToggleButtonModule} from 'primeng/togglebutton';
 
 
 
@@ -24,7 +26,9 @@ import {FileUploadModule} from 'primeng/fileupload';
     ReactiveFormsModule,
     CheckboxModule,
     CalendarModule,
-    FileUploadModule
+    FileUploadModule,
+    PasswordModule,
+    ToggleButtonModule
   ]
 })
 export class RegisterModule { }

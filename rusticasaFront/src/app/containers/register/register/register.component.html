@@ -25,16 +25,38 @@
       <!-- Campo de contraseña -->
       <div class="caja-input col-11 mt-2">
         <label for="passwd-input"><i class="bi bi-shield-lock-fill"></i> Introduce tu Contraseña </label>
-        <div class=" col-12 p-1">
-          <input id="passwd-input" type="password" pInputText formControlName="passwd" class="col-12" [ngClass]="{'is-invalid': registerForm.get('passwd').invalid && (registerForm.get('passwd').dirty || registerForm.get('passwd').touched)}">
+        <div class="col-12 p-1">
+          <div class="d-flex justify-content-around">
+              <input
+              id="passwd-input"
+              [type]="showPasswd ? 'text' : 'password'"
+              pPassword
+              formControlName="passwd"
+              class="col-11"
+              strongLabel="Contraseña Segura"
+              mediumLabel="Comprueba que tu contraseña tenga 8 caracteres y caracteres especiales"
+              weakLabel="Contraseña inválida: 8 caracteres y caracteres especiales"
+              [ngClass]="{
+                'is-invalid': registerForm.get('passwd').invalid && (registerForm.get('passwd').dirty || registerForm.get('passwd').touched)
+              }"
+            />
+            <button type="button" (click)="showPassword()" class="btn btn-success">
+              <i [class]="showPasswd ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill'"></i>
+            </button>
+          </div>
+
+          <div>
           <div *ngIf="registerForm.get('passwd').hasError('minlength') && (registerForm.get('passwd').dirty || registerForm.get('passwd').touched)">
             <small class="text-danger">La contraseña debe tener al menos 8 caracteres.</small>
           </div>
           <div *ngIf="registerForm.get('passwd').hasError('passwordWeak') && (registerForm.get('passwd').dirty || registerForm.get('passwd').touched)">
             <small class="text-danger">La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.</small>
           </div>
+          </div>
+
         </div>
       </div>
+
 
       <!-- Campo de fecha nacimiento -->
       <div class="caja-input col-11 mt-2">

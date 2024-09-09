@@ -16,6 +16,7 @@ import { DetailsHouseModule } from './containers/details-house/details-house.mod
 import { RegisterModule } from './containers/register/register.module';
 import { LoginModule } from './containers/login/login.module';
 import {ToggleButtonModule} from 'primeng/togglebutton';
+import { MessageService } from 'primeng/api';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -48,7 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       defaultLanguage: 'es'
     })
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -22,14 +22,14 @@
   text-align: center;
 }
 
-#fondo {
+.fondo {
   background-image: url(../../../../assets/fondoCasa.jpg);
   background-size: cover;
   background-position: 0 70%;
   background-repeat: no-repeat;
   padding: 40px;
 }
-#fondo h1{
+.fondo h1{
   font-size: 5vw;
 }
 
@@ -37,7 +37,7 @@ div h2{
   font-size: 2.5vw;
 }
 
-#fondo h1 ,div h2{
+.fondo h1 ,div h2{
   letter-spacing: 0.05em;
   color: #ffffff;
   text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5),

@@ -37,7 +37,8 @@
       <div class="dropdown order-lg-1 d-flex flex-column col-1 justify-content-center align-items-center" *ngIf="datosUsu">
         <a href="#" class="d-flex flex-column align-items-center justify-content-center link-body-emphasis text-decoration-none " data-bs-toggle="dropdown" data-bs-target="#dropdown" aria-expanded="false"  (click)="toggleDropdown()">
           <img [src]="ruta" alt="tu foto de perfil" width="40" height="40" class="rounded-circle">
-          <p class="p-0 m-0">{{datosUsu.nickname}} <i class="bi bi-caret-down-fill text-center"></i></p>
+          <p class="p-0 m-0 truncate">{{datosUsu.nickname}}</p>
+          <i class="bi bi-caret-down-fill text-center"></i>
         </a>
 
         <ul class="dropdown-menu text-small posMen" id="dropdown">

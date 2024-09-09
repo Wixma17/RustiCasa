@@ -1,28 +1,29 @@
-nav{
+nav {
   background-color: rgb(147 196 124);
 }
 
-h1,h2{
+h1,
+h2 {
   color: black;
 }
 
-h1{
+h1 {
   font-size: 6vw;
 }
 
-h2{
+h2 {
   font-size: 3vw;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-figure figcaption img{
+figure figcaption img {
   width: 100%;
 }
 
-.posMen{
+.posMen {
   left: -120px;
 }
 
@@ -38,7 +39,7 @@ figure figcaption img{
 }
 
 .transicion::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: -5px;
@@ -56,43 +57,49 @@ figure figcaption img{
   transform-origin: left;
 }
 
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 61px;
+}
+
 /*--Fin subrayado y funcionamiento del subrayado--*/
 
-.headerMen{
+.headerMen {
   font-size: 20px;
   width: 100%;
 }
-.pointer{
+.pointer {
   cursor: pointer;
 }
 /*--Responsive--*/
 
 @media screen and (min-width: 992px) {
-  h1{
+  h1 {
     font-size: 1.5vw;
   }
 
-  h2{
+  h2 {
     font-size: 1vw;
   }
 
-  figure figcaption img{
+  figure figcaption img {
     width: 66%;
   }
 
-  .posMen{
+  .posMen {
     left: -80px;
   }
 
-  .transicion:hover{
+  .transicion:hover {
     color: #000;
     transform: scale(1.1);
   }
-
 }
 
 @media screen and (min-width: 1800px) {
-  .posMen{
+  .posMen {
     left: -40px;
   }
 }

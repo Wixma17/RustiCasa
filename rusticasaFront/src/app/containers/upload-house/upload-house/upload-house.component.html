@@ -1,1 +1,90 @@
-<p>upload-house works!</p>
+<div class="container-fluid d-flex justify-content-center flex-column" id="fondo">
+  <div *ngIf="!usuarioLog" class="d-flex flex-column align-items-center border border-success border-opacity-50 border-3 rounded contenedor-cristalizado p-5">
+    <h1>No estás registrado</h1>
+    <p>Para poder subir tu casa para que los demás puedan disfrutar de tu casa necesitas primero <a [routerLink]="['/register']">registrarte</a> o <a [routerLink]="['/login']">iniciar sesión</a></p>
+    <div class="d-flex col-6 justify-content-around p-3">
+      <a class="btn btn-success col-5" [routerLink]="['/register']">Registrarte</a>
+      <a class="btn btn-success col-5" [routerLink]="['/login']">Iniciar sesión</a>
+    </div>
+  </div>
+
+  <div *ngIf="usuarioLog" class="contenedor-cristalizado">
+    <div class="text-center">
+      <h1>¡Sube tu casa!</h1>
+      <h1 class="fs-3">Con unos simples pasos</h1>
+    </div>
+
+    <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+
+    <div *ngIf="activeIndex === 0">
+      <form [formGroup]="formGroup" (ngSubmit)="nextStep()">
+        <h2 class="ms-5 ps-5">Cuentanos algo sobre tu casa</h2>
+
+        <div class="d-flex flex-column align-items-center">
+          <label for="nombreC" class="col-10 m-1">Nombre de la casa:</label>
+          <input id="nombreC" class="col-10 m-1" pInputText formControlName="nombreCasa">
+          <div class="text-danger" *ngIf="formGroup.get('nombreCasa').invalid && (formGroup.get('nombreCasa').touched || isFormSubmitted)">
+            Nombre de la Casa es obligatorio
+          </div>
+        </div>
+
+        <div class="d-flex flex-column align-items-center">
+          <label for="descripC" class="col-10 m-1">Descripción de la Casa:</label>
+          <textarea class="col-10 m-1" id="descripC" [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize" formControlName="descripCasa"></textarea>
+        </div>
+
+        <div class="d-flex justify-content-center m-2">
+          <button class="btn btn-success col-6" type="button" (click)="nextStep()" [disabled]="formGroup.invalid">Siguiente Paso</button>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="activeIndex === 1">
+      <form [formGroup]="formGroup" (ngSubmit)="nextStep()">
+        <h2 class="ms-5 ps-5">¿Dónde se encuentra tu casa?</h2>
+
+        <div class="d-flex flex-column text-center">
+          <p-dropdown styleClass="col-10 m-2 text-center" placeholder="Selecciona Provincia" (onChange)="cargaPueblos()" [showClear]="true" [options]="ListadoProvincias" formControlName="provinciasS" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona una provincia"></p-dropdown>
+
+          <p-dropdown styleClass="col-10 m-2 text-center" placeholder="Selecciona Municipio" [showClear]="true" [options]="listadoPueblos" formControlName="pueblos" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio"></p-dropdown>
+        </div>
+
+        <div class="d-flex justify-content-around m-2">
+          <button class="btn btn-success col-4" type="button" (click)="nextStep()" [disabled]="formGroup.invalid">Siguiente Paso</button>
+          <button class="btn botonSec col-4" type="button" (click)="previousStep()">Paso anterior</button>
+        </div>
+      </form>
+    </div>
+
+    <div *ngIf="activeIndex === 2">
+      <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+        <h2 class="ms-5 ps-5">¿Cómo es tu casa?</h2>
+
+        <div class="d-flex justify-content-center">
+          <div class="col-11 p-1 mt-4">
+            <p-fileUpload
+              accept="image/*"
+              [auto]="true"
+              chooseLabel="Subir imagen"
+              multiple="multiple"
+              (onSelect)="onFileSelect($event)"
+              name="file"
+              [ngClass]="{'is-invalid': !selectedFile && (isFormSubmitted)}"
+            ></p-fileUpload>
+            <div *ngIf="!selectedFile && isFormSubmitted">
+              <small class="text-danger">Debes seleccionar una imagen.</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center m-2">
+          <button class="btn botonSec col-6" type="button" (click)="previousStep()">Paso anterior</button>
+        </div>
+
+        <div class="d-flex justify-content-center m-2">
+          <button class="btn btn-primary col-6" type="submit" [disabled]="formGroup.invalid">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

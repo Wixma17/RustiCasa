@@ -1,0 +1,23 @@
+#fondo{
+  background: url(../../../../assets/fondoLogin.jpg);
+  height: 80vh;
+}
+
+.contenedor-cristalizado {
+  background: rgba(255, 255, 255, 0.527); /* Fondo semi-transparente */
+  backdrop-filter: blur(10px); /* Desenfoque de fondo */
+  border-radius: 15px; /* Bordes redondeados para un mejor efecto */
+  border: 1px solid rgba(255, 255, 255, 0.445); /* Borde ligero para resaltar */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+  color: rgb(27, 27, 27);
+}
+
+.text-danger {
+  color: red;
+  font-size: 0.875rem; // Puedes ajustar el tamaño según sea necesario
+}
+
+.botonSec{
+  background-color: #6b8e23;
+  color: white;
+}

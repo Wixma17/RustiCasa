@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
   clienteRegister: RequestCliente;
   mensajeCreador: any;
   mensajeImagen: any;
+  showPasswd:boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,6 +49,11 @@ export class RegisterComponent implements OnInit {
       fechaNa: ['', [Validators.required, this.ageValidator]],
       nickname: ['', [Validators.required, Validators.maxLength(7)]]
     });
+  }
+
+  showPassword(){
+    this.showPasswd=!this.showPasswd;
+    console.info(this.showPasswd)
   }
 
   // validador de si el cliente existe
