@@ -95,7 +95,7 @@ public class CasaService {
         return new ResponseEntity<>(pageCasaDTO, HttpStatus.OK);
     }
 
-    public CasaEntity crearCasa(CasaRequest casaRequest) {
+    public ResponseEntity<?> crearCasa(CasaRequest casaRequest) {
 
         MunicipioEntity municipio = municipioRepository.findById(casaRequest.getIdMunicipio()).get();
         ClienteEntity cliente = clienteRepository.findById(casaRequest.getGmail()).get();
@@ -108,7 +108,10 @@ public class CasaService {
                 casaRequest.isPiscina(), casaRequest.isWifi(),
                 casaRequest.isJardin(), new ArrayList<>(), cliente, new ArrayList<>(), new ArrayList<>());
 
-        return guardaCasa(nuevaCasa);
+        guardaCasa(nuevaCasa);
+        CasaDTO casaRegistrada = new CasaDTO(nuevaCasa);
+
+        return new ResponseEntity<>(casaRegistrada, HttpStatus.CREATED);
     }
 
     public ResponseEntity<?> getCasa(Long codCasa) {

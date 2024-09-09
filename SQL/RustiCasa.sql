@@ -50,7 +50,6 @@ CREATE OR REPLACE TABLE Imagen (
     nombre_imagen VARCHAR(150) NOT NULL,
     id_casa INT,
     posicion_carrusel INT,
-    formato_imagen VARCHAR(5) NOT NULL,
     FOREIGN KEY (id_casa) REFERENCES Casa(id_casa)
 );
 

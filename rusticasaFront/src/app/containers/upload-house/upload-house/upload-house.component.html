@@ -94,7 +94,7 @@
     </div>
 
     <div *ngIf="activeIndex === 2">
-      <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+      <form [formGroup]="formGroup" (ngSubmit)="submitForm()" enctype="multipart/form-data">
         <h2 class="text-center">¿Cómo se ve tu casa?</h2>
         <h2 class="fs-3 text-center">Pon algunas imagenes para ver tu casa</h2>
 
@@ -102,7 +102,7 @@
           <div class="col-11 p-1 mt-4">
             <p-fileUpload
               accept="image/*"
-              [auto]="true"
+              [auto]="false"
               chooseLabel="Subir imagen"
               multiple="multiple"
               (onSelect)="onFileSelect($event)"

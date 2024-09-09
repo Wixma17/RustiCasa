@@ -26,3 +26,11 @@ body{
 #fondo > div > p-steps > div > ul > li > a{
   background: none;
 }
+
+#fondo > div > div.ng-star-inserted > form > div.d-flex.justify-content-center > div > p-fileupload > div > div.p-fileupload-buttonbar > p-button:nth-child(2) > button{
+  display: none;
+}
+
+#fondo > div > div.ng-star-inserted > form > div.d-flex.justify-content-center > div > p-fileupload > div > div.p-fileupload-buttonbar > p-button:nth-child(3) > button{
+  display: none;
+}

@@ -47,13 +47,20 @@ export class CasaService {
     return this.httpClient.get<CasaResponse>(url);
   }
 
-  registrarCasa(request:RequestRegistrarCasa): Observable<any>{
+  registrarCasa(request: RequestRegistrarCasa): Observable<any> {
     let url = `${environment.urlApiCasas}registrarCasa`;
-    return this.httpClient.post<any>(url,request);
+    return this.httpClient.post<any>(url, request);
   }
 
-  subirImagenCasa(request:SubidaImagenCasaRequest): Observable<any>{
+  subirImagenCasa(request: SubidaImagenCasaRequest): Observable<any> {
     let url = `${environment.urlApiCasas}subirImagenes`;
-    return this.httpClient.post<any>(url,request);
+    const formData: FormData = new FormData();
+    request.files.forEach((file: File) => {
+      formData.append('files', file, file.name);
+    });
+    formData.append('idCasa', request.idCasa.toString());
+    return this.httpClient.post<any>(url, formData, {
+      headers: {},
+    });
   }
 }

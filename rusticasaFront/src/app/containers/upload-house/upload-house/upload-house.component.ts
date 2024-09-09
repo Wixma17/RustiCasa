@@ -121,39 +121,33 @@ export class UploadHouseComponent implements OnInit {
     };
 
     this.casaService.registrarCasa(registrarCasa).subscribe({
-      next: (com) => {},
+      next: (casa) => {
+        console.log(casa);
+        this.datosCasaNombre = casa;
+
+        let listaImagenes: SubidaImagenCasaRequest = {
+          files: this.selectedFile,
+          idCasa: this.datosCasaNombre.idCasa,
+        };
+        console.log(listaImagenes);
+
+        this.casaService.subirImagenCasa(listaImagenes).subscribe({
+          next: (s) => {},
+          error: (err) => {
+            console.error(err);
+          },
+          complete: () => {
+            console.info('Imagenes subidas correctamente');
+          },
+        });
+      },
       error: (err) => {
         console.error(err);
       },
       complete: () => {
         console.info('Subida de casa completada con exito! ');
-        this.casaService
-          .getListaCasasPorNombre(registrarCasa.nombreCasa)
-          .subscribe((casa) => {
-            this.datosCasaNombre = casa;
-
-            let listaImagenes: SubidaImagenCasaRequest = {
-              files: this.selectedFile,
-              idCasa: this.datosCasaNombre.idCasa,
-            };
-
-            this.casaService.subirImagenCasa(listaImagenes).subscribe({
-              next:(s)=>{
-
-              },
-              error:(err)=>{
-                console.error(err);
-              },
-              complete:()=>{
-                console.info("Imagenes subidas correctamente")
-              }
-            });
-
-          });
       },
     });
-
-
   }
 
   cargaPueblos(): void {

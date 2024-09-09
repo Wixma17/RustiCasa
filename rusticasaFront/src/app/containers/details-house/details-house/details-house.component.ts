@@ -43,6 +43,7 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
     this.serviceHouse.getDatosCasaIdCasa(idCasaLong).subscribe({
       next: (casaR) => {
         this.casa = casaR;
+        console.log(this.casa);
       },
       error: (err) => {
         console.error(err);

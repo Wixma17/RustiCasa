@@ -20,4 +20,9 @@ export class MunicipioService {
     let url = `${environment.urlApiMunicipioProv}mun/`+idMun;
     return this.httpClient.get<any>(url);
   }
+
+  getDatosMunicipio(idMun:number): Observable<any> {
+    let url = `${environment.urlApiMunicipioProv}datosMun/`+idMun;
+    return this.httpClient.get<any>(url);
+  }
 }

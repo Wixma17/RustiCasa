@@ -95,9 +95,8 @@ public class CasaController {
      */
 
     @PostMapping("/registrarCasa")
-    public ResponseEntity<?> registrarCasa(@RequestBody CasaRequest casaRequest) {
-        casaService.crearCasa(casaRequest);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> registrarCasa(@RequestBody CasaRequest casaRequest) {        
+        return casaService.crearCasa(casaRequest);
     }
 
     @PostMapping("/subirImagenes")

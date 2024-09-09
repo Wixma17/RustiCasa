@@ -38,4 +38,9 @@ public class MunicipioService {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    public ResponseEntity<?> getDatosMun(int idMun) {
+        MunicipioDTO municipioDTO = new MunicipioDTO(municipioRepository.findById(idMun).get());        
+        return new ResponseEntity<>(municipioDTO, HttpStatus.OK);
+    }
+
 }
