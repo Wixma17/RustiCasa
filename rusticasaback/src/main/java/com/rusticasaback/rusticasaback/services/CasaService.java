@@ -100,23 +100,23 @@ public class CasaService {
         MunicipioEntity municipio = municipioRepository.findById(casaRequest.getIdMunicipio()).get();
         ClienteEntity cliente = clienteRepository.findById(casaRequest.getGmail()).get();
 
-        CasaEntity nuevaCasa = new CasaEntity(casaRequest.getCasaDto().getIdCasa(),
-                casaRequest.getCasaDto().getDescripcion(),
-                casaRequest.getCasaDto().getNombreCasa(), casaRequest.getCasaDto().isMascotas(), municipio,
-                casaRequest.getCasaDto().getPrecioNoche(), casaRequest.getCasaDto().getNumeroHabitaciones(),
-                casaRequest.getCasaDto().getNumeroInquilinos(),
-                casaRequest.getCasaDto().isPiscina(), casaRequest.getCasaDto().isWifi(),
-                casaRequest.getCasaDto().isJardin(), new ArrayList<>(), cliente, new ArrayList<>(), new ArrayList<>());
+        CasaEntity nuevaCasa = new CasaEntity(casaRequest.getIdCasa(),
+                casaRequest.getDescripcion(),
+                casaRequest.getNombreCasa(), casaRequest.isMascotas(), municipio,
+                casaRequest.getPrecioNoche(), casaRequest.getNumeroHabitaciones(),
+                casaRequest.getNumeroInquilinos(),
+                casaRequest.isPiscina(), casaRequest.isWifi(),
+                casaRequest.isJardin(), new ArrayList<>(), cliente, new ArrayList<>(), new ArrayList<>());
 
         return guardaCasa(nuevaCasa);
     }
 
-    public ResponseEntity<?> getCasa(Long codCasa,String cliente) {
+    public ResponseEntity<?> getCasa(Long codCasa) {
         CasaEntity casaEntity = casaRepository.findById(codCasa).get();
 
-        CasaDTO casaDTO = new CasaDTO(casaEntity);        
+        CasaDTO casaDTO = new CasaDTO(casaEntity);
+        ClienteDTO cliente = new ClienteDTO(casaEntity.getClientePublicador());
         MunicipioDTO municipio = new MunicipioDTO(casaEntity.getMunicipio());
-        
 
         CasaCompletaResponse casaResultado = new CasaCompletaResponse(casaDTO, municipio,
                 ImagenDTO.convertFromEntityList(casaEntity.getListaImagenes()), cliente);

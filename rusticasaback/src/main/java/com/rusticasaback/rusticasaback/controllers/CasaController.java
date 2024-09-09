@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.rusticasaback.rusticasaback.Request.AlquilaRequest;
 import com.rusticasaback.rusticasaback.Request.CasaRequest;
 import com.rusticasaback.rusticasaback.Request.OpinaRequest;
-import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import com.rusticasaback.rusticasaback.services.AlquilaService;
 import com.rusticasaback.rusticasaback.services.CasaService;
 import com.rusticasaback.rusticasaback.services.ImagenService;
@@ -98,11 +96,8 @@ public class CasaController {
 
     @PostMapping("/registrarCasa")
     public ResponseEntity<?> registrarCasa(@RequestBody CasaRequest casaRequest) {
-
-        CasaEntity casaEntity = casaService.crearCasa(casaRequest);
-
-        return casaService.getCasa(casaEntity.getIdCasa());
-
+        casaService.crearCasa(casaRequest);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/subirImagenes")

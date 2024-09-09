@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem, MessageService, SelectItem } from 'primeng/api';
 import { RequestRegistrarCasa } from 'src/app/shared/model/requests/request-registrar-casa-.model';
+import { SubidaImagenCasaRequest } from 'src/app/shared/model/requests/request-subida-img-casa.model';
 import { MunicipioResponse } from 'src/app/shared/model/responses/municipio-response.model';
 import { ProvinciaResponse } from 'src/app/shared/model/responses/provincia-response.model';
+import { CasaService } from 'src/app/shared/services/casa.service';
 import { MunicipioService } from 'src/app/shared/services/municipio.service';
 import { ProvinciaService } from 'src/app/shared/services/provincia.service';
 
@@ -25,23 +27,25 @@ export class UploadHouseComponent implements OnInit {
   idProv: number;
   selectedFile: File[] = [];
   isFormSubmitted: boolean = false;
+  datosCasaNombre: any;
 
   constructor(
     public messageService: MessageService,
     private fb: FormBuilder,
     private municipioService: MunicipioService,
-    private provinciaService: ProvinciaService
+    private provinciaService: ProvinciaService,
+    private casaService: CasaService
   ) {
     this.formGroup = this.fb.group({
       nombreCasa: ['', Validators.required],
       descripCasa: [''],
-      sPis:[false],
-      sMas:[false],
-      sWif:[false],
-      sJar:[false],
-      nInquilinos:[],
-      nHabitaciones:[],
-      precio:[, Validators.required]
+      sPis: [false],
+      sMas: [false],
+      sWif: [false],
+      sJar: [false],
+      nInquilinos: [],
+      nHabitaciones: [],
+      precio: [, Validators.required],
     });
 
     this.formLocaCasa = this.fb.group({
@@ -102,9 +106,7 @@ export class UploadHouseComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log(this.selectedFile);
-
-    let registrarCasa:RequestRegistrarCasa={
+    let registrarCasa: RequestRegistrarCasa = {
       descripcion: this.formGroup.value.descripCasa,
       nombreCasa: this.formGroup.value.nombreCasa,
       mascotas: this.formGroup.value.sMas,
@@ -114,11 +116,44 @@ export class UploadHouseComponent implements OnInit {
       piscina: this.formGroup.value.sPis,
       wifi: this.formGroup.value.sWif,
       jardin: this.formGroup.value.sJar,
-      idMunicipio:  this.formLocaCasa.value.pueblos,
-      gmail: this.usuarioLog.gmail
-    }
+      idMunicipio: this.formLocaCasa.value.pueblos,
+      gmail: this.usuarioLog.gmail,
+    };
 
-    console.info(registrarCasa);
+    this.casaService.registrarCasa(registrarCasa).subscribe({
+      next: (com) => {},
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        console.info('Subida de casa completada con exito! ');
+        this.casaService
+          .getListaCasasPorNombre(registrarCasa.nombreCasa)
+          .subscribe((casa) => {
+            this.datosCasaNombre = casa;
+
+            let listaImagenes: SubidaImagenCasaRequest = {
+              files: this.selectedFile,
+              idCasa: this.datosCasaNombre.idCasa,
+            };
+
+            this.casaService.subirImagenCasa(listaImagenes).subscribe({
+              next:(s)=>{
+
+              },
+              error:(err)=>{
+                console.error(err);
+              },
+              complete:()=>{
+                console.info("Imagenes subidas correctamente")
+              }
+            });
+
+          });
+      },
+    });
+
+
   }
 
   cargaPueblos(): void {

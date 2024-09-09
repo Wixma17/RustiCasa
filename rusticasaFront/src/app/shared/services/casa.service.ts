@@ -6,6 +6,7 @@ import { CasaResponse } from '../model/responses/casa-response.model';
 import { ImagenResponse } from '../model/responses/imagen-response.model';
 import { OpinionResponse } from '../model/responses/opinion-response.model';
 import { RequestRegistrarCasa } from '../model/requests/request-registrar-casa-.model';
+import { SubidaImagenCasaRequest } from '../model/requests/request-subida-img-casa.model';
 
 @Injectable()
 export class CasaService {
@@ -46,8 +47,13 @@ export class CasaService {
     return this.httpClient.get<CasaResponse>(url);
   }
 
-  registrarCasa(request:RequestRegistrarCasa): Observable<CasaResponse>{
+  registrarCasa(request:RequestRegistrarCasa): Observable<any>{
     let url = `${environment.urlApiCasas}registrarCasa`;
-    return this.httpClient.post<CasaResponse>(url,request);
+    return this.httpClient.post<any>(url,request);
+  }
+
+  subirImagenCasa(request:SubidaImagenCasaRequest): Observable<any>{
+    let url = `${environment.urlApiCasas}subirImagenes`;
+    return this.httpClient.post<any>(url,request);
   }
 }
