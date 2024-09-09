@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MenuItem, MessageService, SelectItem } from 'primeng/api';
+import { RequestRegistrarCasa } from 'src/app/shared/model/requests/request-registrar-casa-.model';
 import { MunicipioResponse } from 'src/app/shared/model/responses/municipio-response.model';
 import { ProvinciaResponse } from 'src/app/shared/model/responses/provincia-response.model';
 import { MunicipioService } from 'src/app/shared/services/municipio.service';
@@ -39,7 +40,8 @@ export class UploadHouseComponent implements OnInit {
       sWif:[false],
       sJar:[false],
       nInquilinos:[],
-      nHabitaciones:[]
+      nHabitaciones:[],
+      precio:[, Validators.required]
     });
 
     this.formLocaCasa = this.fb.group({
@@ -50,7 +52,7 @@ export class UploadHouseComponent implements OnInit {
 
   ngOnInit(): void {
     if (sessionStorage.getItem('datosUsu')) {
-      this.usuarioLog = sessionStorage.getItem('datosUsu');
+      this.usuarioLog = JSON.parse(sessionStorage.getItem('datosUsu'));
       console.info(this.usuarioLog);
 
       this.items = [
@@ -100,9 +102,23 @@ export class UploadHouseComponent implements OnInit {
   }
 
   submitForm(): void {
-    console.log('Form submitted:', this.formGroup.value);
-    console.log('Form submitted:', this.formLocaCasa.value);
     console.log(this.selectedFile);
+
+    let registrarCasa:RequestRegistrarCasa={
+      descripcion: this.formGroup.value.descripCasa,
+      nombreCasa: this.formGroup.value.nombreCasa,
+      mascotas: this.formGroup.value.sMas,
+      precioNoche: this.formGroup.value.precio,
+      numeroHabitaciones: this.formGroup.value.nHabitaciones,
+      numeroInquilinos: this.formGroup.value.nInquilinos,
+      piscina: this.formGroup.value.sPis,
+      wifi: this.formGroup.value.sWif,
+      jardin: this.formGroup.value.sJar,
+      idMunicipio:  this.formLocaCasa.value.pueblos,
+      gmail: this.usuarioLog.gmail
+    }
+
+    console.info(registrarCasa);
   }
 
   cargaPueblos(): void {

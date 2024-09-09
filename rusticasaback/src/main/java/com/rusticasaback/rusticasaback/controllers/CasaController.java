@@ -110,8 +110,8 @@ public class CasaController {
             @RequestParam("idCasa") Long idCasa) {
 
         imagenService.subidaImagenes(files, idCasa);
-
-        return casaService.getCasa(idCasa);
+        //casaService.getCasa(idCasa);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/subirOpinion")

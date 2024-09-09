@@ -111,12 +111,12 @@ public class CasaService {
         return guardaCasa(nuevaCasa);
     }
 
-    public ResponseEntity<?> getCasa(Long codCasa) {
+    public ResponseEntity<?> getCasa(Long codCasa,String cliente) {
         CasaEntity casaEntity = casaRepository.findById(codCasa).get();
 
-        CasaDTO casaDTO = new CasaDTO(casaEntity);
-        ClienteDTO cliente = new ClienteDTO(casaEntity.getClientePublicador());
+        CasaDTO casaDTO = new CasaDTO(casaEntity);        
         MunicipioDTO municipio = new MunicipioDTO(casaEntity.getMunicipio());
+        
 
         CasaCompletaResponse casaResultado = new CasaCompletaResponse(casaDTO, municipio,
                 ImagenDTO.convertFromEntityList(casaEntity.getListaImagenes()), cliente);

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { CasaResponse } from '../model/responses/casa-response.model';
 import { ImagenResponse } from '../model/responses/imagen-response.model';
 import { OpinionResponse } from '../model/responses/opinion-response.model';
+import { RequestRegistrarCasa } from '../model/requests/request-registrar-casa-.model';
 
 @Injectable()
 export class CasaService {
@@ -43,5 +44,10 @@ export class CasaService {
   getDatosCasaIdCasa(idCasa: number): Observable<CasaResponse> {
     let url = `${environment.urlApiCasas}datosCasa/${idCasa}`;
     return this.httpClient.get<CasaResponse>(url);
+  }
+
+  registrarCasa(request:RequestRegistrarCasa): Observable<CasaResponse>{
+    let url = `${environment.urlApiCasas}registrarCasa`;
+    return this.httpClient.post<CasaResponse>(url,request);
   }
 }
