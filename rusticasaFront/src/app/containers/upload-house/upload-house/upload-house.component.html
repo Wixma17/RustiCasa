@@ -11,14 +11,14 @@
   <div *ngIf="usuarioLog" class="contenedor-cristalizado">
     <div class="text-center">
       <h1>¡Sube tu casa!</h1>
-      <h1 class="fs-3">Con unos simples pasos</h1>
+      <h1 class="fs-3">Con 3 simples pasos</h1>
     </div>
 
-    <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+    <p-steps [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
 
     <div *ngIf="activeIndex === 0">
       <form [formGroup]="formGroup" (ngSubmit)="nextStep()">
-        <h2 class="ms-5 ps-5">Cuentanos algo sobre tu casa</h2>
+        <h2 class="text-center">Cuéntanos algo sobre tu casa</h2>
 
         <div class="d-flex flex-column align-items-center">
           <label for="nombreC" class="col-10 m-1">Nombre de la casa:</label>
@@ -33,32 +33,66 @@
           <textarea class="col-10 m-1" id="descripC" [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize" formControlName="descripCasa"></textarea>
         </div>
 
+        <div class="d-flex justify-content-around p-2">
+          <div class="p-field-checkbox">
+            <p-checkbox name="servicio" binary="true" formControlName="sPis" inputId="pis"></p-checkbox>
+            <label for="pis" class="ms-2">Piscina</label>
+          </div>
+
+          <div class="p-field-checkbox">
+            <p-checkbox name="servicio" binary="true" formControlName="sMas" inputId="mas"></p-checkbox>
+            <label for="mas" class="ms-2">Mascota</label>
+          </div>
+
+          <div class="p-field-checkbox">
+            <p-checkbox name="servicio" binary="true" formControlName="sWif" inputId="wif"></p-checkbox>
+            <label for="wif" class="ms-2">Wifi</label>
+          </div>
+
+          <div class="p-field-checkbox">
+            <p-checkbox name="servicio" binary="true" formControlName="sJar" inputId="jar"></p-checkbox>
+            <label for="jar" class="ms-2">Jardín</label>
+          </div>
+        </div>
+
+        <div class="text-center d-flex flex-column flex-md-row align-items-center justify-content-around">
+          <p-inputNumber  placeholder="Numero Inquilinos" formControlName="nInquilinos" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+          <p-inputNumber  placeholder="Numero Habitaciones" formControlName="nHabitaciones" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+        </div>
+
         <div class="d-flex justify-content-center m-2">
-          <button class="btn btn-success col-6" type="button" (click)="nextStep()" [disabled]="formGroup.invalid">Siguiente Paso</button>
+          <button class="btn btn-success col-6" type="button" (click)="nextStep()" [disabled]="formGroup.invalid">Siguiente Paso <i class="bi bi-arrow-right"></i></button>
         </div>
       </form>
     </div>
 
     <div *ngIf="activeIndex === 1">
-      <form [formGroup]="formGroup" (ngSubmit)="nextStep()">
-        <h2 class="ms-5 ps-5">¿Dónde se encuentra tu casa?</h2>
+      <form [formGroup]="formLocaCasa" (ngSubmit)="nextStep()">
+        <h2 class="text-center">¿Dónde se encuentra tu casa?</h2>
 
         <div class="d-flex flex-column text-center">
           <p-dropdown styleClass="col-10 m-2 text-center" placeholder="Selecciona Provincia" (onChange)="cargaPueblos()" [showClear]="true" [options]="ListadoProvincias" formControlName="provinciasS" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona una provincia"></p-dropdown>
+          <div class="text-danger" *ngIf="idProv ==null && (formLocaCasa.get('provinciasS').touched || isFormSubmitted)">
+            Selecciona una provincia
+          </div>
 
           <p-dropdown styleClass="col-10 m-2 text-center" placeholder="Selecciona Municipio" [showClear]="true" [options]="listadoPueblos" formControlName="pueblos" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio"></p-dropdown>
+          <div class="text-danger" *ngIf="listaMunicipio.length < 0 && (formLocaCasa.get('pueblos').touched || isFormSubmitted)">
+            Selecciona un municpio
+          </div>
         </div>
 
         <div class="d-flex justify-content-around m-2">
-          <button class="btn btn-success col-4" type="button" (click)="nextStep()" [disabled]="formGroup.invalid">Siguiente Paso</button>
-          <button class="btn botonSec col-4" type="button" (click)="previousStep()">Paso anterior</button>
+          <button class="btn botonSec col-4" type="button" (click)="previousStep()"><i class="bi bi-arrow-left"></i> Paso anterior </button>
+          <button class="btn btn-success col-4" type="button" (click)="nextStep()" [disabled]="formLocaCasa.invalid">Siguiente Paso <i class="bi bi-arrow-right"></i></button>
         </div>
       </form>
     </div>
 
     <div *ngIf="activeIndex === 2">
       <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
-        <h2 class="ms-5 ps-5">¿Cómo es tu casa?</h2>
+        <h2 class="text-center">¿Cómo se ve tu casa?</h2>
+        <h2 class="fs-3 text-center">Pon algunas imagenes para ver tu casa</h2>
 
         <div class="d-flex justify-content-center">
           <div class="col-11 p-1 mt-4">
@@ -77,13 +111,14 @@
           </div>
         </div>
 
-        <div class="d-flex justify-content-center m-2">
-          <button class="btn botonSec col-6" type="button" (click)="previousStep()">Paso anterior</button>
+
+        <div class="d-flex justify-content-around m-2">
+          <button class="btn botonSec col-4" type="button" (click)="previousStep()"><i class="bi bi-arrow-left"></i> Paso anterior</button>
+          <button class="btn btn-success col-4" type="submit" [disabled]="formGroup.invalid || formLocaCasa.invalid">
+            <i class="bi bi-upload"></i> Subir mi Casa
+          </button>
         </div>
 
-        <div class="d-flex justify-content-center m-2">
-          <button class="btn btn-primary col-6" type="submit" [disabled]="formGroup.invalid">Enviar</button>
-        </div>
       </form>
     </div>
   </div>

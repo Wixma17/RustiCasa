@@ -17,19 +17,34 @@ export class UploadHouseComponent implements OnInit {
   listaMunicipio: MunicipioResponse[] = [];
   listaProv: ProvinciaResponse[] = [];
   formGroup: FormGroup;
+  formLocaCasa: FormGroup;
   activeIndex: number = 0;
   usuarioLog: any;
   items: MenuItem[] = [];
   idProv: number;
-  selectedFile: File | null = null;
+  selectedFile: File[] = [];
   isFormSubmitted: boolean = false;
 
-  constructor(public messageService: MessageService, private fb: FormBuilder, private municipioService: MunicipioService, private provinciaService: ProvinciaService) {
+  constructor(
+    public messageService: MessageService,
+    private fb: FormBuilder,
+    private municipioService: MunicipioService,
+    private provinciaService: ProvinciaService
+  ) {
     this.formGroup = this.fb.group({
       nombreCasa: ['', Validators.required],
       descripCasa: [''],
-      provinciasS: [null],
-      pueblos: [null]
+      sPis:[false],
+      sMas:[false],
+      sWif:[false],
+      sJar:[false],
+      nInquilinos:[],
+      nHabitaciones:[]
+    });
+
+    this.formLocaCasa = this.fb.group({
+      provinciasS: [null, Validators.required],
+      pueblos: [null, Validators.required],
     });
   }
 
@@ -85,15 +100,15 @@ export class UploadHouseComponent implements OnInit {
   }
 
   submitForm(): void {
-    if (this.formGroup.valid) {
-      console.log('Form submitted:', this.formGroup.value);
-    }
+    console.log('Form submitted:', this.formGroup.value);
+    console.log('Form submitted:', this.formLocaCasa.value);
+    console.log(this.selectedFile);
   }
 
   cargaPueblos(): void {
     this.listaMunicipio = [];
     this.listadoPueblos = [];
-    this.idProv = this.formGroup.value.provinciasS;
+    this.idProv = this.formLocaCasa.value.provinciasS;
 
     this.municipioService.getListaMunicipio(this.idProv).subscribe({
       next: (mun) => {
@@ -119,6 +134,12 @@ export class UploadHouseComponent implements OnInit {
   }
 
   onFileSelect(event: any): void {
-    this.selectedFile = event.files[0];
+    const fileList: FileList = event.files; // Asumiendo que event.files es FileList
+
+    // Recorrer usando un bucle for clásico
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i];
+      this.selectedFile.push(file);
+    }
   }
 }

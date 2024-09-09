@@ -13,6 +13,7 @@ import {StepsModule} from 'primeng/steps';
 import { DropdownModule } from 'primeng/dropdown';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 
@@ -34,6 +35,7 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     BrowserAnimationsModule,
     NoopAnimationsModule,
     InputTextareaModule,
+    InputNumberModule,
   ]
 })
 export class UploadHouseModule { }
