@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
     const date = new Date(isoString);
 
     // Obtenemos el día, mes y año
-    const day = date.getUTCDate().toString().padStart(2, '0');
+    const day = (date.getUTCDate()+1).toString().padStart(2, '0');
     const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
     const year = date.getUTCFullYear();
 

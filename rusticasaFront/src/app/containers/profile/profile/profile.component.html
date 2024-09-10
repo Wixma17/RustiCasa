@@ -52,11 +52,17 @@
           <i [class]="showPasswd ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill'"></i>
         </button>
       </div>
+      <div *ngIf="modificaForm.get('passwdUsu').hasError('passwordWeak') && (modificaForm.get('passwdUsu').dirty || modificaForm.get('passwdUsu').touched)">
+        <small class="text-danger">La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter especial.</small>
+      </div>
     </div>
 
     <div class="m-4">
       <label for="fech"><i class="bi bi-calendar-event"></i> Fecha Nacimiento: </label>
       <p-calendar id="fech" styleClass="col-12" placeholder="Fecha Nacimiento" formControlName="dateUsu" selectionMode="single" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="1"></p-calendar>
+      <div *ngIf="modificaForm.get('dateUsu').hasError('ageInvalid') && (modificaForm.get('dateUsu').dirty || modificaForm.get('dateUsu').touched)">
+        <small class="text-danger">Debes ser mayor de edad.</small>
+      </div>
     </div>
 
     <div class="text-center m-3">
@@ -70,7 +76,7 @@
     <button class="btn btn-danger col-10" (click)="logout()"> <i class="bi bi-box-arrow-left"></i> Cerrar Sesión</button>
   </div>
 
-  <div class="toast-container position-fixed bottom-0 end-0 "></div>
+  <div class="toast-container" style="right: 6px;position: fixed;bottom: 6px;">
     <div id="liveToast" class="toast bg-success" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header">
         <img src="../../../../assets/LogoSimple.PNG" class="rounded me-2 col-2">
