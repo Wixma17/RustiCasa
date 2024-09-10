@@ -1,55 +1,68 @@
 <div *ngIf="casa" class="container-fluid">
-
   <div class="d-flex justify-content-between">
-    <h1>{{casa.nombreCasa}}</h1>
+    <h1>{{ casa.nombreCasa }}</h1>
 
-    <div *ngIf="listaOpinionCasa" class="d-flex align-items-center justify-content-end justify-content-md-end">
-      <p-rating [ngModel]="mediaOp" [readonly]="true" [cancel]="false" [stars]="5"></p-rating>
+    <div
+      *ngIf="listaOpinionCasa"
+      class="d-flex align-items-center justify-content-end justify-content-md-end"
+    >
+      <p-rating
+        [ngModel]="mediaOp"
+        [readonly]="true"
+        [cancel]="false"
+        [stars]="5"
+      ></p-rating>
       <span class="ms-1 mb-1">({{ listaOpinionCasa.length }})</span>
     </div>
   </div>
 
-  <h1 class="fs-2">Precio por noche: {{casa.precioNoche}} €</h1>
-  <h1 class="fs-3">Localizado en: {{casa.municipio.municipio}}</h1>
+  <div class="d-flex flex-column flex-lg-row justify-content-around">
+    <div class="col-lg-4 d-flex flex-column justify-content-evenly order-lg-1">
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <h1 class="fs-2">Precio por noche: {{ casa.precioNoche }} €</h1>
+        <h1 class="fs-3">Localizado en: <a href="https://www.google.com/search?q={{ casa.municipio.municipio }}">{{ casa.municipio.municipio }}</a></h1>
+      </div>
 
-  <div class="col-12" *ngIf="listaImagenes">
-    <p-carousel [value]="listaImagenes" class="p-1 col-10">
-      <ng-template let-imagen pTemplate="item">
-        <img [src]="imagen.safeUrl" class="w-100"/>
-      </ng-template>
-    </p-carousel>
-  </div>
+      <div
+        class="border rounded p-2 m-2 d-flex flex-column justify-content-center"
+        style="background-color: #d2b48c0e"
+      >
+        <h1 class="fs-4">Servicios disponibles de la Casa:</h1>
+        <p *ngIf="casa.jardin">
+          <i class="pi pi-check" style="font-size: 1rem; color: #75b77c"></i>
+          Tiene jardin
+        </p>
 
-  <div class="d-flex flex-column">
-    <div class="border rounded p-2 m-2 d-flex flex-column justify-content-center">
-      <h1 class="fs-4">Esta casa cuenta con los siguientes servicios disponibles: </h1>
-      <p>
-        <i class="pi pi-check" style="font-size: 1rem; color: #75b77c;" *ngIf="casa.jardin"></i>
-        <i class="pi pi-times" style="font-size: 1rem; color: red;" *ngIf="!casa.jardin"></i>
-        <span *ngIf="!casa.jardin"> No </span> Tiene jardin
-      </p>
-
-      <p>
-        <i class="pi pi-check" style="font-size: 1rem; color: #75b77c" *ngIf="casa.wifi"></i>
-        <i class="pi pi-times" style="font-size: 1rem; color: red;" *ngIf="!casa.wifi"></i>
-        <span *ngIf="!casa.wifi"> No </span> Tiene Wifi
-      </p>
-      <p>
-        <i class="pi pi-check" style="font-size: 1rem; color: #75b77c" *ngIf="casa.piscina"></i>
-        <i class="pi pi-times" style="font-size: 1rem; color: red;" *ngIf="!casa.piscina"></i>
-        <span *ngIf="!casa.piscina"> No </span> Tiene piscina
-      </p>
-      <p>
-        <i class="pi pi-check" style="font-size: 1rem; color: #75b77c" *ngIf="casa.mascotas"></i>
-        <i class="pi pi-times" style="font-size: 1rem; color: red;" *ngIf="!casa.mascotas"></i>
-        <span *ngIf="!casa.mascotas"> No </span> Acepta mascotas
-      </p>
+        <p *ngIf="casa.wifi">
+          <i class="pi pi-check" style="font-size: 1rem; color: #75b77c"></i>
+          Tiene Wifi
+        </p>
+        <p *ngIf="casa.piscina">
+          <i class="pi pi-check" style="font-size: 1rem; color: #75b77c"></i>
+          Tiene piscina
+        </p>
+        <p *ngIf="casa.mascotas">
+          <i class="pi pi-check" style="font-size: 1rem; color: #75b77c"></i>
+          Acepta mascotas
+        </p>
+      </div>
     </div>
 
-    <p class="p-2">{{casa.descripcion}}</p>
+    <div class="col-12 col-lg-7" *ngIf="listaImagenes">
+      <p-carousel [value]="listaImagenes" class="p-1 col-11">
+        <ng-template let-imagen pTemplate="item">
+          <img
+            [src]="imagen.safeUrl"
+            class="w-100 d-flex justify-content-center align-items-center text-center"
+          />
+        </ng-template>
+      </p-carousel>
+    </div>
   </div>
 
-  <app-mapa [datosLoc]="casa.municipio"></app-mapa>
+  <div class="d-flex flex-column col-12 col-lg-4"></div>
 
+  <p class="p-2">{{ casa.descripcion }}</p>
+
+  <app-mapa [datosLoc]="casa.municipio" class="m-2"></app-mapa>
 </div>
-

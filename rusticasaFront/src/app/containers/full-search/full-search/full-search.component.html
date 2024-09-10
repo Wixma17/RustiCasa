@@ -3,7 +3,7 @@
   <aside class="col-12 col-lg-3 d-flex justify-content-center">
       <form [formGroup]="formuReact" *ngIf="formuReact" class="col-12">
 
-        <div class="col-11 d-flex flex-column justify-content-center">
+        <div class="col-11 d-flex flex-column justify-content-center mb-4">
           <p-checkbox styleClass="m-1" [formControl]="formuReact.controls['piscina']" label="Piscina"></p-checkbox>
 
           <p-checkbox styleClass="m-1" [formControl]="formuReact.controls['wifi']" label="Wifi"></p-checkbox>
@@ -14,22 +14,25 @@
         </div>
 
 
-        <div class="col-12 col-md-10 d-flex align-items-center justify-content-around">
-          <label class="pe-3">{{formuReact.controls['precioValor'].value[0]}}</label>
-          <p-slider [formControl]="formuReact.controls['precioValor']" [range]="true" [max]="precioMax" [min]="0" class="col-8 me-1 ms-1"></p-slider>
-          <label class="ps-3">{{formuReact.controls['precioValor'].value[1]}}</label>
+        <div class="col-12 col-md-10 d-flex flex-column mt-4">
+          <h1 class="fs-6">Precio por noche/s (en €):</h1>
+          <div class="col-12 col-md-10 d-flex align-items-center justify-content-around">
+            <label class="pe-3">{{formuReact.controls['precioValor'].value[0]}}</label>
+            <p-slider [formControl]="formuReact.controls['precioValor']" [range]="true" [max]="precioMax" [min]="0" class="col-8 me-1 ms-1"></p-slider>
+            <label class="ps-3">{{formuReact.controls['precioValor'].value[1]}}</label>
+          </div>
         </div>
 
         <!--Formu welcome-->
-        <div class="col-12 d-flex flex-column">
-          <p-dropdown styleClass="col-12 mt-2" placeholder="{{provSele}}" (onChange)="cargaPueblos()" [showClear]="true" [options]="ListadoProvincias" [formControl]="formuReact.controls['provinciasS']" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona una provincia" ></p-dropdown>
+        <div class="col-12 d-flex flex-column mt-2">
+          <p-dropdown styleClass="col-12 mt-3" placeholder="{{provSele}}" (onChange)="cargaPueblos()" [showClear]="true" [options]="ListadoProvincias" [formControl]="formuReact.controls['provinciasS']" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona una provincia" ></p-dropdown>
 
-          <p-dropdown styleClass="col-12 mt-2" placeholder="{{muniSele}}" [showClear]="true" [options]="listadoPueblos" [formControl]="formuReact.controls['pueblos']"  [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio" #selectPueblos></p-dropdown>
+          <p-dropdown styleClass="col-12 mt-3" placeholder="{{muniSele}}" [showClear]="true" [options]="listadoPueblos" [formControl]="formuReact.controls['pueblos']"  [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio" #selectPueblos></p-dropdown>
 
-          <p-inputNumber styleClass="col-12 mt-2" placeholder="Numero Inquilinos" [formControl]="formuReact.controls['nInquilinos']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
-          <p-inputNumber styleClass="col-12 mt-2" placeholder="Numero de habitaciones" [formControl]="formuReact.controls['nHabitaciones']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+          <p-inputNumber styleClass="col-12 mt-3" placeholder="Numero Inquilinos" [formControl]="formuReact.controls['nInquilinos']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+          <p-inputNumber styleClass="col-12 mt-3" placeholder="Numero de habitaciones" [formControl]="formuReact.controls['nHabitaciones']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
 
-          <p-calendar styleClass="col-12 text-center mt-2" placeholder="Fecha entrada - Fecha Salida" [formControl]="formuReact.controls['fechas']" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="2"></p-calendar>
+          <p-calendar styleClass="col-12 text-center mt-3" placeholder="Fecha entrada - Fecha Salida" [formControl]="formuReact.controls['fechas']" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="2"></p-calendar>
           <div *ngIf="formuReact.get('fechas').invalid && formuReact.get('fechas').touched" class="d-flex justify-content-center m-3">
             <div *ngIf="formuReact.get('fechas').errors.required" class="bg-white col-4 text-danger rounded-4">
               <span class="fs-3">* Fecha es obligatoria</span>
@@ -39,7 +42,7 @@
         </div>
         <!--Fin Formu welcome-->
 
-        <div class="d-flex  justify-content-center align-items-center">
+        <div class="d-flex  justify-content-center align-items-center mt-2">
           <button type="button" class="btn btn-success m-1 col-5" id="liveToastBtn" (click)="buscaFiltro()"><i class="bi bi-binoculars"></i> Buscar</button>
           <!--<button class="btn btn-danger m-1 col-5" type="reset"><i class="bi bi-trash3"></i> Limpiar</button>-->
         </div>
