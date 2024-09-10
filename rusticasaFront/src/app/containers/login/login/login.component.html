@@ -20,8 +20,13 @@
       <!-- Campo de contraseña -->
       <div class="caja-input col-11 mt-2">
         <label for="passwd-input"><i class="bi bi-shield-lock-fill"></i> <span class="accesibilidad">Introduce tu</span> Contraseña </label>
-        <div class="col-12 p-1">
-          <input id="passwd-input" type="password" pInputText formControlName="passwd" class="col-12">
+        <div class="col-11 p-1">
+          <div class="d-flex justify-content-around col-12">
+            <input id="passwd-input" [type]="showPasswd ? 'text' : 'password'" pInputText formControlName="passwd" class="col-12">
+            <button type="button" (click)="showPassword()" class="btn btn-success ms-4">
+              <i [class]="showPasswd ? 'bi bi-eye-fill' : 'bi bi-eye-slash-fill'"></i>
+            </button>
+          </div>
           <div *ngIf="loginForm.get('passwd').touched && loginForm.get('passwd').invalid" class="text-danger">
             <div *ngIf="loginForm.get('passwd').errors.required">La contraseña es obligatoria.</div>
           </div>

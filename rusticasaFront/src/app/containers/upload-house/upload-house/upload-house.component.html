@@ -1,4 +1,4 @@
-<div class="container-fluid d-flex justify-content-center flex-column" id="fondo">
+<div class="container-fluid d-flex align-items-center justify-content-center flex-column" id="fondo">
   <div *ngIf="!usuarioLog" class="d-flex flex-column align-items-center border border-success border-opacity-50 border-3 rounded contenedor-cristalizado p-5">
     <h1>No estás registrado</h1>
     <p>Para poder subir tu casa para que los demás puedan disfrutar de tu casa necesitas primero <a [routerLink]="['/register']">registrarte</a> o <a [routerLink]="['/login']">iniciar sesión</a></p>
@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <div *ngIf="usuarioLog" class="contenedor-cristalizado">
+  <div *ngIf="usuarioLog" class="contenedor-cristalizado col-11 col-lg-8">
     <div class="text-center">
       <h1>¡Sube tu casa!</h1>
       <h1 class="fs-3">Con 3 simples pasos</h1>
@@ -55,13 +55,13 @@
           </div>
         </div>
 
-        <div class="text-center d-flex flex-column flex-md-row align-items-center justify-content-around">
-          <p-inputNumber  placeholder="Numero Inquilinos" formControlName="nInquilinos" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+        <div class="col-12 d-flex flex-column flex-md-row align-items-center justify-content-around">
+          <p-inputNumber styleClass="mb-2"  placeholder="Numero Inquilinos" formControlName="nInquilinos" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
           <p-inputNumber  placeholder="Numero Habitaciones" formControlName="nHabitaciones" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
         </div>
 
-        <div>
-          <p-inputNumber  placeholder="Precio noche en €" formControlName="precio" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="10000"></p-inputNumber>
+        <div class="text-center">
+          <p-inputNumber styleClass="col-6 m-2"  placeholder="Precio noche en €" formControlName="precio" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="10000"></p-inputNumber>
         </div>
 
         <div class="d-flex justify-content-center m-2">

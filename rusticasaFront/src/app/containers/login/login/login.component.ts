@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   loginError: string | null = null; // Nueva propiedad para manejar el error
   crendeSave: any;
   emailStatus: string;
+  showPasswd:boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -92,6 +93,11 @@ export class LoginComponent implements OnInit {
       // Manejar el caso cuando el formulario no es válido
       this.loginForm.markAllAsTouched();
     }
+  }
+
+  showPassword(){
+    this.showPasswd=!this.showPasswd;
+    console.info(this.showPasswd)
   }
 
   enviarPasswd() {
