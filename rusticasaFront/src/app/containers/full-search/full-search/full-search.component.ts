@@ -264,16 +264,16 @@ export class FullSearchComponent implements OnInit {
     }
 
     let requestAvanzada: RequestCasaAvanzada = {
-      mascotas: !!this.formuReact.controls['mascotas'].value, // Asegúrate de que sea un booleano
-      wifi: !!this.formuReact.controls['wifi'].value, // Asegúrate de que sea un booleano
-      jardin: !!this.formuReact.controls['jardin'].value, // Asegúrate de que sea un booleano
-      piscina: !!this.formuReact.controls['piscina'].value, // Asegúrate de que sea un booleano
-      precioMin: this.formuReact.controls['precioValor'].value[0], // Valor mínimo
-      precioMax: this.formuReact.controls['precioValor'].value[1], // Valor máximo
+      mascotas: !!this.formuReact.controls['mascotas'].value,
+      wifi: !!this.formuReact.controls['wifi'].value,
+      jardin: !!this.formuReact.controls['jardin'].value,
+      piscina: !!this.formuReact.controls['piscina'].value,
+      precioMin: this.formuReact.controls['precioValor'].value[0],
+      precioMax: this.formuReact.controls['precioValor'].value[1],
       inquilinos: this.formuReact.controls['nInquilinos'].value,
       numHab: this.formuReact.controls['nHabitaciones'].value,
-      checkIn: this.formuReact.controls['fechas'].value[0], // Fecha de check-in
-      checkOut: this.formuReact.controls['fechas'].value[1], // Fecha de check-out
+      checkIn: this.formuReact.controls['fechas'].value[0],
+      checkOut: this.formuReact.controls['fechas'].value[1],
       codProv: this.formuReact.controls['provinciasS'].value,
       codMun: this.formuReact.controls['pueblos'].value,
     };

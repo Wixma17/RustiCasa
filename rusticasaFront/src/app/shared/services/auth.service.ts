@@ -60,6 +60,7 @@ export class AuthService {
 
     if (data.files) {
       formData.append('files', data.files, data.files.name); // Añadir el archivo con el nombre 'files'
+      console.info("Sube la imagen")
     } else {
       console.error('No se ha proporcionado ningún archivo.');
       return throwError(

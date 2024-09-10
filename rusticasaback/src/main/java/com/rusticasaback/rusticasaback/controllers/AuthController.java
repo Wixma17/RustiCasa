@@ -44,9 +44,6 @@ public class AuthController {
             @RequestParam("gmail") String gmail,
             @RequestParam("files") List<MultipartFile> files) {
 
-        System.out.println("correo=> " + gmail);
-        System.out.println("Fotos=> " + files);
-
         imagenService.subidaImagenPerfil(gmail, files);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Imagen actualizada");
