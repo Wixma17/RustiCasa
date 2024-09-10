@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -17,6 +16,7 @@ import { RegisterModule } from './containers/register/register.module';
 import { LoginModule } from './containers/login/login.module';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import { MessageService } from 'primeng/api';
+import { ProfileModule } from './containers/profile/profile.module';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -40,6 +40,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegisterModule,
     LoginModule,
     ToggleButtonModule,
+    ProfileModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

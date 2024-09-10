@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { MenuItem, MessageService, SelectItem } from 'primeng/api';
 import { RequestRegistrarCasa } from 'src/app/shared/model/requests/request-registrar-casa-.model';
 import { SubidaImagenCasaRequest } from 'src/app/shared/model/requests/request-subida-img-casa.model';
@@ -34,7 +35,8 @@ export class UploadHouseComponent implements OnInit {
     private fb: FormBuilder,
     private municipioService: MunicipioService,
     private provinciaService: ProvinciaService,
-    private casaService: CasaService
+    private casaService: CasaService,
+    private router: Router
   ) {
     this.formGroup = this.fb.group({
       nombreCasa: ['', Validators.required],
@@ -146,6 +148,9 @@ export class UploadHouseComponent implements OnInit {
       },
       complete: () => {
         console.info('Subida de casa completada con exito! ');
+
+        /* CAMBIAR A LISTAS DE CASAS Q TIENE EL USUARIO PUESTAS */
+        this.router.navigate(['/welcome']);
       },
     });
   }

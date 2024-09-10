@@ -6,6 +6,7 @@ import { UploadHouseComponent } from './containers/upload-house/upload-house/upl
 import { DetailsHouseComponent } from './containers/details-house/details-house/details-house.component';
 import { LoginComponent } from './containers/login/login/login.component';
 import { RegisterComponent } from './containers/register/register/register.component';
+import { ProfileComponent } from './containers/profile/profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -62,6 +63,16 @@ const routes: Routes = [
       breadcrumb: [
         { label: 'Inicio', routerLink: '/welcome' },
         { label: 'Inicio Sesión', routerLink: '/login' },
+      ],
+    },
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Tu Perfil', routerLink: '/profile' },
       ],
     },
   }
