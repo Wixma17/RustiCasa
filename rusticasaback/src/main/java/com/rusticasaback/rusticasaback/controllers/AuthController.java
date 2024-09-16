@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.rusticasaback.rusticasaback.DTOs.ClienteDTO;
 import com.rusticasaback.rusticasaback.Request.LoginRequest;
 import com.rusticasaback.rusticasaback.Request.RegisterRequest;
+import com.rusticasaback.rusticasaback.entities.ClienteEntity;
 import com.rusticasaback.rusticasaback.services.ClienteService;
 import com.rusticasaback.rusticasaback.services.ImagenService;
 
@@ -33,7 +34,24 @@ public class AuthController {
 
     @PostMapping("/registerUser")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-        clienteService.crearCliente(registerRequest);
+        // Obtener el cliente existente (o crear uno nuevo si no existe)
+        ClienteEntity clienteExistente = clienteService.verClienteExistente(registerRequest.getGmail()).get();
+
+        if (clienteExistente == null) {
+            ClienteDTO c= clienteService.crearCliente(registerRequest);
+            clienteExistente = c.createClienteEntity();
+        } else {
+            // Actualizar solo los campos proporcionados, manteniendo la imagen existente si
+            // no se proporciona una nueva
+            clienteExistente.setNombre(registerRequest.getNombre());
+            clienteExistente.setApellido(registerRequest.getApellido());
+            clienteExistente.setPasswd(registerRequest.getPasswd());
+            clienteExistente.setNickname(registerRequest.getNickname());
+            clienteExistente.setFechaNacimiento(registerRequest.getFechaNacimiento());
+            // Si no se proporciona una nueva imagen, no cambiar el campo de imagen
+        }
+
+        clienteService.guardaCliente(clienteExistente);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Cliente Subido");
         return new ResponseEntity<>(response, HttpStatus.CREATED);

@@ -23,7 +23,7 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping("/fotoPerfil/{gmail}")
-    public ResponseEntity<?> fotosCasa(@PathVariable(name = "gmail") String gmail) {
+    public ResponseEntity<?> fotosPerfil(@PathVariable(name = "gmail") String gmail) {
         String url = imagenService.getImagenPerfil(gmail);
         Map<String, String> response = new HashMap<>();
         response.put("urlImg", url);

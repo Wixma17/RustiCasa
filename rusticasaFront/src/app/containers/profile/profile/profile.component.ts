@@ -40,8 +40,6 @@ export class ProfileComponent implements OnInit {
         dateUsu:[this.fecha,[this.ageValidator]],
         nicknameUsu:[this.usuConn.nickname]
       });
-
-      console.info(this.usuConn);
     }
   }
 
@@ -84,23 +82,30 @@ export class ProfileComponent implements OnInit {
       fechaNacimiento: this.convertStringToDate(this.modificaForm.value.dateUsu)
     }
 
-    this.authService.registrarUsuario(clienteModify);
-
-    if(this.selectedFile){
-      let imgUsu:SubidaImagenRequest={
-        files: this.selectedFile,
-        gmail: clienteModify.gmail
-      }
-
-      this.authService.subirImagenPerfil(imgUsu).subscribe((info)=>{
+    this.authService.registrarUsuario(clienteModify).subscribe({
+      next:(info)=>{
         console.info(info)
-      });
-    }
+      },
+      error:(err)=>{
+        console.error(err)
+      },
+      complete:()=>{
+        if(this.selectedFile){
+          let imgUsu:SubidaImagenRequest={
+            files: this.selectedFile,
+            gmail: clienteModify.gmail
+          }
 
-    this.authService.updateUserData(clienteModify);
+          this.authService.subirImagenPerfil(imgUsu).subscribe((info)=>{
+            console.info(info)
+          });
+        }
+      }
+    });
 
     sessionStorage.removeItem("datosUsu");
     sessionStorage.setItem("datosUsu",JSON.stringify(clienteModify));
+    this.authService.updateUserData(clienteModify);
 
     const toastElement = document.getElementById('liveToast');
     if (toastElement) {

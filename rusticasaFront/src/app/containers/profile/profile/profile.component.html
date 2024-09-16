@@ -66,7 +66,7 @@
     </div>
 
     <div class="text-center m-3">
-      <button class="btn btn-success col-12" (click)="guardarCambios()" id=""> <i class="bi bi-check-square"></i> Confirmar Cambios</button>
+      <button [disabled]="!modificaForm.dirty && selectedFile == null" class="btn btn-success col-12" (click)="guardarCambios()" id=""> <i class="bi bi-check-square"></i> Confirmar Cambios</button>
     </div>
 
 
