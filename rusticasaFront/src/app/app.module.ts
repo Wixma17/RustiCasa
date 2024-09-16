@@ -17,6 +17,7 @@ import { LoginModule } from './containers/login/login.module';
 import {ToggleButtonModule} from 'primeng/togglebutton';
 import { MessageService } from 'primeng/api';
 import { ProfileModule } from './containers/profile/profile.module';
+import { ListHouseOwnerModule } from './containers/list-house-owner/list-house-owner.module';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginModule,
     ToggleButtonModule,
     ProfileModule,
+    ListHouseOwnerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

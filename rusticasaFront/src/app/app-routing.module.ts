@@ -7,6 +7,7 @@ import { DetailsHouseComponent } from './containers/details-house/details-house/
 import { LoginComponent } from './containers/login/login/login.component';
 import { RegisterComponent } from './containers/register/register/register.component';
 import { ProfileComponent } from './containers/profile/profile/profile.component';
+import { ListHouseOwnerComponent } from './containers/list-house-owner/list-house-owner/list-house-owner.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -73,6 +74,16 @@ const routes: Routes = [
       breadcrumb: [
         { label: 'Inicio', routerLink: '/welcome' },
         { label: 'Tu Perfil', routerLink: '/profile' },
+      ],
+    },
+  },
+  {
+    path: 'list-house-owner',
+    component: ListHouseOwnerComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Tus casas', routerLink: '/list-house-owner' },
       ],
     },
   }

@@ -41,8 +41,11 @@ public class CasaController {
     }
 
     @GetMapping("/listaCasasUsuario/{email}")
-    public ResponseEntity<?> listaCasasUsuario(@PathVariable(name = "email") String email) {
-        return casaService.getListaCasasUsuario(email);
+    public ResponseEntity<?> listaCasasUsuario(
+            @PathVariable(name = "email") String email,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        return casaService.getListaCasasUsuario(email, page, size);
     }
 
     @GetMapping("/fotosCasa/{idCasa}")
@@ -95,7 +98,7 @@ public class CasaController {
      */
 
     @PostMapping("/registrarCasa")
-    public ResponseEntity<?> registrarCasa(@RequestBody CasaRequest casaRequest) {        
+    public ResponseEntity<?> registrarCasa(@RequestBody CasaRequest casaRequest) {
         return casaService.crearCasa(casaRequest);
     }
 
@@ -104,7 +107,7 @@ public class CasaController {
             @RequestParam("idCasa") Long idCasa) {
 
         imagenService.subidaImagenes(files, idCasa);
-        //casaService.getCasa(idCasa);
+        // casaService.getCasa(idCasa);
         return ResponseEntity.ok().build();
     }
 

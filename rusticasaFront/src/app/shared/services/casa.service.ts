@@ -22,9 +22,9 @@ export class CasaService {
     return this.httpClient.get<ImagenResponse[]>(url);
   }
 
-  getListaCasasPorNombre(nombreCasa: string): Observable<CasaResponse[]> {
-    let url = `${environment.urlApiCasas}listaCasasPorNombre/${nombreCasa}`;
-    return this.httpClient.get<CasaResponse[]>(url);
+  getListaCasasPorGmail(gmail: string): Observable<any> {
+    let url = `${environment.urlApiCasas}listaCasasUsuario/${gmail}`;
+    return this.httpClient.get<any>(url);
   }
 
   getListaOpinionCasa(idCasa: number): Observable<OpinionResponse[]> {

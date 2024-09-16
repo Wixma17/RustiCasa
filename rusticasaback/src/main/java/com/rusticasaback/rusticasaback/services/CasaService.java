@@ -20,6 +20,7 @@ import com.rusticasaback.rusticasaback.repositories.CasaRepository;
 import com.rusticasaback.rusticasaback.repositories.ClienteRepository;
 import com.rusticasaback.rusticasaback.repositories.MunicipioRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 @Service
@@ -43,13 +44,15 @@ public class CasaService {
         return ResponseEntity.ok(listaCasaResp);
     }
 
-    public ResponseEntity<?> getListaCasasUsuario(String gmail) {
-        ClienteEntity cliente = clienteRepository.findById(gmail).get();
-        List<CasaEntity> listaCasa = casaRepository.findByClientePublicador(cliente);
-        ArrayList<CasaDTO> listaCasaResp = new ArrayList<CasaDTO>();
-        for (CasaEntity casa : listaCasa) {
-            listaCasaResp.add(new CasaDTO(casa));
-        }
+    public ResponseEntity<?> getListaCasasUsuario(String gmail, int page, int size) {
+        ClienteEntity cliente = clienteRepository.findById(gmail)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<CasaEntity> listaCasa = casaRepository.findByClientePublicador(cliente, pageable);
+
+        Page<CasaDTO> listaCasaResp = listaCasa.map(CasaDTO::new);
 
         return ResponseEntity.ok(listaCasaResp);
     }
