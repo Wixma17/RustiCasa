@@ -6,39 +6,45 @@ import { Router } from '@angular/router';
 import { RequestCliente } from 'src/app/shared/model/requests/request-register.model';
 import { SubidaImagenRequest } from 'src/app/shared/model/requests/request-subida-imagenesRequest.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { ClienteService } from 'src/app/shared/services/cliente.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  usuConn:any;
+  usuConn: any;
   ruta: SafeResourceUrl;
   modificaForm: FormGroup;
-  fecha:string;
-  showPasswd:boolean = false;
+  fecha: string;
+  showPasswd: boolean = false;
   selectedFile: File | null = null;
 
-  constructor(private authService: AuthService,private formBuilder: FormBuilder,private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private clienteService:ClienteService
+  ) {}
 
   ngOnInit(): void {
-    if(sessionStorage.getItem('datosUsu')){
-      this.usuConn= JSON.parse(sessionStorage.getItem('datosUsu'));
+    if (sessionStorage.getItem('datosUsu')) {
+      this.usuConn = JSON.parse(sessionStorage.getItem('datosUsu'));
 
       this.authService.rutaImg$.subscribe((url) => {
         this.ruta = url;
       });
 
-      this.fecha=this.formatDateToDDMMYYYY(this.usuConn.fechaNacimiento);
+      this.fecha = this.formatDateToDDMMYYYY(this.usuConn.fechaNacimiento);
 
       this.modificaForm = this.formBuilder.group({
-        nombreUsu:[this.usuConn.nombre],
-        apeUsu:[this.usuConn.apellido],
-        emailUsu:[this.usuConn.gmail],
-        passwdUsu:[this.usuConn.passwd,[this.passwordValidator]],
-        dateUsu:[this.fecha,[this.ageValidator]],
-        nicknameUsu:[this.usuConn.nickname]
+        nombreUsu: [this.usuConn.nombre],
+        apeUsu: [this.usuConn.apellido],
+        emailUsu: [this.usuConn.gmail],
+        passwdUsu: [this.usuConn.passwd, [this.passwordValidator]],
+        dateUsu: [this.fecha, [this.ageValidator]],
+        nicknameUsu: [this.usuConn.nickname],
       });
     }
   }
@@ -48,7 +54,7 @@ export class ProfileComponent implements OnInit {
     const date = new Date(isoString);
 
     // Obtenemos el día, mes y año
-    const day = (date.getUTCDate()+1).toString().padStart(2, '0');
+    const day = (date.getUTCDate() + 1).toString().padStart(2, '0');
     const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
     const year = date.getUTCFullYear();
 
@@ -56,8 +62,8 @@ export class ProfileComponent implements OnInit {
     return `${day}/${month}/${year}`;
   }
 
-  showPassword(){
-    this.showPasswd=!this.showPasswd;
+  showPassword() {
+    this.showPasswd = !this.showPasswd;
   }
 
   onFileSelect(event: any) {
@@ -71,48 +77,66 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  guardarCambios(){
-    let clienteModify:RequestCliente={
+  guardarCambios() {
+    let clienteModify: RequestCliente = {
       gmail: this.modificaForm.value.emailUsu,
       nombre: this.modificaForm.value.nombreUsu,
       apellido: this.modificaForm.value.apeUsu,
       passwd: this.modificaForm.value.passwdUsu,
       nickname: this.modificaForm.value.nicknameUsu,
       administrador: false,
-      fechaNacimiento: this.convertStringToDate(this.modificaForm.value.dateUsu)
-    }
+      fechaNacimiento: this.convertStringToDate(
+        this.modificaForm.value.dateUsu
+      ),
+    };
 
     this.authService.registrarUsuario(clienteModify).subscribe({
-      next:(info)=>{
-        console.info(info)
+      next: (info) => {
+        console.info(info);
       },
-      error:(err)=>{
-        console.error(err)
+      error: (err) => {
+        console.error(err);
       },
-      complete:()=>{
-        if(this.selectedFile){
-          let imgUsu:SubidaImagenRequest={
+      complete: () => {
+        if (this.selectedFile) {
+          let imgUsu: SubidaImagenRequest = {
             files: this.selectedFile,
-            gmail: clienteModify.gmail
-          }
+            gmail: clienteModify.gmail,
+          };
 
-          this.authService.subirImagenPerfil(imgUsu).subscribe((info)=>{
-            console.info(info)
+          this.authService.subirImagenPerfil(imgUsu).subscribe({
+            next: (info) => {
+
+              this.clienteService.getRutaFotoPerfil(this.usuConn.gmail).subscribe((rutaImage)=>{
+                this.ruta = rutaImage.urlImg;
+              });
+
+              this.authService.rutaImg$.subscribe((url) => {
+                this.ruta = url;
+                console.info(this.ruta)
+                console.info(url)
+              });
+
+              console.info(info);
+
+            },
+            error: (err) => {
+              console.error(err);
+            }
           });
         }
-      }
-    });
 
-    sessionStorage.removeItem("datosUsu");
-    sessionStorage.setItem("datosUsu",JSON.stringify(clienteModify));
-    this.authService.updateUserData(clienteModify);
+        sessionStorage.removeItem('datosUsu');
+        sessionStorage.setItem('datosUsu', JSON.stringify(clienteModify));
+        this.authService.updateUserData(clienteModify);
+      },
+    });
 
     const toastElement = document.getElementById('liveToast');
     if (toastElement) {
       const toast = new Toast(toastElement);
       toast.show();
     }
-
   }
 
   convertStringToDate(dateInput: any): Date | null {
@@ -127,7 +151,10 @@ export class ProfileComponent implements OnInit {
       return new Date(year, month - 1, day);
     }
 
-    console.error('El valor proporcionado no es una cadena ni un objeto Date:', dateInput);
+    console.error(
+      'El valor proporcionado no es una cadena ni un objeto Date:',
+      dateInput
+    );
     return null;
   }
 
@@ -157,7 +184,4 @@ export class ProfileComponent implements OnInit {
       ? null
       : { passwordWeak: true };
   }
-
-
-
 }
