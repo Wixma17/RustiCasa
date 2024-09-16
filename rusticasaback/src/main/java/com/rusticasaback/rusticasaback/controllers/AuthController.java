@@ -51,6 +51,8 @@ public class AuthController {
             // Si no se proporciona una nueva imagen, no cambiar el campo de imagen
         }
 
+        System.out.println("fecha=> "+clienteExistente.getFechaNacimiento());
+
         clienteService.guardaCliente(clienteExistente);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Cliente Subido");

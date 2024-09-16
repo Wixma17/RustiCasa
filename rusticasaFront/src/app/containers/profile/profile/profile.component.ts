@@ -87,10 +87,12 @@ export class ProfileComponent implements OnInit {
       passwd: this.modificaForm.value.passwdUsu,
       nickname: this.modificaForm.value.nicknameUsu,
       administrador: false,
-      fechaNacimiento: this.convertStringToDate(
+      fechaNacimiento: this.convertStringToDateCET(
         this.modificaForm.value.dateUsu
       ),
     };
+
+    console.info(clienteModify.fechaNacimiento)
 
     this.authService.registrarUsuario(clienteModify).subscribe({
       next: (info) => {
@@ -142,24 +144,51 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  convertStringToDate(dateInput: any): Date | null {
+  //----------------------------------------------------------------------
+  convertStringToDateCET(dateInput: any): Date | null {
     // Si el valor ya es un objeto Date, lo retornamos
     if (dateInput instanceof Date) {
-      return dateInput;
+      return this.adjustToCET(dateInput);
     }
 
-    // Si el valor es una cadena, intentamos convertirla a una fecha
+    // Si el valor es una cadena, intentamos convertirla a una fecha y luego ajustar a CET
     if (typeof dateInput === 'string') {
       const [day, month, year] = dateInput.split('/').map(Number);
-      return new Date(year, month - 1, day);
+
+      // Crear una fecha en UTC
+      const utcDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
+
+      // Ajustar la fecha a CET y devolverla como Date
+      return this.adjustToCET(utcDate);
     }
 
-    console.error(
-      'El valor proporcionado no es una cadena ni un objeto Date:',
-      dateInput
-    );
+    console.error('El valor proporcionado no es una cadena ni un objeto Date:', dateInput);
     return null;
   }
+
+  adjustToCET(utcDate: Date): Date {
+    // CET es UTC + 1, ajustamos la fecha
+    const cetOffset = 1 * 60; // 1 hora (en minutos)
+
+    // Ajuste para horario de verano (CEST es UTC+2)
+    const isDST = this.isDaylightSavingTime(utcDate);
+    const offset = isDST ? 2 * 60 : cetOffset; // 2 horas en verano (CEST)
+
+    // Ajustamos la fecha añadiendo el offset de CET/CEST
+    const adjustedDate = new Date(utcDate.getTime() + offset * 60000); // Convertimos minutos a milisegundos
+
+    return adjustedDate;
+  }
+
+  isDaylightSavingTime(date: Date): boolean {
+    // Verifica si la fecha está dentro del horario de verano (CEST)
+    const jan = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
+    const jul = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
+    return Math.max(jan, jul) !== date.getTimezoneOffset();
+  }
+
+
+  //--------------------------------------------------------------------------
 
   ageValidator(control: AbstractControl): { [key: string]: boolean } | null {
     const dob = new Date(control.value);
