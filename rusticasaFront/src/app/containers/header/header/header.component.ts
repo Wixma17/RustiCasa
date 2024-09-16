@@ -22,7 +22,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   constructor(
     private busqueda: BusquedasService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private clienteService:ClienteService
   ) {}
 
   private collapseElement!: HTMLElement;
@@ -62,9 +63,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.datosUsu = data;
     });
 
-    this.authService.rutaImg$.subscribe((url) => {
-      this.ruta = url;
-    });
+      this.authService.rutaImg$.subscribe((url) => {
+        this.ruta = url;
+      });
+
   }
 
   toggleDropdown() {

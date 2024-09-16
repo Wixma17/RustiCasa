@@ -1,5 +1,5 @@
 import { Toast } from 'bootstrap';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { RequestCliente } from 'src/app/shared/model/requests/request-register.m
 import { SubidaImagenRequest } from 'src/app/shared/model/requests/request-subida-imagenesRequest.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
+import { FileUpload } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-profile',
@@ -20,6 +21,7 @@ export class ProfileComponent implements OnInit {
   fecha: string;
   showPasswd: boolean = false;
   selectedFile: File | null = null;
+  @ViewChild('fileUploader') fileUploader: FileUpload | undefined;
 
   constructor(
     private authService: AuthService,
@@ -54,7 +56,7 @@ export class ProfileComponent implements OnInit {
     const date = new Date(isoString);
 
     // Obtenemos el día, mes y año
-    const day = (date.getUTCDate() + 1).toString().padStart(2, '0');
+    const day = date.getUTCDate().toString().padStart(2, '0');
     const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
     const year = date.getUTCFullYear();
 
@@ -113,11 +115,12 @@ export class ProfileComponent implements OnInit {
 
               this.authService.rutaImg$.subscribe((url) => {
                 this.ruta = url;
-                console.info(this.ruta)
-                console.info(url)
               });
 
-              console.info(info);
+
+              this.authService.updateUserData(clienteModify);
+
+              this.clearFileUpload();
 
             },
             error: (err) => {
@@ -128,7 +131,7 @@ export class ProfileComponent implements OnInit {
 
         sessionStorage.removeItem('datosUsu');
         sessionStorage.setItem('datosUsu', JSON.stringify(clienteModify));
-        this.authService.updateUserData(clienteModify);
+
       },
     });
 
@@ -183,5 +186,12 @@ export class ProfileComponent implements OnInit {
     return hasUppercase && hasLowercase && hasNumber && hasSpecialChar
       ? null
       : { passwordWeak: true };
+  }
+
+  clearFileUpload() {
+    if (this.fileUploader) {
+      this.fileUploader.clear(); // Método para limpiar el componente p-fileUpload
+      this.selectedFile = null; // Opcional: Limpia la variable `selectedFile`
+    }
   }
 }
