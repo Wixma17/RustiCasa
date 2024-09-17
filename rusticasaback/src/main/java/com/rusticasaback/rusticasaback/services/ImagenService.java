@@ -107,26 +107,45 @@ public class ImagenService {
     }
 
     public boolean subidaImagenes(List<MultipartFile> files, Long idCasa) {
-        CasaEntity casaEntity = casaRepository.findById(idCasa).orElse(null);
 
+
+        //Mirar esto a ver si se puede corregir
+
+        // Encuentra la casa
+        CasaEntity casaEntity = casaRepository.findById(idCasa).orElse(null);
+    
         if (casaEntity == null) {
             return false; // En caso de que no exista la casa
         }
-
+    
+        // Si no se pasan imágenes, solo actualiza la posición del carrusel para las existentes
+        if (files.isEmpty()) {
+            List<ImagenEntity> imagenesExistentes = casaEntity.getListaImagenes();
+            if (imagenesExistentes != null) {
+                // Reordenar las imágenes existentes
+                for (int i = 0; i < imagenesExistentes.size(); i++) {
+                    ImagenEntity imgEntity = imagenesExistentes.get(i);
+                    imgEntity.setPosicionCarrusel(i);
+                    imagenRepository.save(imgEntity);
+                }
+            }
+            return true; // No hubo imágenes nuevas para procesar
+        }
+    
         // Directorio para subir las imágenes
         String ruta = "FotosCasas/" + idCasa + "/";
         File uploadDirFile = new File(ruta);
         if (!uploadDirFile.exists()) {
             uploadDirFile.mkdirs();
         }
-
+    
         Path uploadDir = Paths.get(ruta);
         try {
             Files.createDirectories(uploadDir);
-
+    
             // Obtener la lista actual de imágenes
             List<ImagenEntity> imagenesExistentes = casaEntity.getListaImagenes();
-
+    
             // Reordenar las imágenes existentes para evitar conflictos de índice
             if (imagenesExistentes != null) {
                 for (int i = 0; i < imagenesExistentes.size(); i++) {
@@ -135,42 +154,39 @@ public class ImagenService {
                     imagenRepository.save(imgEntity);
                 }
             }
-
+    
             // Subir cada imagen nueva
-            ArrayList<ImagenDTO> listaImagenesSubidas = new ArrayList<>();
             int lastIndex = imagenesExistentes != null ? imagenesExistentes.size() : 0;
-
+    
             for (int i = 0; i < files.size(); i++) {
                 String fileName = StringUtils.cleanPath(files.get(i).getOriginalFilename());
                 Path filePath = uploadDir.resolve(fileName);
                 Files.copy(files.get(i).getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                // Asignar el índice correctamente comenzando desde lastIndex
-                ImagenDTO imag = new ImagenDTO(null, fileName, lastIndex + i);
-                listaImagenesSubidas.add(imag);
-
-                // Guardar información en la base de datos
-                ImagenEntity imgEntity = ImagenDTO.createImagenEntity(imag);
+    
+                // Crear una nueva entidad ImagenEntity para cada imagen nueva
+                ImagenEntity imgEntity = new ImagenEntity();
+                imgEntity.setNombreImagen(fileName);
+                imgEntity.setPosicionCarrusel(lastIndex + i);
                 imgEntity.setCasaImagen(casaEntity);
+    
                 imagenRepository.save(imgEntity);
             }
-
+    
             // Actualizar la lista de imágenes de la casa
-            if (casaEntity.getListaImagenes() != null) {
-                casaEntity.getListaImagenes().addAll(ImagenDTO.convertFromDtoList(listaImagenesSubidas));
-            } else {
-                casaEntity.setListaImagenes(ImagenDTO.convertFromDtoList(listaImagenesSubidas));
-            }
-
+            List<ImagenEntity> todasLasImagenes = imagenRepository.findByCasaImagen(casaEntity);
+            casaEntity.setListaImagenes(todasLasImagenes);
+    
             // Guardar la entidad de casa actualizada
             casaRepository.save(casaEntity);
-
+    
             return true;
         } catch (IOException e) {
             return false;
         }
-        /* Fin subida de archivos */
+        /* Fin subida Archivos */
     }
+    
+    
 
     public boolean eliminarImagen(Long idImagen, Long idCasa) {
         // Obtener la entidad de la casa

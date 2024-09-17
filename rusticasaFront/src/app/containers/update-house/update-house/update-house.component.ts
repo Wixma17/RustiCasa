@@ -265,7 +265,7 @@ export class UpdateHouseComponent implements OnInit {
       },
     });
 
-    if (this.selectedFile.length > 0) {
+
       let listaImg: SubidaImagenCasaRequest = {
         files: this.selectedFile,
         idCasa: this.casaUpdate.idCasa,
@@ -275,7 +275,7 @@ export class UpdateHouseComponent implements OnInit {
         console.log("Subida de imagenes con exito");
       });
 
-    }
+
 
     this.router.navigate(['/list-house-owner']);
   }
