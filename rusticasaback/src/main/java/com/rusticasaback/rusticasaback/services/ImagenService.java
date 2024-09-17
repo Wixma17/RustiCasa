@@ -106,50 +106,63 @@ public class ImagenService {
     }
 
     public boolean subidaImagenes(List<MultipartFile> files, Long idCasa) {
-        ArrayList<ImagenDTO> listaImagenesSubidas = new ArrayList<ImagenDTO>();
-
-        CasaEntity casaEntity = casaRepository.findById(idCasa).get();
-
+        ArrayList<ImagenDTO> listaImagenesSubidas = new ArrayList<>();
+    
+        CasaEntity casaEntity = casaRepository.findById(idCasa).orElse(null);
+    
+        if (casaEntity == null) {
+            return false; // En caso de que no exista la casa
+        }
+    
         /* Subida de archivos */
-
         String ruta = "FotosCasas/" + idCasa + "/";
-
+    
         File uploadDirFile = new File(ruta);
         if (!uploadDirFile.exists()) {
             uploadDirFile.mkdirs();
         }
-
+    
         Path uploadDir = Paths.get(ruta);
         try {
-
             Files.createDirectories(uploadDir);
-
+    
+            // Obtener el último índice de la lista de imágenes existente
+            int lastIndex = casaEntity.getListaImagenes() != null ? casaEntity.getListaImagenes().size() : 0;
+    
+            // Subir cada imagen
             for (int i = 0; i < files.size(); i++) {
-                @SuppressWarnings("null")
                 String fileName = StringUtils.cleanPath(files.get(i).getOriginalFilename());
-
+    
                 Path filePath = uploadDir.resolve(fileName);
                 Files.copy(files.get(i).getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
-                ImagenDTO imag = new ImagenDTO(null, fileName, i);
+    
+                // Asignar el índice correctamente comenzando desde lastIndex
+                ImagenDTO imag = new ImagenDTO(null, fileName, lastIndex + i);
                 listaImagenesSubidas.add(imag);
-
+    
                 // Guardar información en la base de datos
                 ImagenEntity imgEntity = ImagenDTO.createImagenEntity(imag);
                 imgEntity.setCasaImagen(casaEntity);
                 imagenRepository.save(imgEntity);
             }
-
-            // Asignar lista de imagenes subidas a la casa
-            casaEntity.setListaImagenes(ImagenDTO.convertFromDtoList(listaImagenesSubidas));
+    
+            // Agregar las nuevas imágenes a la lista existente de la casa
+            if (casaEntity.getListaImagenes() != null) {
+                casaEntity.getListaImagenes().addAll(ImagenDTO.convertFromDtoList(listaImagenesSubidas));
+            } else {
+                casaEntity.setListaImagenes(ImagenDTO.convertFromDtoList(listaImagenesSubidas));
+            }
+    
+            // Guardar la entidad de casa actualizada
             casaRepository.save(casaEntity);
-
+    
             return true;
         } catch (IOException e) {
             return false;
         }
-        /* Fin subida de archvos */
+        /* Fin subida de archivos */
     }
+    
 
     public boolean eliminarImagen(Long idImagen, Long idCasa) {
         // Obtener la entidad de la casa

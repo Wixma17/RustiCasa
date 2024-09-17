@@ -60,7 +60,6 @@ export class UploadHouseComponent implements OnInit {
   ngOnInit(): void {
     if (sessionStorage.getItem('datosUsu')) {
       this.usuarioLog = JSON.parse(sessionStorage.getItem('datosUsu'));
-      console.info(this.usuarioLog);
 
       this.items = [
         { label: 'Datos Casa' },

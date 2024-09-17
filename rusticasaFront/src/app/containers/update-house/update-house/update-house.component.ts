@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SelectItem } from 'primeng/api';
 import { Dropdown } from 'primeng/dropdown';
 import { map } from 'rxjs/operators';
+import { RequestRegistrarCasa } from 'src/app/shared/model/requests/request-registrar-casa-.model';
+import { SubidaImagenCasaRequest } from 'src/app/shared/model/requests/request-subida-img-casa.model';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { MunicipioResponse } from 'src/app/shared/model/responses/municipio-response.model';
 import { ProvinciaResponse } from 'src/app/shared/model/responses/provincia-response.model';
@@ -30,6 +32,9 @@ export class UpdateHouseComponent implements OnInit {
   @ViewChild('selectPueblos') selectPueblos!: Dropdown;
   listaImg: any[];
   selectedFile: File[] = [];
+  usuarioLog: any;
+  idMun: number;
+  casaUpdate: RequestRegistrarCasa;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +42,9 @@ export class UpdateHouseComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private fb: FormBuilder,
     private municipioService: MunicipioService,
-    private provinciaService: ProvinciaService
+    private provinciaService: ProvinciaService,
+    private casaService: CasaService,
+    private router: Router
   ) {
     this.updateForm = this.fb.group({
       nombreCasa: ['', Validators.required],
@@ -55,6 +62,9 @@ export class UpdateHouseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.usuarioLog = JSON.parse(sessionStorage.getItem('datosUsu'));
+    console.info(this.usuarioLog);
+
     const idCasaString = this.route.snapshot.paramMap.get('id');
     const idCasaLong = idCasaString ? parseInt(idCasaString, 10) : null;
 
@@ -72,7 +82,9 @@ export class UpdateHouseComponent implements OnInit {
               });
           });
 
-          this.municipioService.getNombreMunicipio(this.casa.municipio.idMunicipio).subscribe((info)=>{
+        this.municipioService
+          .getNombreMunicipio(this.casa.municipio.idMunicipio)
+          .subscribe((info) => {
             this.muniSele = info.nombre;
           });
 
@@ -212,5 +224,59 @@ export class UpdateHouseComponent implements OnInit {
       const file = fileList[i];
       this.selectedFile.push(file);
     }
+  }
+
+  subeCasa() {
+    if (typeof this.updateForm.value.pueblos === 'number') {
+      this.municipioService
+        .getDatosMunicipio(this.updateForm.value.pueblos)
+        .subscribe((info) => {
+          this.idMun = info.idMunicipio;
+          this.actualizarCasa();
+        });
+    } else {
+      this.idMun = this.casa.municipio.idMunicipio;
+      this.actualizarCasa();
+    }
+  }
+
+  actualizarCasa() {
+    this.casaUpdate = {
+      idCasa: this.casa.idCasa,
+      descripcion: this.updateForm.value.descripCasa,
+      nombreCasa: this.updateForm.value.nombreCasa,
+      mascotas: this.updateForm.value.sMas,
+      precioNoche: this.updateForm.value.precio,
+      numeroHabitaciones: this.updateForm.value.nHabitaciones,
+      numeroInquilinos: this.updateForm.value.nInquilinos,
+      piscina: this.updateForm.value.sPis,
+      wifi: this.updateForm.value.sWif,
+      jardin: this.updateForm.value.sJar,
+      idMunicipio: this.idMun,
+      gmail: this.usuarioLog.gmail,
+    };
+
+    this.casaService.registrarCasa(this.casaUpdate).subscribe({
+      next: (c) => {
+        console.info('Casa registrada');
+      },
+      error: (err) => {
+        console.error(err);
+      },
+    });
+
+    if (this.selectedFile.length > 0) {
+      let listaImg: SubidaImagenCasaRequest = {
+        files: this.selectedFile,
+        idCasa: this.casaUpdate.idCasa,
+      };
+
+      this.casaService.subirImagenCasa(listaImg).subscribe((s)=>{
+        console.log("Subida de imagenes con exito");
+      });
+
+    }
+
+    this.router.navigate(['/list-house-owner']);
   }
 }
