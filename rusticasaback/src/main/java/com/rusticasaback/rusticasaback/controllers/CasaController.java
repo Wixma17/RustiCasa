@@ -1,6 +1,9 @@
 package com.rusticasaback.rusticasaback.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -133,15 +136,16 @@ public class CasaController {
         return casaService.obtenDatosCasa(idCasa);
     }
 
-   /* @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarImagen(@PathVariable Long id) {
-        boolean eliminado = imagenService.eliminarImagen(id);
-
-        if (eliminado) {
-            return ResponseEntity.ok("Imagen eliminada exitosamente.");
+    @DeleteMapping("/eliminar/{idImagen}")
+    public ResponseEntity<?> eliminarImagen(@PathVariable Long idImagen, @RequestParam Long idCasa) {
+        boolean eliminada = imagenService.eliminarImagen(idImagen, idCasa);
+        if (eliminada) {
+             Map<String, String> response = new HashMap<>();
+            response.put("message", "Imagen eliminada exitosamente");
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Imagen no encontrada.");
+            return ResponseEntity.status(404).body("Imagen no encontrada o no pudo ser eliminada");
         }
-    }*/
+    }
 
 }

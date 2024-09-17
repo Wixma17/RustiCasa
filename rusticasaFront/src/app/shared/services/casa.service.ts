@@ -63,4 +63,10 @@ export class CasaService {
       headers: {},
     });
   }
+
+  eliminarImagen(idImagen: number, idCasa: number): Observable<any> {
+    let url= `${environment.urlApiCasas}eliminar/${idImagen}?idCasa=${idCasa}`;
+    return this.httpClient.delete<any>(url);
+  }
+
 }

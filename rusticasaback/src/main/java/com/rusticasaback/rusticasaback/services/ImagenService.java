@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -149,4 +150,39 @@ public class ImagenService {
         }
         /* Fin subida de archvos */
     }
+
+    public boolean eliminarImagen(Long idImagen, Long idCasa) {
+        // Obtener la entidad de la casa
+        CasaEntity casaEntity = casaRepository.findById(idCasa).orElseThrow(() -> new RuntimeException("Casa no encontrada"));
+    
+        // Buscar la imagen en la base de datos
+        Optional<ImagenEntity> imagenOptional = imagenRepository.findById(idImagen);
+    
+        if (imagenOptional.isPresent()) {
+            ImagenEntity imagenAEliminar = imagenOptional.get();
+    
+            // Ruta donde está almacenada la imagen
+            String rutaImagen = "FotosCasas/" + idCasa + "/" + imagenAEliminar.getNombreImagen();
+    
+            // Eliminar el archivo del sistema de archivos
+            File archivo = new File(rutaImagen);
+            if (archivo.exists()) {
+                archivo.delete(); // Eliminar el archivo físico
+            }
+    
+            // Eliminar la imagen de la base de datos
+            imagenRepository.delete(imagenAEliminar);
+    
+            // Actualizar la lista de imágenes de la casa
+            List<ImagenEntity> listaImagenes = casaEntity.getListaImagenes();
+            listaImagenes.remove(imagenAEliminar);
+            casaEntity.setListaImagenes(listaImagenes);
+            casaRepository.save(casaEntity);
+    
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }

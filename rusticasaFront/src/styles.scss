@@ -38,3 +38,8 @@ body{
 #fondo > div > p-steps > div > ul > li > a:hover{
   cursor: pointer;
 }
+
+#fondo > form > div.col-12.p-4 > p-fileupload > div > div.p-fileupload-buttonbar > p-button > button{
+  display: none;
+}
+

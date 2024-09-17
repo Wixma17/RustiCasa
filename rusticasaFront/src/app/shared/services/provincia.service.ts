@@ -20,4 +20,9 @@ export class ProvinciaService {
     let url = `${environment.urlApiMunicipioProv}prov/`+idProv;
     return this.httpClient.get<any>(url);
   }
+
+  getCodProvincia(idMun:number): Observable<any> {
+    let url = `${environment.urlApiMunicipioProv}provinciaNomb/`+idMun;
+    return this.httpClient.get<any>(url);
+  }
 }

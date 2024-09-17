@@ -62,6 +62,20 @@ export class UpdateHouseComponent implements OnInit {
       next: (casaR) => {
         this.casa = casaR;
 
+        this.provinciaService
+          .getCodProvincia(this.casa.municipio.idMunicipio)
+          .subscribe((info) => {
+            this.provinciaService
+              .getNombreProvincia(info.codProv)
+              .subscribe((prov) => {
+                this.provSele = prov.nombre;
+              });
+          });
+
+          this.municipioService.getNombreMunicipio(this.casa.municipio.idMunicipio).subscribe((info)=>{
+            this.muniSele = info.nombre;
+          });
+
         // Actualizar los valores del formulario con los datos de la casa
         this.updateForm.patchValue({
           nombreCasa: this.casa.nombreCasa,
@@ -73,6 +87,8 @@ export class UpdateHouseComponent implements OnInit {
           nInquilinos: this.casa.numeroInquilinos,
           nHabitaciones: this.casa.numeroHabitaciones,
           precio: this.casa.precioNoche,
+          provinciasS: this.provSele,
+          pueblos: this.muniSele,
         });
 
         console.log(this.casa);
@@ -170,10 +186,28 @@ export class UpdateHouseComponent implements OnInit {
     }
   }
 
-  onFileSelect(event: any): void {
-    const fileList: FileList = event.files; // Asumiendo que event.files es FileList
+  // Eliminar imagen
+  eliminarImagen(index: number): void {
+    const imagenAEliminar = this.listaImg[index];
+    const idCasa = this.casa.idCasa;
 
-    // Recorrer usando un bucle for clásico
+    // Llamar al servicio para eliminar la imagen del servidor
+    this.serviceHouse
+      .eliminarImagen(imagenAEliminar.idImagen, idCasa)
+      .subscribe({
+        next: () => {
+          this.listaImg.splice(index, 1);
+        },
+        error: (err) => {
+          console.error('Error al eliminar imagen:', err);
+        },
+      });
+  }
+
+  // Manejar selección de nuevas imágenes
+  onFileSelect(event: any): void {
+    const fileList: FileList = event.files;
+
     for (let i = 0; i < fileList.length; i++) {
       const file = fileList[i];
       this.selectedFile.push(file);

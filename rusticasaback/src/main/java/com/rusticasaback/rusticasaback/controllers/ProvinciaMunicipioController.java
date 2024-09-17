@@ -41,5 +41,10 @@ public class ProvinciaMunicipioController {
     public ResponseEntity<?> getDatosMun(@PathVariable(name = "idMun") int idMun) {
         return municipioService.getDatosMun(idMun);
     }
+
+    @GetMapping("/provinciaNomb/{idMunicipio}")
+    public ResponseEntity<?> obtenerProvinciaPorMunicipio(@PathVariable Long idMunicipio) {
+        return provinciaService.getNombreProvPorIdMun(idMunicipio);
+    }
     
 }

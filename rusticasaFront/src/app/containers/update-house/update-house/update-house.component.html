@@ -68,7 +68,7 @@
       <div *ngFor="let img of listaImg; let i = index" class="m-2 position-relative">
         <img [src]="img.safeUrl" alt="Imagen casa" class="img-thumbnail" style="width: 150px; height: 150px;">
         <button type="button" class="btn btn-danger position-absolute top-0 end-0" (click)="eliminarImagen(i)">
-          Eliminar
+         <span class="accesibilidad"> Eliminar </span>  <i class="bi bi-trash"></i>
         </button>
       </div>
     </div>
