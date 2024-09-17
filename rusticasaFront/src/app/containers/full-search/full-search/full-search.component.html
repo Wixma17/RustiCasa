@@ -1,7 +1,7 @@
 <!--row row-cols-1 row-cols-lg-2-->
-<div class="container-fluid d-flex flex-column flex-lg-row justify-content-between">
+<div class="container-fluid d-flex flex-column flex-lg-row justify-content-between" id="fondo">
   <aside class="col-12 col-lg-3 d-flex justify-content-center">
-      <form [formGroup]="formuReact" *ngIf="formuReact" class="col-12">
+      <form [formGroup]="formuReact" *ngIf="formuReact" class="col-12 formFondo contenedor-cristalizado">
 
         <div class="col-11 d-flex flex-column justify-content-center mb-4">
           <p-checkbox styleClass="m-1" [formControl]="formuReact.controls['piscina']" label="Piscina"></p-checkbox>

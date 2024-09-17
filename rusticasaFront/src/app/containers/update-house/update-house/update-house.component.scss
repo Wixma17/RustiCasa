@@ -1,6 +1,5 @@
-#fondo{
+#fondo {
   background: url(../../../../assets/fondoLogin2.jpg);
-  height: 80vh;
 }
 
 .contenedor-cristalizado {
@@ -12,18 +11,20 @@
   color: rgb(27, 27, 27);
 }
 
-.text-danger {
-  color: red;
-  font-size: 0.875rem; // Puedes ajustar el tamaño según sea necesario
+h1 {
+  font-size: 30px;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  text-shadow: 6px 1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5),
+    -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
 }
 
-.botonSec{
-  background-color: #6b8e23;
-  color: white;
+@media screen and (min-width: 992px) {
+  h1 {
+    font-size: 60px;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    text-shadow: 6px 1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5),
+      -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
+  }
 }
-
-
-
-
-
-

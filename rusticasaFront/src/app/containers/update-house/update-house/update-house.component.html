@@ -1,0 +1,95 @@
+<div class="container-fluid d-flex flex-column align-items-center justify-content-evenly" *ngIf="casa" id="fondo">
+
+  <h1 class="m-4">Modificar casa: " {{casa.nombreCasa}} "</h1>
+
+  <form [formGroup]="updateForm" class="col-10 col-lg-8 d-flex flex-column justify-content-around contenedor-cristalizado mb-5">
+
+    <div class="d-flex flex-column align-items-center">
+      <label for="nombreC" class="col-10 m-1">Nombre de la casa:</label>
+      <input id="nombreC" class="col-10 m-1" pInputText formControlName="nombreCasa">
+      <div class="text-danger" *ngIf="updateForm.get('nombreCasa').invalid && (updateForm.get('nombreCasa').touched || isFormSubmitted)">
+        Nombre de la Casa es obligatorio
+      </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+      <label for="descripC" class="col-10 m-1">Descripción de la Casa:</label>
+      <textarea class="col-10 m-1" id="descripC" [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize" formControlName="descripCasa"></textarea>
+    </div>
+
+    <div class="d-flex flex-column flex-lg-row justify-content-around p-2">
+      <div class="p-field-checkbox m-3">
+        <p-checkbox name="servicio" binary="true" formControlName="sPis" inputId="pis"></p-checkbox>
+        <label for="pis" class="ms-2">Piscina</label>
+      </div>
+
+      <div class="p-field-checkbox m-3">
+        <p-checkbox name="servicio" binary="true" formControlName="sMas" inputId="mas"></p-checkbox>
+        <label for="mas" class="ms-2">Mascota</label>
+      </div>
+
+      <div class="p-field-checkbox m-3">
+        <p-checkbox name="servicio" binary="true" formControlName="sWif" inputId="wif"></p-checkbox>
+        <label for="wif" class="ms-2">Wifi</label>
+      </div>
+
+      <div class="p-field-checkbox m-3">
+        <p-checkbox name="servicio" binary="true" formControlName="sJar" inputId="jar"></p-checkbox>
+        <label for="jar" class="ms-2">Jardín</label>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex flex-column flex-lg-row align-items-center justify-content-around mb-2 mt-3">
+      <label for="numInq">Número inquilinos:</label>
+      <p-inputNumber id="numInq" styleClass="mb-2"  placeholder="Numero Inquilinos" formControlName="nInquilinos" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+      <label for="numHab">Número Habitaciones:</label>
+      <p-inputNumber id="numHab" placeholder="Numero Habitaciones" formControlName="nHabitaciones" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
+    </div>
+
+    <div class="text-center d-flex flex-column flex-md-row align-items-center justify-content-center">
+      <label for="prec">Precio por noches (en €):</label>
+      <p-inputNumber id="prec" styleClass="col-12 m-lg-2"  placeholder="Precio noche en €" formControlName="precio" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="10000"></p-inputNumber>
+    </div>
+
+    <div class="d-flex flex-column">
+      <div class="m-3 text-center d-flex flex-column justify-content-center">
+        <label for="pro">Provincia: </label>
+        <p-dropdown id="pro" styleClass="col-9 mt-3" placeholder="{{provSele}}" (onChange)="cargaPueblos()" [showClear]="true" [options]="ListadoProvincias" [formControl]="updateForm.controls['provinciasS']" [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona una provincia" ></p-dropdown>
+      </div>
+
+      <div class="m-3 text-center d-flex flex-column justify-content-center">
+        <label for="selectPueblos">Municipio: </label>
+        <p-dropdown styleClass="col-9 mt-3" placeholder="{{muniSele}}" [showClear]="true" [options]="listadoPueblos" [formControl]="updateForm.controls['pueblos']"  [filter]="true" [virtualScroll]="true" [showTransitionOptions]="'500ms'" [hideTransitionOptions]="'500ms'" itemSize="30" aria-placeholder="Selecciona un municipio" #selectPueblos></p-dropdown>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex flex-wrap justify-content-center mt-3">
+      <!-- Mostrar imágenes existentes -->
+      <div *ngFor="let img of listaImg; let i = index" class="m-2 position-relative">
+        <img [src]="img.safeUrl" alt="Imagen casa" class="img-thumbnail" style="width: 150px; height: 150px;">
+        <button type="button" class="btn btn-danger position-absolute top-0 end-0" (click)="eliminarImagen(i)">
+          Eliminar
+        </button>
+      </div>
+    </div>
+
+    <div class="col-12 p-4">
+      <p-fileUpload
+        accept="image/*"
+        [auto]="false"
+        chooseLabel="Subir imagen"
+        multiple="multiple"
+        (onSelect)="onFileSelect($event)"
+        name="file"
+        [ngClass]="{'is-invalid': !selectedFile && (isFormSubmitted)}"
+      ></p-fileUpload>
+      <div *ngIf="!selectedFile && isFormSubmitted">
+        <small class="text-danger">Debes seleccionar una imagen.</small>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center m-2">
+      <button class="btn btn-success col-6" type="button" (click)="nextStep()" [disabled]="updateForm.invalid || updateForm.pristine">¡Modifica mi casa!</button>
+    </div>
+  </form>
+</div>

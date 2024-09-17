@@ -10,10 +10,6 @@ import { CommonComponentsModule } from 'src/app/common-components/common-compone
 import { SliderModule } from 'primeng/slider';
 import { PaginatorModule } from 'primeng/paginator';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule } from 'primeng/calendar';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { DropdownModule } from 'primeng/dropdown';
-
 
 
 @NgModule({
@@ -31,9 +27,6 @@ import { DropdownModule } from 'primeng/dropdown';
     PaginatorModule,
     NoopAnimationsModule,
     ReactiveFormsModule,
-    CalendarModule,
-    InputNumberModule,
-    DropdownModule,
     BrowserAnimationsModule
   ]
 })

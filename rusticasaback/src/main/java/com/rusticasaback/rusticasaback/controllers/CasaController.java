@@ -2,6 +2,7 @@ package com.rusticasaback.rusticasaback.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -131,5 +132,16 @@ public class CasaController {
     public ResponseEntity<?> datosCasa(@PathVariable(name = "idCasa") Long idCasa) {
         return casaService.obtenDatosCasa(idCasa);
     }
+
+   /* @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminarImagen(@PathVariable Long id) {
+        boolean eliminado = imagenService.eliminarImagen(id);
+
+        if (eliminado) {
+            return ResponseEntity.ok("Imagen eliminada exitosamente.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Imagen no encontrada.");
+        }
+    }*/
 
 }

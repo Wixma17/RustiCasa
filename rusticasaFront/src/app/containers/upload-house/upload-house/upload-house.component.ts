@@ -30,6 +30,7 @@ export class UploadHouseComponent implements OnInit {
   isFormSubmitted: boolean = false;
   datosCasaNombre: any;
 
+
   constructor(
     public messageService: MessageService,
     private fb: FormBuilder,

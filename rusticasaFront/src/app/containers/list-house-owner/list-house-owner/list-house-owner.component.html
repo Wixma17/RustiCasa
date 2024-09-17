@@ -1,9 +1,10 @@
-<div class="container-fluid ">
+<div class="container-fluid " id="fondo">
   <h1>Buenas {{usuConn.nickname}} estas son tus casas subidas: </h1>
 
-  <section *ngIf="casasPaginadas && casasPaginadas.length > 0" class="col-12 p-2 d-flex flex-column align-items-center p-2">
-    <div *ngFor="let casa of casasPaginadas" class="col-lg-6 col-10">
+  <section *ngIf="casasPaginadas && casasPaginadas.length > 0" class="col-12 p-2 d-flex flex-column align-items-center p-2" >
+    <div *ngFor="let casa of casasPaginadas" class="col-lg-6 col-10 p-3 mb-2">
       <app-house [datosCasa]="casa"></app-house>
+      <button class="btn btn-warning" (click)="editarCasa(casa.idCasa)">Editar "{{casa.nombreCasa}}"</button>
     </div>
     <p-paginator
       [rows]="rows"

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CasaService } from 'src/app/shared/services/casa.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class ListHouseOwnerComponent implements OnInit {
   totalRecords: number = 0; // Total de registros
   usuConn: any;
 
-  constructor(private casaService: CasaService) {}
+  constructor(private casaService: CasaService,private router: Router) {}
 
   ngOnInit(): void {
     this.usuConn = JSON.parse(sessionStorage.getItem('datosUsu'));
@@ -25,6 +26,7 @@ export class ListHouseOwnerComponent implements OnInit {
       next: (response: any) => {
         this.casasPaginadas = response.content;
         this.totalRecords = response.totalElements; // Ajusta según la respuesta del backend
+        console.log(this.casasPaginadas)
       },
       error: (err) => {
         console.error(err);
@@ -38,5 +40,9 @@ export class ListHouseOwnerComponent implements OnInit {
   onPageChange(event: any) {
     this.currentPage = event.page;
     this.loadCasas(this.currentPage);
+  }
+
+  editarCasa(casaId: number) {
+    this.router.navigate(['/update-house', casaId]);
   }
 }

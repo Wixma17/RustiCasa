@@ -1,1 +1,20 @@
+#fondo{
+  background: url(../../../../assets/fondoLogin2.jpg);
+}
 
+.contenedor-cristalizado {
+  background: rgba(255, 255, 255, 0.5); /* Fondo semi-transparente */
+  backdrop-filter: blur(10px); /* Desenfoque de fondo */
+  border-radius: 15px; /* Bordes redondeados para un mejor efecto */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde ligero para resaltar */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+  color: black; /* Color del texto dentro del contenedor */
+}
+
+.formFondo{
+    border: 0.5px solid black;
+    border-radius: 5px;
+    padding: 15px;
+    height: 32%;
+    margin-top: 15px;
+}

@@ -34,3 +34,7 @@ body{
 #fondo > div > div.ng-star-inserted > form > div.d-flex.justify-content-center > div > p-fileupload > div > div.p-fileupload-buttonbar > p-button:nth-child(3) > button{
   display: none;
 }
+
+#fondo > div > p-steps > div > ul > li > a:hover{
+  cursor: pointer;
+}

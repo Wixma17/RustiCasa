@@ -8,6 +8,8 @@ import { LoginComponent } from './containers/login/login/login.component';
 import { RegisterComponent } from './containers/register/register/register.component';
 import { ProfileComponent } from './containers/profile/profile/profile.component';
 import { ListHouseOwnerComponent } from './containers/list-house-owner/list-house-owner/list-house-owner.component';
+import { UpdateHouseComponent } from './containers/update-house/update-house/update-house.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
@@ -84,6 +86,17 @@ const routes: Routes = [
       breadcrumb: [
         { label: 'Inicio', routerLink: '/welcome' },
         { label: 'Tus casas', routerLink: '/list-house-owner' },
+      ],
+    },
+  },
+  {
+    path: 'update-house/:id',
+    component: UpdateHouseComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Tus casas', routerLink: '/list-house-owner' },
+        { label: 'Modificación casa', routerLink: '/update-house/:id' }
       ],
     },
   }
