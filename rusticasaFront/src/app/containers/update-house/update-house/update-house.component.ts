@@ -36,6 +36,7 @@ export class UpdateHouseComponent implements OnInit {
   idMun: number;
   casaUpdate: RequestRegistrarCasa;
   ordenCarrusel: number[];
+  datosNuevoCarrusel: number[];
 
   constructor(
     private route: ActivatedRoute,
@@ -151,11 +152,14 @@ export class UpdateHouseComponent implements OnInit {
       .subscribe({
         next: (img) => {
           this.ordenCarrusel = [];
+          this.datosNuevoCarrusel = [];
+          this.listaImg = [];
           for (let imagen of img) {
-            this.ordenCarrusel.push(imagen.posicionCarrusel);
+            this.ordenCarrusel[imagen.posicionCarrusel] =
+              imagen.posicionCarrusel;
+            this.datosNuevoCarrusel[imagen.posicionCarrusel] = imagen.idImagen;
+            this.listaImg[imagen.posicionCarrusel] = imagen;
           }
-          console.log(this.ordenCarrusel);
-          this.listaImg = img;
         },
         error: (err) => {
           console.error(err);
@@ -224,8 +228,7 @@ export class UpdateHouseComponent implements OnInit {
           console.error('Error al eliminar imagen:', err);
         },
       });
-}
-
+  }
 
   // Manejar selección de nuevas imágenes
   onFileSelect(event: any): void {
@@ -279,10 +282,10 @@ export class UpdateHouseComponent implements OnInit {
     let listaImg: SubidaImagenCasaRequest = {
       files: this.selectedFile,
       idCasa: this.casaUpdate.idCasa,
-      idsImagenes:this.ordenCarrusel
+      idsImagenes: this.datosNuevoCarrusel,
     };
 
-    console.log(listaImg.files)
+    console.log(listaImg.files);
 
     this.casaService.subirImagenCasa(listaImg).subscribe((s) => {
       console.log('Subida de imagenes con exito');
@@ -291,7 +294,7 @@ export class UpdateHouseComponent implements OnInit {
     this.router.navigate(['/list-house-owner']);
   }
 
-  cambioCarrusel(posicionActual: number, atras: boolean) {
+  cambioCarrusel(posicionActual: number, id: number, atras: boolean) {
     let posSustituir: number;
 
     if (atras) {
@@ -306,15 +309,23 @@ export class UpdateHouseComponent implements OnInit {
           : posicionActual + 1;
     }
 
+    let datoSustituirPrev = this.datosNuevoCarrusel[posSustituir];
     let numSustituir = this.ordenCarrusel[posSustituir];
+
+    // Cambio del orden en el array de ids de imagen
+    this.datosNuevoCarrusel[posSustituir] =
+      this.datosNuevoCarrusel[posicionActual];
+    this.datosNuevoCarrusel[posicionActual] = datoSustituirPrev;
+
+    // Cambio del orden en el array de las posiciones
     this.ordenCarrusel[posSustituir] = this.ordenCarrusel[posicionActual];
     this.ordenCarrusel[posicionActual] = numSustituir;
 
-    const imgSustituir = this.listaImg[posSustituir];
+    let imgSustituir = this.listaImg[posSustituir];
     this.listaImg[posSustituir] = this.listaImg[posicionActual];
     this.listaImg[posicionActual] = imgSustituir;
 
     console.log(this.ordenCarrusel);
+    console.log(this.datosNuevoCarrusel);
   }
-
 }
