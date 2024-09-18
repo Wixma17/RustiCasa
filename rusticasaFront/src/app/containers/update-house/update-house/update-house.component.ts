@@ -36,7 +36,6 @@ export class UpdateHouseComponent implements OnInit {
   idMun: number;
   casaUpdate: RequestRegistrarCasa;
   ordenCarrusel: number[];
-  datosNuevoCarrusel: number[];
 
   constructor(
     private route: ActivatedRoute,
@@ -152,12 +151,10 @@ export class UpdateHouseComponent implements OnInit {
       .subscribe({
         next: (img) => {
           this.ordenCarrusel = [];
-          this.datosNuevoCarrusel = [];
           this.listaImg = [];
           for (let imagen of img) {
             this.ordenCarrusel[imagen.posicionCarrusel] =
               imagen.posicionCarrusel;
-            this.datosNuevoCarrusel[imagen.posicionCarrusel] = imagen.idImagen;
             this.listaImg[imagen.posicionCarrusel] = imagen;
           }
         },
@@ -218,11 +215,7 @@ export class UpdateHouseComponent implements OnInit {
       .eliminarImagen(imagenAEliminar.idImagen, idCasa)
       .subscribe({
         next: () => {
-          // Actualizar la lista local eliminando la imagen
           this.listaImg.splice(index, 1);
-
-          // Actualizar el orden del carrusel en el frontend si es necesario
-          // Por ejemplo, si `ordenCarrusel` es un array, también puedes ajustarlo aquí.
         },
         error: (err) => {
           console.error('Error al eliminar imagen:', err);
@@ -282,7 +275,7 @@ export class UpdateHouseComponent implements OnInit {
     let listaImg: SubidaImagenCasaRequest = {
       files: this.selectedFile,
       idCasa: this.casaUpdate.idCasa,
-      idsImagenes: this.datosNuevoCarrusel,
+      idsImagenes: this.ordenCarrusel,
     };
 
     console.log(listaImg.files);
@@ -294,38 +287,4 @@ export class UpdateHouseComponent implements OnInit {
     this.router.navigate(['/list-house-owner']);
   }
 
-  cambioCarrusel(posicionActual: number, id: number, atras: boolean) {
-    let posSustituir: number;
-
-    if (atras) {
-      posSustituir =
-        posicionActual === 0
-          ? this.ordenCarrusel.length - 1
-          : posicionActual - 1;
-    } else {
-      posSustituir =
-        posicionActual === this.ordenCarrusel.length - 1
-          ? 0
-          : posicionActual + 1;
-    }
-
-    let datoSustituirPrev = this.datosNuevoCarrusel[posSustituir];
-    let numSustituir = this.ordenCarrusel[posSustituir];
-
-    // Cambio del orden en el array de ids de imagen
-    this.datosNuevoCarrusel[posSustituir] =
-      this.datosNuevoCarrusel[posicionActual];
-    this.datosNuevoCarrusel[posicionActual] = datoSustituirPrev;
-
-    // Cambio del orden en el array de las posiciones
-    this.ordenCarrusel[posSustituir] = this.ordenCarrusel[posicionActual];
-    this.ordenCarrusel[posicionActual] = numSustituir;
-
-    let imgSustituir = this.listaImg[posSustituir];
-    this.listaImg[posSustituir] = this.listaImg[posicionActual];
-    this.listaImg[posicionActual] = imgSustituir;
-
-    console.log(this.ordenCarrusel);
-    console.log(this.datosNuevoCarrusel);
-  }
 }

@@ -109,15 +109,20 @@ public class CasaController {
 
     @PostMapping("/subirImagenes")
     public ResponseEntity<?> subirImagenes(
-            @RequestParam("files") List<MultipartFile> files,
+            @RequestParam(value = "files", required = false) List<MultipartFile> files,
             @RequestParam("idCasa") Long idCasa,
             @RequestParam(value = "idsImagenes", required = false) List<Long> idsImagenes) {
-
+    
         // Si idsImagenes es null, inicializa una lista vacía
         if (idsImagenes == null) {
             idsImagenes = new ArrayList<>();
         }
-
+    
+        // Si files es null, inicializa una lista vacía
+        if (files == null) {
+            files = new ArrayList<>();
+        }
+    
         boolean resultado = imagenService.subidaImagenes(files, idCasa, idsImagenes);
         if (resultado) {
             return ResponseEntity.ok().build();

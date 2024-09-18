@@ -173,14 +173,6 @@
         *ngFor="let img of listaImg; let i = index"
         class="m-1 position-relative d-flex align-items-center"
       >
-        <div>
-          <button
-            class="btn btn-primary"
-            (click)="cambioCarrusel(i, img.idImagen, true)"
-          >
-            <i class="bi bi-caret-left-fill"></i>
-          </button>
-        </div>
 
         <div class="m-2 position-relative">
           <img
@@ -196,12 +188,6 @@
           >
             <span class="accesibilidad"> Eliminar </span>
             <i class="bi bi-trash"></i>
-          </button>
-        </div>
-
-        <div>
-          <button class="btn btn-primary" (click)="cambioCarrusel(i,img.idImagen, false)">
-            <i class="bi bi-caret-right-fill"></i>
           </button>
         </div>
       </div>
