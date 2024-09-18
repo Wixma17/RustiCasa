@@ -280,11 +280,18 @@ export class UpdateHouseComponent implements OnInit {
 
     console.log(listaImg.files);
 
-    this.casaService.subirImagenCasa(listaImg).subscribe((s) => {
-      console.log('Subida de imagenes con exito');
+    this.casaService.subirImagenCasa(listaImg).subscribe({
+      next:(s) => {
+        console.log('Subida de imagenes con exito');
+      },
+      error:(err)=>{
+        console.error(err);
+      },
+      complete:()=>{
+        this.router.navigate(['/list-house-owner']);
+      }
     });
 
-    this.router.navigate(['/list-house-owner']);
   }
 
 }
