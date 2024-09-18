@@ -111,93 +111,83 @@ public class ImagenService {
         if (casaEntity == null) {
             return false;
         }
-
+    
         // Obtener las imágenes existentes
         List<ImagenEntity> imagenesExistentes = casaEntity.getListaImagenes();
         if (imagenesExistentes == null) {
             imagenesExistentes = new ArrayList<>();
         }
-
-        // Procesar eliminación y reordenación de imágenes si se proporciona la lista de
-        // IDs
+    
         if (idsImagenes != null && !idsImagenes.isEmpty()) {
             // Crear un mapa para la nueva posición de las imágenes
             Map<Long, Integer> idPosicionMap = new HashMap<>();
             for (int i = 0; i < idsImagenes.size(); i++) {
                 idPosicionMap.put(idsImagenes.get(i), i);
             }
-
-            // Reordenar imágenes existentes y eliminar las que no están en la lista de IDs
+    
+            // Reordenar imágenes existentes según la lista de IDs
             for (ImagenEntity imgEntity : imagenesExistentes) {
                 Long imgId = imgEntity.getIdImagen();
                 if (idPosicionMap.containsKey(imgId)) {
                     imgEntity.setPosicionCarrusel(idPosicionMap.get(imgId));
                     imagenRepository.save(imgEntity);
-                } /*else {
-                    // Eliminar imágenes que no están en la lista de IDs
-                    Path filePath = Paths.get("FotosCasas/" + idCasa + "/" + imgEntity.getNombreImagen());
-                    try {
-                        Files.deleteIfExists(filePath);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    imagenRepository.delete(imgEntity);
-                }*/
-            }
-        } else {
-            // Si no se proporciona idsImagenes, solo eliminar imágenes que no están en el
-            // directorio de archivos
-            for (ImagenEntity imgEntity : imagenesExistentes) {
-                Path filePath = Paths.get("FotosCasas/" + idCasa + "/" + imgEntity.getNombreImagen());
-                if (!Files.exists(filePath)) {
-                    imagenRepository.delete(imgEntity);
                 }
             }
+    
+            // Si no se envían archivos, solo actualiza el orden y retorna
+            if (files == null || files.isEmpty()) {
+                List<ImagenEntity> todasLasImagenes = imagenRepository.findByCasaImagen(casaEntity);
+                casaEntity.setListaImagenes(todasLasImagenes);
+                casaRepository.save(casaEntity);
+                return true;
+            }
         }
-
+    
         // Subir nuevas imágenes
-        if (!files.isEmpty()) {
+        if (files != null && !files.isEmpty()) {
             String ruta = "FotosCasas/" + idCasa + "/";
             File uploadDirFile = new File(ruta);
             if (!uploadDirFile.exists()) {
                 uploadDirFile.mkdirs();
             }
-
+    
             Path uploadDir = Paths.get(ruta);
             try {
                 Files.createDirectories(uploadDir);
-
+    
                 // Obtener la última posición en el carrusel para las nuevas imágenes
                 int lastIndex = imagenesExistentes.stream()
                         .mapToInt(ImagenEntity::getPosicionCarrusel)
                         .max()
                         .orElse(-1) + 1;
-
+    
                 for (MultipartFile file : files) {
                     String fileName = StringUtils.cleanPath(file.getOriginalFilename());
                     Path filePath = uploadDir.resolve(fileName);
                     Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-
+    
                     // Crear una nueva entidad ImagenEntity
                     ImagenEntity imgEntity = new ImagenEntity();
                     imgEntity.setNombreImagen(fileName);
                     imgEntity.setPosicionCarrusel(lastIndex++);
                     imgEntity.setCasaImagen(casaEntity);
-
+    
                     imagenRepository.save(imgEntity);
                 }
             } catch (IOException e) {
                 return false;
             }
         }
-
+    
         // Actualizar la lista de imágenes de la casa
         List<ImagenEntity> todasLasImagenes = imagenRepository.findByCasaImagen(casaEntity);
         casaEntity.setListaImagenes(todasLasImagenes);
         casaRepository.save(casaEntity);
-
+    
         return true;
     }
+    
+    
 
     public boolean eliminarImagen(Long idImagen, Long idCasa) {
         // Obtener la entidad de la casa

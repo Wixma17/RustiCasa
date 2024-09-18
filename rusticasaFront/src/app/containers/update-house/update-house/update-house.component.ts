@@ -282,6 +282,8 @@ export class UpdateHouseComponent implements OnInit {
       idsImagenes:this.ordenCarrusel
     };
 
+    console.log(listaImg.files)
+
     this.casaService.subirImagenCasa(listaImg).subscribe((s) => {
       console.log('Subida de imagenes con exito');
     });
