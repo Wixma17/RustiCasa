@@ -55,18 +55,30 @@ export class CasaService {
   subirImagenCasa(request: SubidaImagenCasaRequest): Observable<any> {
     let url = `${environment.urlApiCasas}subirImagenes`;
     const formData: FormData = new FormData();
+
+    // Agregar archivos al FormData
     request.files.forEach((file: File) => {
       formData.append('files', file, file.name);
     });
+
+    // Agregar idCasa al FormData
     formData.append('idCasa', request.idCasa.toString());
+
+    // Agregar idsImagenes al FormData si se proporciona
+    if (request.idsImagenes && request.idsImagenes.length > 0) {
+      request.idsImagenes.forEach((id: number) => {
+        formData.append('idsImagenes', id.toString());
+      });
+    }
+
+    // Enviar la solicitud POST al backend
     return this.httpClient.post<any>(url, formData, {
       headers: {},
     });
   }
 
   eliminarImagen(idImagen: number, idCasa: number): Observable<any> {
-    let url= `${environment.urlApiCasas}eliminar/${idImagen}?idCasa=${idCasa}`;
+    let url = `${environment.urlApiCasas}eliminar/${idImagen}?idCasa=${idCasa}`;
     return this.httpClient.delete<any>(url);
   }
-
 }

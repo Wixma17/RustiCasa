@@ -1,5 +1,6 @@
 package com.rusticasaback.rusticasaback.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,12 +108,22 @@ public class CasaController {
     }
 
     @PostMapping("/subirImagenes")
-    public ResponseEntity<?> subirImagenes(@RequestParam("files") List<MultipartFile> files,
-            @RequestParam("idCasa") Long idCasa) {
+    public ResponseEntity<?> subirImagenes(
+            @RequestParam("files") List<MultipartFile> files,
+            @RequestParam("idCasa") Long idCasa,
+            @RequestParam(value = "idsImagenes", required = false) List<Long> idsImagenes) {
 
-        imagenService.subidaImagenes(files, idCasa);
-        // casaService.getCasa(idCasa);
-        return ResponseEntity.ok().build();
+        // Si idsImagenes es null, inicializa una lista vacía
+        if (idsImagenes == null) {
+            idsImagenes = new ArrayList<>();
+        }
+
+        boolean resultado = imagenService.subidaImagenes(files, idCasa, idsImagenes);
+        if (resultado) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PostMapping("/subirOpinion")
@@ -140,7 +151,7 @@ public class CasaController {
     public ResponseEntity<?> eliminarImagen(@PathVariable Long idImagen, @RequestParam Long idCasa) {
         boolean eliminada = imagenService.eliminarImagen(idImagen, idCasa);
         if (eliminada) {
-             Map<String, String> response = new HashMap<>();
+            Map<String, String> response = new HashMap<>();
             response.put("message", "Imagen eliminada exitosamente");
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         } else {

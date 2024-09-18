@@ -214,13 +214,18 @@ export class UpdateHouseComponent implements OnInit {
       .eliminarImagen(imagenAEliminar.idImagen, idCasa)
       .subscribe({
         next: () => {
+          // Actualizar la lista local eliminando la imagen
           this.listaImg.splice(index, 1);
+
+          // Actualizar el orden del carrusel en el frontend si es necesario
+          // Por ejemplo, si `ordenCarrusel` es un array, también puedes ajustarlo aquí.
         },
         error: (err) => {
           console.error('Error al eliminar imagen:', err);
         },
       });
-  }
+}
+
 
   // Manejar selección de nuevas imágenes
   onFileSelect(event: any): void {
@@ -274,6 +279,7 @@ export class UpdateHouseComponent implements OnInit {
     let listaImg: SubidaImagenCasaRequest = {
       files: this.selectedFile,
       idCasa: this.casaUpdate.idCasa,
+      idsImagenes:this.ordenCarrusel
     };
 
     this.casaService.subirImagenCasa(listaImg).subscribe((s) => {
