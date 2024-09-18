@@ -45,4 +45,8 @@ export class ListHouseOwnerComponent implements OnInit {
   editarCasa(casaId: number) {
     this.router.navigate(['/update-house', casaId]);
   }
+
+  goUpload(){
+    this.router.navigate(['/upload-house']);
+  }
 }

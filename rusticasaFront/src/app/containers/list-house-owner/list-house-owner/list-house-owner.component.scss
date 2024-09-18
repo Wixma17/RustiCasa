@@ -9,3 +9,13 @@ h1 {
   text-shadow: 6px 1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5),
     -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
 }
+
+.botonTexto{
+  font-size: 35px;
+}
+
+#fondo > section > button > i{
+  position: absolute;
+  top: 0px;
+  font-size: 15px;
+}

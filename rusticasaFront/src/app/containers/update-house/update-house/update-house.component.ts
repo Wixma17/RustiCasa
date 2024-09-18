@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -284,18 +284,29 @@ export class UpdateHouseComponent implements OnInit {
   }
 
   cambioCarrusel(posicionActual: number, atras: boolean) {
-    let numSustituir;
-    let posSustituir;
+    let posSustituir: number;
+
     if (atras) {
-      posSustituir = posicionActual - 1;
+      posSustituir =
+        posicionActual === 0
+          ? this.ordenCarrusel.length - 1
+          : posicionActual - 1;
     } else {
-      posSustituir = posicionActual + 1;
+      posSustituir =
+        posicionActual === this.ordenCarrusel.length - 1
+          ? 0
+          : posicionActual + 1;
     }
-    numSustituir = this.ordenCarrusel[posSustituir];
-    this.ordenCarrusel[posSustituir] = this.ordenCarrusel.splice(
-      posicionActual,
-      1
-    )[0];
+
+    let numSustituir = this.ordenCarrusel[posSustituir];
+    this.ordenCarrusel[posSustituir] = this.ordenCarrusel[posicionActual];
     this.ordenCarrusel[posicionActual] = numSustituir;
+
+    const imgSustituir = this.listaImg[posSustituir];
+    this.listaImg[posSustituir] = this.listaImg[posicionActual];
+    this.listaImg[posicionActual] = imgSustituir;
+
+    console.log(this.ordenCarrusel);
   }
+
 }
