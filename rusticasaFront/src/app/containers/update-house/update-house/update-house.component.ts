@@ -35,6 +35,7 @@ export class UpdateHouseComponent implements OnInit {
   usuarioLog: any;
   idMun: number;
   casaUpdate: RequestRegistrarCasa;
+  ordenCarrusel: number[];
 
   constructor(
     private route: ActivatedRoute,
@@ -149,6 +150,11 @@ export class UpdateHouseComponent implements OnInit {
       )
       .subscribe({
         next: (img) => {
+          this.ordenCarrusel = [];
+          for (let imagen of img) {
+            this.ordenCarrusel.push(imagen.posicionCarrusel);
+          }
+          console.log(this.ordenCarrusel);
           this.listaImg = img;
         },
         error: (err) => {
@@ -265,18 +271,31 @@ export class UpdateHouseComponent implements OnInit {
       },
     });
 
+    let listaImg: SubidaImagenCasaRequest = {
+      files: this.selectedFile,
+      idCasa: this.casaUpdate.idCasa,
+    };
 
-      let listaImg: SubidaImagenCasaRequest = {
-        files: this.selectedFile,
-        idCasa: this.casaUpdate.idCasa,
-      };
-
-      this.casaService.subirImagenCasa(listaImg).subscribe((s)=>{
-        console.log("Subida de imagenes con exito");
-      });
-
-
+    this.casaService.subirImagenCasa(listaImg).subscribe((s) => {
+      console.log('Subida de imagenes con exito');
+    });
 
     this.router.navigate(['/list-house-owner']);
+  }
+
+  cambioCarrusel(posicionActual: number, atras: boolean) {
+    let numSustituir;
+    let posSustituir;
+    if (atras) {
+      posSustituir = posicionActual - 1;
+    } else {
+      posSustituir = posicionActual + 1;
+    }
+    numSustituir = this.ordenCarrusel[posSustituir];
+    this.ordenCarrusel[posSustituir] = this.ordenCarrusel.splice(
+      posicionActual,
+      1
+    )[0];
+    this.ordenCarrusel[posicionActual] = numSustituir;
   }
 }

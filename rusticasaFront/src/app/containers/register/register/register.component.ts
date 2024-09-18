@@ -130,33 +130,31 @@ export class RegisterComponent implements OnInit {
         },
         complete: () => {
           console.info('Registro Completado=> ' + this.clienteRegister);
+          let datosImg: SubidaImagenRequest = {
+            files: this.selectedFile,
+            gmail: this.clienteRegister.gmail,
+          };
+
+          this.authService.subirImagenPerfil(datosImg).subscribe({
+            next: (mess) => {
+              this.mensajeImagen = mess;
+            },
+            error: (err) => {
+              console.error(err);
+            },
+            complete: () => {
+              console.info('Imagen Subida=> ' + datosImg);
+              sessionStorage.setItem(
+                'datosUsu',
+                JSON.stringify(this.clienteRegister)
+              );
+              this.authService.updateUserData(this.clienteRegister);
+              this.router.navigate(['/welcome']);
+            },
+          });
         },
       });
 
-      //------------------------------------------------------
-
-      let datosImg: SubidaImagenRequest = {
-        files: this.selectedFile,
-        gmail: this.clienteRegister.gmail,
-      };
-
-      this.authService.subirImagenPerfil(datosImg).subscribe({
-        next: (mess) => {
-          this.mensajeImagen = mess;
-        },
-        error: (err) => {
-          console.error(err);
-        },
-        complete: () => {
-          console.info('Imagen Subida=> ' + datosImg);
-          sessionStorage.setItem(
-            'datosUsu',
-            JSON.stringify(this.clienteRegister)
-          );
-          this.authService.updateUserData(this.clienteRegister);
-          this.router.navigate(['/welcome']);
-        },
-      });
     } else {
       this.registerForm.markAllAsTouched();
     }

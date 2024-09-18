@@ -3,6 +3,8 @@ package com.rusticasaback.rusticasaback.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,25 +36,20 @@ public class AuthController {
 
     @PostMapping("/registerUser")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-        // Obtener el cliente existente (o crear uno nuevo si no existe)
-        ClienteEntity clienteExistente = clienteService.verClienteExistente(registerRequest.getGmail()).get();
-
-        if (clienteExistente == null) {
+        ClienteEntity clienteExistente;
+    
+        Optional<ClienteEntity> clienteExistenteOptional = clienteService.verClienteExistente(registerRequest.getGmail());
+        if (!clienteExistenteOptional.isPresent()) {
             ClienteDTO c= clienteService.crearCliente(registerRequest);
             clienteExistente = c.createClienteEntity();
         } else {
-            // Actualizar solo los campos proporcionados, manteniendo la imagen existente si
-            // no se proporciona una nueva
+            clienteExistente = clienteExistenteOptional.get();
             clienteExistente.setNombre(registerRequest.getNombre());
             clienteExistente.setApellido(registerRequest.getApellido());
             clienteExistente.setPasswd(registerRequest.getPasswd());
             clienteExistente.setNickname(registerRequest.getNickname());
             clienteExistente.setFechaNacimiento(registerRequest.getFechaNacimiento());
-            // Si no se proporciona una nueva imagen, no cambiar el campo de imagen
         }
-
-        System.out.println("fecha=> "+clienteExistente.getFechaNacimiento());
-
         clienteService.guardaCliente(clienteExistente);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Cliente Subido");

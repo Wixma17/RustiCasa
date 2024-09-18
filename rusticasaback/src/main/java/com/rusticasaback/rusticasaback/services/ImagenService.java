@@ -108,16 +108,10 @@ public class ImagenService {
 
     public boolean subidaImagenes(List<MultipartFile> files, Long idCasa) {
 
-
-        //Mirar esto a ver si se puede corregir
-
-        // Encuentra la casa
         CasaEntity casaEntity = casaRepository.findById(idCasa).orElse(null);
-    
         if (casaEntity == null) {
-            return false; // En caso de que no exista la casa
-        }
-    
+            return false;
+        }    
         // Si no se pasan imágenes, solo actualiza la posición del carrusel para las existentes
         if (files.isEmpty()) {
             List<ImagenEntity> imagenesExistentes = casaEntity.getListaImagenes();
@@ -127,6 +121,7 @@ public class ImagenService {
                     ImagenEntity imgEntity = imagenesExistentes.get(i);
                     imgEntity.setPosicionCarrusel(i);
                     imagenRepository.save(imgEntity);
+                    System.out.println(imgEntity.getPosicionCarrusel());
                 }
             }
             return true; // No hubo imágenes nuevas para procesar
