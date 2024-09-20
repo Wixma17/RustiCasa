@@ -137,4 +137,8 @@ export class HouseComponent implements OnInit, OnDestroy {
   detalleCasa() {
     this.router.navigate(['/details-house/' + this.datosCasa.idCasa]);
   }
+
+  goListOpinion(){
+    this.router.navigate(['/opinion-list-house/'+this.datosCasa.idCasa]);
+  }
 }

@@ -19,6 +19,7 @@ import { MessageService } from 'primeng/api';
 import { ProfileModule } from './containers/profile/profile.module';
 import { ListHouseOwnerModule } from './containers/list-house-owner/list-house-owner.module';
 import { UpdateHouseModule } from './containers/update-house/update-house.module';
+import { OpinionListHouseModule } from './containers/opinion-list-house/opinion-list-house.module';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BreadcrumbModule,
     RegisterModule,
     LoginModule,
+    OpinionListHouseModule,
     ToggleButtonModule,
     ProfileModule,
     UpdateHouseModule,

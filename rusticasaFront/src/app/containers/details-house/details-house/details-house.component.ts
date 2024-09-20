@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { merge, Observable, Subject, Subscription } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
@@ -33,7 +33,8 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private serviceHouse: CasaService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -149,5 +150,9 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroySubject.next();
+  }
+
+  goListOpinion(){
+    this.router.navigate(['/opinion-list-house/'+this.casa.idCasa]);
   }
 }

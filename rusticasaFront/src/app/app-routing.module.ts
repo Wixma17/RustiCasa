@@ -9,6 +9,7 @@ import { RegisterComponent } from './containers/register/register/register.compo
 import { ProfileComponent } from './containers/profile/profile/profile.component';
 import { ListHouseOwnerComponent } from './containers/list-house-owner/list-house-owner/list-house-owner.component';
 import { UpdateHouseComponent } from './containers/update-house/update-house/update-house.component';
+import { OpinionListHouseComponent } from './containers/opinion-list-house/opinion-list-house/opinion-list-house.component';
 
 
 const routes: Routes = [
@@ -97,6 +98,18 @@ const routes: Routes = [
         { label: 'Inicio', routerLink: '/welcome' },
         { label: 'Tus casas', routerLink: '/list-house-owner' },
         { label: 'Modificación casa', routerLink: '/update-house/:id' }
+      ],
+    },
+  },
+  {
+    path: 'opinion-list-house/:idCasa',
+    component: OpinionListHouseComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Búsquedas', routerLink: '/full-search' },
+        { label: 'Detalles Casa', routerLink: '/details-house/:idCasa' },
+        { label: 'Opinion Casa', routerLink: '/opinion-list-house/:idCasa' }
       ],
     },
   }

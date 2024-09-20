@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core'; // Importa el decorador Injectable de Angular para hacer que el servicio esté disponible en la inyección de dependencias.
-import { Router, NavigationEnd, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router'; // Importa Router y eventos de navegación para manejar las rutas y ActivatedRoute para obtener información sobre la ruta activa.
-import { BehaviorSubject, Observable } from 'rxjs'; // Importa BehaviorSubject para manejar el estado reactivo y Observable para exponer ese estado.
-import { filter } from 'rxjs/operators'; // Importa el operador filter de RxJS para filtrar los eventos de navegación.
+import { Injectable } from '@angular/core';
+import { Router, NavigationEnd, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root' // Marca el servicio como inyectable a nivel raíz, por lo que estará disponible en toda la aplicación.
@@ -28,6 +28,10 @@ export class BreadcrumbService { // Declara el servicio BreadcrumbService.
       // Actualiza el BehaviorSubject con el nuevo array de migas de pan.
       this.breadcrumbsSubject.next(breadcrumbs);
     });
+  }
+
+  updateBreadcrumbs(breadcrumbs: Array<{ label: string, routerLink?: string }>) {
+    this.breadcrumbsSubject.next(breadcrumbs);
   }
 
   // Método recursivo que construye las migas de pan (breadcrumbs) basándose en la estructura de rutas.

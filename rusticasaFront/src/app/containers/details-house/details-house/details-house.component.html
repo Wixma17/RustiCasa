@@ -4,15 +4,16 @@
 
     <div
       *ngIf="listaOpinionCasa"
-      class="d-flex align-items-center justify-content-end justify-content-md-end"
     >
-      <p-rating
+    <a (click)="goListOpinion()" class="d-flex align-items-center justify-content-end justify-content-md-end">
+        <p-rating
         [ngModel]="mediaOp"
         [readonly]="true"
         [cancel]="false"
         [stars]="5"
       ></p-rating>
       <span class="ms-1 mb-1">({{ listaOpinionCasa.length }})</span>
+    </a>
     </div>
   </div>
 
