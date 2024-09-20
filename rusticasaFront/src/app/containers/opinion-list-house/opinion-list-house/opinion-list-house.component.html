@@ -8,7 +8,7 @@
           <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex justify-content-start p-3 align-items-center">
               <img [src]="rutasFotosPerfil[op.opinaEntityPK.gmail].urlImg" alt="Foto perfil de: {{op.opinaEntityPK.gmail}}" class="rounded-circle" *ngIf="rutasFotosPerfil[op.opinaEntityPK.gmail]">
-              <p class="ms-5">{{op.opinaEntityPK.gmail}}</p>
+              <p class="ms-5" *ngIf="nombreClientes[op.opinaEntityPK.gmail]">{{nombreClientes[op.opinaEntityPK.gmail].nickname}}</p>
             </div>
 
             <div class="m-3">

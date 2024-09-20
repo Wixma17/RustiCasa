@@ -19,4 +19,9 @@ export class ClienteService {
     let url = `${environment.urlApiCliente}cliente/${gmail}`;
     return this.httpClient.get<any>(url);
   }
+
+  getDataCliente(gmail:string): Observable<any> {
+    let url = `${environment.urlApiCliente}clienteData/${gmail}`;
+    return this.httpClient.get<any>(url);
+  }
 }

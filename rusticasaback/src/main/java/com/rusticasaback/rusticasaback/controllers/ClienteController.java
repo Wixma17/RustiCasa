@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.rusticasaback.rusticasaback.DTOs.ClienteDTO;
 import com.rusticasaback.rusticasaback.entities.ClienteEntity;
 import com.rusticasaback.rusticasaback.services.ClienteService;
 import com.rusticasaback.rusticasaback.services.ImagenService;
@@ -41,6 +43,15 @@ public class ClienteController {
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
 
+    }
+
+    @GetMapping("/clienteData/{gmail}")
+    public ResponseEntity<?> getDatosCliente(@PathVariable(name = "gmail") String gmail) {
+        
+        Optional<ClienteEntity> cli = clienteService.verClienteExistente(gmail);  
+        ClienteDTO cliente= new ClienteDTO(cli.get());      
+
+        return new ResponseEntity<>(cliente, HttpStatus.OK);       
     }
 
 }

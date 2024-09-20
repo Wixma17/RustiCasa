@@ -17,6 +17,7 @@ export class OpinionListHouseComponent implements OnInit {
   idCasaLong:number;
   listaOpinion:any;
   rutasFotosPerfil: { [gmail: string]: string } = {};
+  nombreClientes: { [gmail: string]: string } = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -63,6 +64,18 @@ export class OpinionListHouseComponent implements OnInit {
                 },
                 (error) => {
                   console.error('Error al obtener la ruta de la foto de perfil:', error);
+                }
+              );
+            });
+
+            this.listaOpinion.forEach(op => {
+              this.clienteService.getDataCliente(op.opinaEntityPK.gmail).subscribe(
+                (nombre) => {
+                  this.nombreClientes[op.opinaEntityPK.gmail] = nombre;
+                  console.log(this.nombreClientes)
+                },
+                (error) => {
+                  console.error('Error al obtener el nombre del cliente:', error);
                 }
               );
             });
