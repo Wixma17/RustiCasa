@@ -13,18 +13,23 @@ import { ClienteService } from 'src/app/shared/services/cliente.service';
 })
 export class OpinionListHouseComponent implements OnInit {
   casa: CasaResponse;
-  idCasaString:string;
-  idCasaLong:number;
-  listaOpinion:any;
+  idCasaString: string;
+  idCasaLong: number;
+  listaOpinion: any = [];
   rutasFotosPerfil: { [gmail: string]: string } = {};
   nombreClientes: { [gmail: string]: string } = {};
+
+  // Variables de paginación
+  page: number = 0; // Página actual
+  rows: number = 10; // Tamaño de la página
+  totalRecords: number = 0; // Total de registros
 
   constructor(
     private route: ActivatedRoute,
     private serviceHouse: CasaService,
-    private breadcrumbService:BreadcrumbService,
-    private casaService:CasaService,
-    private clienteService:ClienteService
+    private breadcrumbService: BreadcrumbService,
+    private casaService: CasaService,
+    private clienteService: ClienteService
   ) {}
 
   ngOnInit(): void {
@@ -50,49 +55,58 @@ export class OpinionListHouseComponent implements OnInit {
         console.error(err);
       },
       complete: () => {
-        console.info('Datos cargados de la casa correctamente');
-
-        this.casaService.getListaOpinionCasa(this.idCasaLong).subscribe({
-          next:(listaOp)=>{
-            this.listaOpinion=listaOp;
-
-            this.listaOpinion.forEach(op => {
-              this.clienteService.getRutaFotoPerfil(op.opinaEntityPK.gmail).subscribe(
-                (ruta) => {
-                  this.rutasFotosPerfil[op.opinaEntityPK.gmail] = ruta;
-                  console.log(this.rutasFotosPerfil)
-                },
-                (error) => {
-                  console.error('Error al obtener la ruta de la foto de perfil:', error);
-                }
-              );
-            });
-
-            this.listaOpinion.forEach(op => {
-              this.clienteService.getDataCliente(op.opinaEntityPK.gmail).subscribe(
-                (nombre) => {
-                  this.nombreClientes[op.opinaEntityPK.gmail] = nombre;
-                  console.log(this.nombreClientes)
-                },
-                (error) => {
-                  console.error('Error al obtener el nombre del cliente:', error);
-                }
-              );
-            });
-
-          },
-          error:(err)=>{
-            console.error(err);
-          },
-          complete:()=>{
-            console.log(this.listaOpinion);
-          }
-        });
+        this.loadOpinions(); // Cargar las opiniones cuando los datos de la casa estén listos
       },
     });
   }
 
+  // Método para cargar las opiniones con paginación
+  loadOpinions(): void {
+    this.casaService.getListaOpinionCasaPage(this.idCasaLong, this.page, this.rows).subscribe({
+      next: (page) => {
+        this.listaOpinion = page.content; // Extraer la lista de opiniones paginadas
+        this.totalRecords = page.totalElements; // Establecer el total de registros para el paginador
 
+        // Obtener la foto de perfil para cada opinión
+        this.listaOpinion.forEach(op => {
+          this.clienteService.getRutaFotoPerfil(op.opinaEntityPK.gmail).subscribe(
+            (ruta) => {
+              this.rutasFotosPerfil[op.opinaEntityPK.gmail] = ruta;
+            },
+            (error) => {
+              console.error('Error al obtener la ruta de la foto de perfil:', error);
+            }
+          );
+        });
 
+        // Obtener el nombre del cliente para cada opinión
+        this.listaOpinion.forEach(op => {
+          this.clienteService.getDataCliente(op.opinaEntityPK.gmail).subscribe(
+            (nombre) => {
+              this.nombreClientes[op.opinaEntityPK.gmail] = nombre;
+            },
+            (error) => {
+              console.error('Error al obtener el nombre del cliente:', error);
+            }
+          );
+        });
 
+        console.log(`Total de páginas: ${page.totalPages}`);
+        console.log(`Total de elementos: ${page.totalElements}`);
+      },
+      error: (err) => {
+        console.error(err);
+      },
+      complete: () => {
+        console.log(this.listaOpinion);
+      }
+    });
+  }
+
+  // Método que se llama cuando cambia la página en el paginador
+  onPageChange(event: any): void {
+    this.page = event.page; // Actualizar la página actual
+    this.rows = event.rows; // Actualizar el tamaño de la página
+    this.loadOpinions(); // Recargar las opiniones con la nueva página
+  }
 }

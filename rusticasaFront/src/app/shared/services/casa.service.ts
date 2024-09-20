@@ -32,6 +32,12 @@ export class CasaService {
     return this.httpClient.get<OpinionResponse[]>(url);
   }
 
+  getListaOpinionCasaPage(idCasa: number, page: number = 0, size: number = 10): Observable<any> {
+    const url = `${environment.urlApiCasas}opinionCasaPage/${idCasa}`;
+    const params = { page: page.toString(), size: size.toString() }; // Parámetros de paginación
+    return this.httpClient.get<any>(url, { params });
+  }
+
   getPrecioAltoNoche(): Observable<number> {
     let url = `${environment.urlApiCasas}precioMaximo`;
     return this.httpClient.get<number>(url);

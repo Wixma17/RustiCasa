@@ -8,7 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import com.rusticasaback.rusticasaback.DTOs.OpinaDTO;
 import com.rusticasaback.rusticasaback.Request.OpinaRequest;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
@@ -58,5 +59,13 @@ public class OpinaService {
 
         return new ResponseEntity<>(listaOpinion, HttpStatus.CREATED);
     }
+
+    public ResponseEntity<Page<OpinaDTO>> getListaOpinionCasa(Long idCasa, Pageable pageable) {
+        Page<OpinaEntity> pageCasa = opinaRepository.findByOpinaEntityPK_IdCasa(idCasa, pageable);
+        Page<OpinaDTO> pageOpinion = pageCasa.map(OpinaDTO::new);
+        
+        return new ResponseEntity<>(pageOpinion, HttpStatus.OK);
+    }
+    
 
 }

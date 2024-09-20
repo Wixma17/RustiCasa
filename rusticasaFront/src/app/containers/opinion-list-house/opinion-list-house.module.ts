@@ -4,6 +4,7 @@ import { OpinionListHouseComponent } from './opinion-list-house/opinion-list-hou
 import {CardModule} from 'primeng/card';
 import {RatingModule} from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     CardModule,
     RatingModule,
-    FormsModule
+    FormsModule,
+    PaginatorModule
   ]
 })
 export class OpinionListHouseModule { }
