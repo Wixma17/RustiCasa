@@ -20,7 +20,7 @@ import { ProfileModule } from './containers/profile/profile.module';
 import { ListHouseOwnerModule } from './containers/list-house-owner/list-house-owner.module';
 import { UpdateHouseModule } from './containers/update-house/update-house.module';
 import { OpinionListHouseModule } from './containers/opinion-list-house/opinion-list-house.module';
-
+import {CardModule} from 'primeng/card';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -46,6 +46,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ToggleButtonModule,
     ProfileModule,
     UpdateHouseModule,
+    CardModule,
     ListHouseOwnerModule,
     TranslateModule.forRoot({
       loader: {

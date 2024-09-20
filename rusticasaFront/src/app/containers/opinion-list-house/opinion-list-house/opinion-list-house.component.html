@@ -1,3 +1,21 @@
-<div class="container-fluid" *ngIf="casa">
+<div class="container-fluid" *ngIf="casa" id="fondo">
   <h1>Opiniones de: {{casa.nombreCasa}}</h1>
+
+  <div *ngFor="let op of listaOpinion">
+    <p-card styleClass="col-6">
+      <p-header>
+        <div class="d-flex justify-content-start p-3 align-items-center">
+          <img [src]="rutasFotosPerfil[op.opinaEntityPK.gmail].urlImg" alt="Foto perfil de: {{op.opinaEntityPK.gmail}}" class="rounded-circle" *ngIf="rutasFotosPerfil[op.opinaEntityPK.gmail]">
+          <p class="ms-5">{{op.opinaEntityPK.gmail}}</p>
+        </div>
+      </p-header>
+
+      <p class="fs-4">Su opinión:</p>
+      <p>{{op.textoOpinion}}</p>
+
+      <p-footer>
+        <p>Le doy un: <strong>{{op.puntuacion}}</strong></p>
+      </p-footer>
+    </p-card>
+  </div>
 </div>

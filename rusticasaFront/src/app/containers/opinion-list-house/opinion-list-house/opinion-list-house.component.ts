@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
+import { OpinionResponse } from 'src/app/shared/model/responses/opinion-response.model';
 import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 import { CasaService } from 'src/app/shared/services/casa.service';
+import { ClienteService } from 'src/app/shared/services/cliente.service';
 
 @Component({
   selector: 'app-opinion-list-house',
@@ -13,11 +15,15 @@ export class OpinionListHouseComponent implements OnInit {
   casa: CasaResponse;
   idCasaString:string;
   idCasaLong:number;
+  listaOpinion:any;
+  rutasFotosPerfil: { [gmail: string]: string } = {};
 
   constructor(
     private route: ActivatedRoute,
     private serviceHouse: CasaService,
-    private breadcrumbService:BreadcrumbService
+    private breadcrumbService:BreadcrumbService,
+    private casaService:CasaService,
+    private clienteService:ClienteService
   ) {}
 
   ngOnInit(): void {
@@ -44,6 +50,31 @@ export class OpinionListHouseComponent implements OnInit {
       },
       complete: () => {
         console.info('Datos cargados de la casa correctamente');
+
+        this.casaService.getListaOpinionCasa(this.idCasaLong).subscribe({
+          next:(listaOp)=>{
+            this.listaOpinion=listaOp;
+
+            this.listaOpinion.forEach(op => {
+              this.clienteService.getRutaFotoPerfil(op.opinaEntityPK.gmail).subscribe(
+                (ruta) => {
+                  this.rutasFotosPerfil[op.opinaEntityPK.gmail] = ruta;
+                  console.log(this.rutasFotosPerfil)
+                },
+                (error) => {
+                  console.error('Error al obtener la ruta de la foto de perfil:', error);
+                }
+              );
+            });
+
+          },
+          error:(err)=>{
+            console.error(err);
+          },
+          complete:()=>{
+            console.log(this.listaOpinion);
+          }
+        });
       },
     });
   }

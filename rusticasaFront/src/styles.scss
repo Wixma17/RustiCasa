@@ -43,3 +43,20 @@ body{
   display: none;
 }
 
+body > app-root > div > app-details-house > div > div.d-flex.justify-content-between > div > a > span:hover{
+  cursor: pointer;
+}
+
+#fondo > section > div:nth-child(2) > app-house > div > div > div.col-12.order-2.col-md-6.order-md-1 > div > div.d-flex.flex-md-row.justify-content-between.align-items-center > div > a > span:hover{
+  cursor: pointer;
+}
+
+#fondo > section > div:nth-child(1) > app-house > div > div > div.col-12.order-2.col-md-6.order-md-1 > div > div.d-flex.flex-md-row.justify-content-between.align-items-center > div > a > span{
+  cursor: pointer;
+}
+
+#fondo > div > p-card > div > div.p-card-header > p-header > div > img{
+  width: 60px;
+  height: 60px;
+}
+
