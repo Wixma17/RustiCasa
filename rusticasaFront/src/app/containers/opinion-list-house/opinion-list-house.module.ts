@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { OpinionListHouseComponent } from './opinion-list-house/opinion-list-house.component';
 import {CardModule} from 'primeng/card';
 import {RatingModule} from 'primeng/rating';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -11,7 +12,8 @@ import {RatingModule} from 'primeng/rating';
   imports: [
     CommonModule,
     CardModule,
-    RatingModule
+    RatingModule,
+    FormsModule
   ]
 })
 export class OpinionListHouseModule { }
