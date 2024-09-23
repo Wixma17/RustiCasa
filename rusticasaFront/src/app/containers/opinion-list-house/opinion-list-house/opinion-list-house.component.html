@@ -1,7 +1,14 @@
-<div class="container-fluid d-flex flex-column justify-content-between" *ngIf="casa" id="fondo" style="height: 80vh;">
-  <h1 class="col-12">Opiniones de: {{casa.nombreCasa}}</h1>
+<div class="container-fluid d-flex flex-column justify-content-between"  id="fondo">
+  <h1 class="col-12" *ngIf="casa">Opiniones de: {{casa.nombreCasa}}</h1>
 
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-around">
+  <!-- Button trigger modal -->
+   <div class="d-flex justify-content-center">
+    <button type="button" class="btn btn-primary col-4" data-bs-toggle="modal" data-bs-target="#subopin" [disabled]="isDisabled">
+      Escribe tu opinión
+    </button>
+   </div>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-around" *ngIf="casa">
     <div *ngFor="let op of listaOpinion" class="mt-2 mb-2 p-2 col-md-4">
       <p-card styleClass="col-12">
         <p-header>
@@ -32,15 +39,61 @@
     </div>
   </div>
 
-  <p-paginator
-  [rows]="rows"
-  *ngIf="totalRecords !== undefined && totalRecords !== null"
-  [totalRecords]="totalRecords"
-  [pageLinkSize]="3"
-  (onPageChange)="onPageChange($event)">
-</p-paginator>
+
+  <!-- Modal -->
+  <div class="modal fade" id="subopin" tabindex="-1" aria-labelledby="subopinModalLabel" aria-hidden="true" *ngIf="casa">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="subopinModalLabel">¿Qué opinas sobre {{casa.nombreCasa}}?</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="subeOpinionForm" *ngIf="subeOpinionForm">
+
+            <div class="m-3">
+              <h1 class="fs-5 p-2">1º Dale una puntuación a la casa:</h1>
+              <p-rating
+                formControlName="nEstrellas"
+                [readonly]="false"
+                [cancel]="true"
+                [stars]="5">
+              </p-rating>
+            </div>
+
+            <div class="m-3">
+              <h1 class="fs-5 p-2 mt-3">2º Escribe tu opinión (cosas que más te hayan gustado...):</h1>
+              <textarea [rows]="8" [cols]="50" pInputTextarea formControlName="textoOpi"></textarea>
+              <div *ngIf="subeOpinionForm.get('textoOpi')?.invalid && subeOpinionForm.get('textoOpi')?.touched" class="text-danger">
+                <span *ngIf="subeOpinionForm.get('textoOpi')?.errors?.required">La opinión es obligatoria.</span>
+                <span *ngIf="subeOpinionForm.get('textoOpi')?.errors?.minlength">La opinión debe tener al menos 10 caracteres.</span>
+              </div>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary" (click)="subirOpi()" [disabled]="subeOpinionForm.invalid">
+            Publica mi opinión
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
 
 
+  <div class="d-flex justify-content-center p-2">
+    <p-paginator
+      [rows]="rows"
+      *ngIf="totalRecords !== undefined && totalRecords !== null"
+      [totalRecords]="totalRecords"
+      [pageLinkSize]="3"
+      (onPageChange)="onPageChange($event)">
+    </p-paginator>
+  </div>
 
 
 </div>

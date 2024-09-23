@@ -10,6 +10,7 @@
             <a  (click)="goListOpinion()" class="d-flex align-items-center justify-content-center justify-content-md-end col-7">
               <p-rating [ngModel]="mediaOp" [readonly]="true" [cancel]="false" [stars]="5"></p-rating>
               <span class="ms-1 mb-1">({{ listaOpinionCasa.length }})</span>
+              <span class="accesibilidad">Click aqui para ir a opiniones de {{datosCasa.nombreCasa}}</span>
             </a>
           </div>
         </div>

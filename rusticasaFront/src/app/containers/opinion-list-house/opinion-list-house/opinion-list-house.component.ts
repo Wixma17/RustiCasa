@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { OpinionResponse } from 'src/app/shared/model/responses/opinion-response.model';
@@ -18,6 +19,9 @@ export class OpinionListHouseComponent implements OnInit {
   listaOpinion: any = [];
   rutasFotosPerfil: { [gmail: string]: string } = {};
   nombreClientes: { [gmail: string]: string } = {};
+  subeOpinionForm: FormGroup;
+  isDisabled:boolean = false;
+  usuConn: any;
 
   // Variables de paginación
   page: number = 0; // Página actual
@@ -29,12 +33,29 @@ export class OpinionListHouseComponent implements OnInit {
     private serviceHouse: CasaService,
     private breadcrumbService: BreadcrumbService,
     private casaService: CasaService,
-    private clienteService: ClienteService
-  ) {}
+    private clienteService: ClienteService,
+    private formubuild: FormBuilder
+  ) {
+    this.subeOpinionForm = this.formubuild.group({
+      nEstrellas: [0],
+      textoOpi: ['', [Validators.required, Validators.minLength(10)]]
+    });
+  }
 
   ngOnInit(): void {
+    this.usuConn = JSON.parse(sessionStorage.getItem('datosUsu'));
+
     this.idCasaString = this.route.snapshot.paramMap.get('idCasa');
     this.idCasaLong = this.idCasaString ? parseInt(this.idCasaString, 10) : null;
+
+
+    this.casaService.getListaCasasPorGmail(this.usuConn.gmail).subscribe((casas)=>{
+      casas.content.forEach(element => {
+        if(element.idCasa == this.idCasaLong){
+          this.isDisabled=true;
+        }
+      });
+    });
 
     if (this.idCasaLong) {
       // Actualiza los breadcrumbs manualmente si es necesario
@@ -101,6 +122,7 @@ export class OpinionListHouseComponent implements OnInit {
         console.log(this.listaOpinion);
       }
     });
+
   }
 
   // Método que se llama cuando cambia la página en el paginador
@@ -108,5 +130,10 @@ export class OpinionListHouseComponent implements OnInit {
     this.page = event.page; // Actualizar la página actual
     this.rows = event.rows; // Actualizar el tamaño de la página
     this.loadOpinions(); // Recargar las opiniones con la nueva página
+  }
+
+  subirOpi(){
+    console.info(this.subeOpinionForm.value.nEstrellas);
+    console.info(this.subeOpinionForm.value.textoOpi);
   }
 }

@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { OpinionListHouseComponent } from './opinion-list-house/opinion-list-house.component';
 import {CardModule} from 'primeng/card';
 import {RatingModule} from 'primeng/rating';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 
 
@@ -15,7 +16,9 @@ import { PaginatorModule } from 'primeng/paginator';
     CardModule,
     RatingModule,
     FormsModule,
-    PaginatorModule
+    PaginatorModule,
+    InputTextareaModule,
+    ReactiveFormsModule
   ]
 })
 export class OpinionListHouseModule { }
