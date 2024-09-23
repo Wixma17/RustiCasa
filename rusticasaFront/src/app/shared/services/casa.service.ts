@@ -7,6 +7,7 @@ import { ImagenResponse } from '../model/responses/imagen-response.model';
 import { OpinionResponse } from '../model/responses/opinion-response.model';
 import { RequestRegistrarCasa } from '../model/requests/request-registrar-casa-.model';
 import { SubidaImagenCasaRequest } from '../model/requests/request-subida-img-casa.model';
+import { RequestOpinion } from '../model/requests/request-opina.model';
 
 @Injectable()
 export class CasaService {
@@ -87,4 +88,10 @@ export class CasaService {
     let url = `${environment.urlApiCasas}eliminar/${idImagen}?idCasa=${idCasa}`;
     return this.httpClient.delete<any>(url);
   }
+
+  publicaOpi(opiRequest:RequestOpinion): Observable<any> {
+    let url = `${environment.urlApiCasas}subirOpinion`;
+    return this.httpClient.post<any>(url,opiRequest);
+  }
+
 }

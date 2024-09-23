@@ -1,7 +1,5 @@
 package com.rusticasaback.rusticasaback.Request;
 
-import com.rusticasaback.rusticasaback.DTOs.OpinaDTO;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,5 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OpinaRequest {
-    private OpinaDTO opinaDTO;    
+    private String gmail;
+    private Long idCasa;
+    private String textoOpinion;
+    private Double puntuacion;    
 }

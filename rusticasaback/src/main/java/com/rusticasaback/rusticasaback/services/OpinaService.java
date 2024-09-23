@@ -15,6 +15,7 @@ import com.rusticasaback.rusticasaback.Request.OpinaRequest;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import com.rusticasaback.rusticasaback.entities.ClienteEntity;
 import com.rusticasaback.rusticasaback.entities.relaciones.OpinaEntity;
+import com.rusticasaback.rusticasaback.entities.relaciones.OpinaEntityPK;
 import com.rusticasaback.rusticasaback.repositories.CasaRepository;
 import com.rusticasaback.rusticasaback.repositories.ClienteRepository;
 import com.rusticasaback.rusticasaback.repositories.OpinaRepository;
@@ -38,12 +39,12 @@ public class OpinaService {
     public OpinaEntity creaOpinion(OpinaRequest opinaRequest) {
 
         ClienteEntity clienteOpinion = clienteRepository
-                .findById(opinaRequest.getOpinaDTO().getOpinaEntityPK().getGmail()).get();
+                .findById(opinaRequest.getGmail()).get();
 
-        CasaEntity casaOpinion = casaRepository.findById(opinaRequest.getOpinaDTO().getOpinaEntityPK().getIdCasa()).get();
+        CasaEntity casaOpinion = casaRepository.findById(opinaRequest.getIdCasa()).get();
 
-        OpinaEntity opinion = new OpinaEntity(opinaRequest.getOpinaDTO().getOpinaEntityPK(),
-                opinaRequest.getOpinaDTO().getTextoOpinion(), opinaRequest.getOpinaDTO().getPuntuacion(),
+        OpinaEntity opinion = new OpinaEntity(new OpinaEntityPK(opinaRequest.getIdCasa(), opinaRequest.getGmail()),
+                opinaRequest.getTextoOpinion(), opinaRequest.getPuntuacion(),
                 clienteOpinion, casaOpinion);
 
         return guardaOpinion(opinion);

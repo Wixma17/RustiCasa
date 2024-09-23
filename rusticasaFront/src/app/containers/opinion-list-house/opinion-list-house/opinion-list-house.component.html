@@ -1,6 +1,8 @@
 <div class="container-fluid d-flex flex-column justify-content-between"  id="fondo">
   <h1 class="col-12" *ngIf="casa">Opiniones de: {{casa.nombreCasa}}</h1>
 
+  <h1 class="col-12" *ngIf="listaOpinion.length==0 && casa">¡Ahora mismo no existe Opiniones de: {{casa.nombreCasa}} sube una!</h1>
+
   <!-- Button trigger modal -->
    <div class="d-flex justify-content-center">
     <button type="button" class="btn btn-primary col-4" data-bs-toggle="modal" data-bs-target="#subopin" [disabled]="isDisabled">
