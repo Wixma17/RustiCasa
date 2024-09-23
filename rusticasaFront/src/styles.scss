@@ -65,3 +65,12 @@ body > app-root > div > app-welcome > div.fondo > div > form > fieldset.text-cen
   justify-content: space-evenly;
 }
 
+#fondo > div > div > p-steps > div > ul > li > a{
+  background: none;
+}
+
+#fondo > div > div > p-steps > div > ul > li > a:hover{
+  cursor: pointer;
+}
+
+

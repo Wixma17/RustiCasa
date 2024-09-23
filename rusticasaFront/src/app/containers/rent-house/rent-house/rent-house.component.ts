@@ -17,7 +17,11 @@ export class RentHouseComponent implements OnInit {
   idCasaLong: number;
   usuConn: any;
   alquilaForm: FormGroup;
+  alquilaForm2: FormGroup;
   ccRegex: RegExp = /^[0-9\-]+$/;
+  activeIndex: number = 0;
+  items: MenuItem[] = [];
+  isFormSubmitted: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,6 +31,9 @@ export class RentHouseComponent implements OnInit {
   ) {
     this.alquilaForm = this.formBuilder.group({
       fechas: [null, [Validators.required]],
+    });
+
+    this.alquilaForm2 = this.formBuilder.group({
       inputDatosTarjeta:['',[Validators.required, Validators.pattern(this.ccRegex)]],
       cvv:['',[Validators.required,Validators.minLength(3),Validators.maxLength(3)]],
       direccion:['',[Validators.required]]
@@ -34,6 +41,12 @@ export class RentHouseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.items = [
+      { label: 'Fecha Alquiler' },
+      { label: 'Datos Tarjeta' }
+    ];
+
     this.idCasaString = this.route.snapshot.paramMap.get('idCasa');
     this.idCasaLong = this.idCasaString
       ? parseInt(this.idCasaString, 10)
@@ -64,5 +77,21 @@ export class RentHouseComponent implements OnInit {
         console.error(err);
       },
     });
+  }
+
+  nextStep(): void {
+    if (this.alquilaForm.valid) {
+      if (this.activeIndex < this.items.length - 1) {
+        this.activeIndex++;
+      }
+    } else {
+      this.isFormSubmitted = true; // Marcar el formulario como enviado para mostrar errores
+    }
+  }
+
+  previousStep(): void {
+    if (this.activeIndex > 0) {
+      this.activeIndex--;
+    }
   }
 }

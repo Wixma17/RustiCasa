@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {KeyFilterModule} from 'primeng/keyfilter';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InputTextModule } from 'primeng/inputtext';
+import {StepsModule} from 'primeng/steps';
 
 
 
@@ -19,7 +20,8 @@ import { InputTextModule } from 'primeng/inputtext';
     ReactiveFormsModule,
     KeyFilterModule,
     BrowserAnimationsModule,
-    InputTextModule
+    InputTextModule,
+    StepsModule
   ]
 })
 export class RentHouseModule { }

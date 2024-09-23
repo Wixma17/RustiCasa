@@ -1,5 +1,6 @@
 #fondo{
   background: url(../../../../assets/fondoLogin2.jpg);
+  height: 100%;
 }
 
 .contenedor-cristalizado {
@@ -31,6 +32,15 @@
   width: 91%;
 }
 
+.altura{
+  height: 100%;
+}
+
+.botonSec{
+  background-color: #6b8e23;
+  color: white;
+}
+
 @media screen and (min-width: 992px) {
   #fondo{
     background: url(../../../../assets/fondoLogin2.jpg);
@@ -43,5 +53,9 @@
     text-shadow: 6px 1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5), -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
     text-align: center;
     font-size: 60px;
+  }
+
+  .altura{
+    height: 80%;
   }
 }
