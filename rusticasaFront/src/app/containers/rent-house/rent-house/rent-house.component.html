@@ -1,1 +1,56 @@
-<p>rent-house works!</p>
+<div class="container-fluid" *ngIf="casa" id="fondo">
+  <h1>Formulario Alquiler: {{casa.nombreCasa}}</h1>
+
+  <div class="d-flex justify-content-center">
+    <form [formGroup]="alquilaForm" class="col-lg-6 p-2 col-10 rounded border border-1 d-flex flex-column justify-content-around align-items-center contenedor-cristalizado">
+
+      <div class="text-center col-12  p-1">
+        <label for="cal" class="fs-4 text-start col-11 m-1">Introduzca la fecha: </label>
+
+        <p-calendar id="cal" styleClass="col-11 text-center" placeholder="Fecha entrada - Fecha Salida" formControlName="fechas" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="2"></p-calendar>
+        <div *ngIf="alquilaForm.get('fechas').invalid && alquilaForm.get('fechas').touched" class="d-flex  justify-content-center m-3">
+          <div *ngIf="alquilaForm.get('fechas').errors.required" class="col-12 text-danger rounded-4">
+            <span class="fs-4">*La fecha es obligatoria</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center col-12 p-1">
+        <label for="cc" class="fs-4 text-start col-11">Datos tarjeta bancaria: </label>
+
+        <input id="cc" type="text" pInputText name="cc" formControlName="inputDatosTarjeta" pInputText [pKeyFilter]="ccRegex" [pValidateOnly]="true" placeholder="xxxx-xxxx-xxxx-xxxx">
+
+        <div *ngIf="alquilaForm.get('inputDatosTarjeta').invalid && alquilaForm.get('inputDatosTarjeta').touched" class="text-danger mt-2">
+          <span class="fs-4" *ngIf="alquilaForm.get('inputDatosTarjeta').errors.required">*El número de tarjeta es obligatorio</span>
+          <span class="fs-4" *ngIf="alquilaForm.get('inputDatosTarjeta').errors.pattern">*Formato de tarjeta inválido</span>
+        </div>
+      </div>
+
+      <div class="text-center col-12 p-1">
+        <label for="cvv" class="fs-4 text-start col-11">CVV: </label>
+
+        <input id="cvv" type="text" pInputText name="cvv" formControlName="cvv" pInputText  placeholder="xxx">
+
+        <div *ngIf="alquilaForm.get('cvv').invalid && alquilaForm.get('cvv').touched" class="text-danger mt-2">
+          <span class="fs-4" *ngIf="alquilaForm.get('cvv').errors.required">*El cvv es obligatorio</span>
+          <span class="fs-4" *ngIf="alquilaForm.get('cvv').errors.minlenght">*mínimo 3 números</span>
+          <span class="fs-4" *ngIf="alquilaForm.get('cvv').errors.maxlenght">*máximo 3 números</span>
+        </div>
+      </div>
+
+      <div class="text-center col-12 p-1">
+        <label for="dire" class="fs-4 text-start col-11">Dirección factura: </label>
+
+        <input id="dire" type="text" pInputText name="dire" formControlName="direccion" pInputText  placeholder="C/Nueva 1">
+
+        <div *ngIf="alquilaForm.get('direccion').invalid && alquilaForm.get('direccion').touched" class="text-danger mt-2">
+          <span class="fs-4" *ngIf="alquilaForm.get('direccion').errors.required">*La direccion es obligatoria</span>
+        </div>
+      </div>
+
+      <button class="btn btn-success">Alquilar la casa</button>
+
+    </form>
+  </div>
+
+</div>

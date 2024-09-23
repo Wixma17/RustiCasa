@@ -3,21 +3,35 @@ import { ActivatedRoute } from '@angular/router';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 import { CasaService } from 'src/app/shared/services/casa.service';
+import { MenuItem } from 'primeng/api';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-rent-house',
   templateUrl: './rent-house.component.html',
-  styleUrls: ['./rent-house.component.scss']
+  styleUrls: ['./rent-house.component.scss'],
 })
 export class RentHouseComponent implements OnInit {
   casa: CasaResponse;
   idCasaString: string;
   idCasaLong: number;
   usuConn: any;
+  alquilaForm: FormGroup;
+  ccRegex: RegExp = /^[0-9\-]+$/;
 
-  constructor( private route: ActivatedRoute,private breadcrumbService: BreadcrumbService,
-    private casaService: CasaService
-  ) { }
+  constructor(
+    private route: ActivatedRoute,
+    private breadcrumbService: BreadcrumbService,
+    private casaService: CasaService,
+    private formBuilder: FormBuilder
+  ) {
+    this.alquilaForm = this.formBuilder.group({
+      fechas: [null, [Validators.required]],
+      inputDatosTarjeta:['',[Validators.required, Validators.pattern(this.ccRegex)]],
+      cvv:['',[Validators.required,Validators.minLength(3),Validators.maxLength(3)]],
+      direccion:['',[Validators.required]]
+    });
+  }
 
   ngOnInit(): void {
     this.idCasaString = this.route.snapshot.paramMap.get('idCasa');
@@ -48,8 +62,7 @@ export class RentHouseComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
-      }
+      },
     });
   }
-
 }

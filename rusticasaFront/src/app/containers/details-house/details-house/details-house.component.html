@@ -1,11 +1,11 @@
-<div *ngIf="casa" class="container-fluid">
-  <div class="d-flex justify-content-between">
-    <h1>{{ casa.nombreCasa }}</h1>
+<div *ngIf="casa" class="container-fluid" id="fondo">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 id="titulo">{{ casa.nombreCasa }}</h1>
 
     <div
       *ngIf="listaOpinionCasa"
     >
-    <a (click)="goListOpinion()" class="d-flex align-items-center justify-content-end justify-content-md-end">
+    <a (click)="goListOpinion()" class="d-flex align-items-center justify-content-end justify-content-md-end bg-white p-2 rounded">
         <p-rating
         [ngModel]="mediaOp"
         [readonly]="true"
@@ -18,7 +18,7 @@
     </div>
   </div>
 
-  <div class="d-flex flex-column flex-lg-row justify-content-around">
+  <div class="d-flex flex-column flex-lg-row justify-content-around bg-white rounded">
     <div class="col-lg-4 d-flex flex-column justify-content-evenly order-lg-1">
       <div class="d-flex flex-column justify-content-center align-items-center">
         <h1 class="fs-2">Precio por noche: {{ casa.precioNoche }} €</h1>
@@ -67,9 +67,12 @@
     </div>
   </div>
 
-  <div class="d-flex flex-column col-12 col-lg-4"></div>
+  <div class="d-flex flex-column col-12 rounded descrip">
+    <h4 class="m-2">Descripción de la Casa:</h4>
+    <p class="p-2">{{ casa.descripcion }}</p>
+  </div>
 
-  <p class="p-2">{{ casa.descripcion }}</p>
+
 
   <app-mapa [datosLoc]="casa.municipio" class="m-2"></app-mapa>
 </div>

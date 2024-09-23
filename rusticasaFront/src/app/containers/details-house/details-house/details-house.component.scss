@@ -2,3 +2,19 @@
   font-size: 10px;
   position: absolute;
 }
+
+#fondo{
+  background: url(../../../../assets/fondoLogin2.jpg);
+}
+
+.descrip{
+  margin-top: 10px;
+  border: 1px dotted black;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+#titulo{
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  text-shadow: 6px 1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5), -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
