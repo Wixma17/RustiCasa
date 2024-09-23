@@ -10,6 +10,7 @@ import { ProfileComponent } from './containers/profile/profile/profile.component
 import { ListHouseOwnerComponent } from './containers/list-house-owner/list-house-owner/list-house-owner.component';
 import { UpdateHouseComponent } from './containers/update-house/update-house/update-house.component';
 import { OpinionListHouseComponent } from './containers/opinion-list-house/opinion-list-house/opinion-list-house.component';
+import { RentHouseComponent } from './containers/rent-house/rent-house/rent-house.component';
 
 
 const routes: Routes = [
@@ -110,6 +111,18 @@ const routes: Routes = [
         { label: 'Búsquedas', routerLink: '/full-search' },
         { label: 'Detalles Casa', routerLink: '/details-house/:idCasa' },
         { label: 'Opinion Casa', routerLink: '/opinion-list-house/:idCasa' }
+      ],
+    },
+  },
+  {
+    path: 'rent-house/:idCasa',
+    component: RentHouseComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Búsquedas', routerLink: '/full-search' },
+        { label: 'Detalles Casa', routerLink: '/details-house/:idCasa' },
+        { label: 'Alquila Casa', routerLink: '/rent-house/:idCasa' }
       ],
     },
   }

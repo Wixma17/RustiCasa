@@ -5,7 +5,7 @@
 
   <!-- Button trigger modal -->
    <div class="d-flex justify-content-center">
-    <button type="button" class="btn btn-primary col-4" data-bs-toggle="modal" data-bs-target="#subopin" [disabled]="isDisabled">
+    <button type="button" class="btn botonSec col-4" data-bs-toggle="modal" data-bs-target="#subopin" [disabled]="isDisabled">
       Escribe tu opinión
     </button>
    </div>
@@ -76,7 +76,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" (click)="subirOpi()" [disabled]="subeOpinionForm.invalid">
+          <button type="button" class="btn btn-success" (click)="subirOpi()" [disabled]="subeOpinionForm.invalid">
             Publica mi opinión
           </button>
         </div>

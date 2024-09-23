@@ -19,6 +19,10 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
   listaImagenes: any[];
   listaOpinionCasa: any[];
   mediaOp: number = 0;
+  isDisabled:boolean=false;
+  usuConn: any;
+  idCasaString:string;
+  idCasaLong:number;
 
   // Subjects
   private destroySubject = new Subject<void>();
@@ -34,14 +38,18 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private serviceHouse: CasaService,
     private sanitizer: DomSanitizer,
-    private router: Router
+    private router: Router,
+    private casaService: CasaService
   ) {}
 
   ngOnInit(): void {
-    const idCasaString = this.route.snapshot.paramMap.get('idCasa');
-    const idCasaLong = idCasaString ? parseInt(idCasaString, 10) : null;
 
-    this.serviceHouse.getDatosCasaIdCasa(idCasaLong).subscribe({
+    this.usuConn = JSON.parse(sessionStorage.getItem('datosUsu'));
+
+    this.idCasaString = this.route.snapshot.paramMap.get('idCasa');
+    this.idCasaLong = this.idCasaString ? parseInt(this.idCasaString, 10) : null;
+
+    this.serviceHouse.getDatosCasaIdCasa(this.idCasaLong).subscribe({
       next: (casaR) => {
         this.casa = casaR;
         console.log(this.casa);
@@ -55,7 +63,7 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
       },
     });
 
-    this.fotos$ = this.serviceHouse.getFotosCasas(idCasaLong).pipe(
+    this.fotos$ = this.serviceHouse.getFotosCasas(this.idCasaLong).pipe(
       map((imagenes) =>
         imagenes.map((imagen) => {
           return {
@@ -67,7 +75,7 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
         })
       )
     );
-    this.opiniones$ = this.serviceHouse.getListaOpinionCasa(idCasaLong).pipe(
+    this.opiniones$ = this.serviceHouse.getListaOpinionCasa(this.idCasaLong).pipe(
       map((op) => {
         this.listaOpinionCasa = op;
 
@@ -91,6 +99,18 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
         return op;
       })
     );
+
+
+    this.casaService
+      .getListaCasasPorGmail(this.usuConn.gmail)
+      .subscribe((casas) => {
+        casas.content.forEach((element) => {
+          if (element.idCasa == this.idCasaLong) {
+            this.isDisabled = true;
+          }
+        });
+      });
+
   }
 
   subscriptionPoint(): void {
@@ -154,5 +174,9 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
 
   goListOpinion(){
     this.router.navigate(['/opinion-list-house/'+this.casa.idCasa]);
+  }
+
+  goAlquilaCasa(){
+    this.router.navigate(['/rent-house/'+this.casa.idCasa]);
   }
 }

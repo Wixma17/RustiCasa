@@ -36,7 +36,6 @@ export class OpinionListHouseComponent implements OnInit {
     private casaService: CasaService,
     private clienteService: ClienteService,
     private formubuild: FormBuilder,
-    private router: Router
   ) {
     this.subeOpinionForm = this.formubuild.group({
       nEstrellas: [0],

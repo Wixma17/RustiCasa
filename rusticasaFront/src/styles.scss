@@ -60,3 +60,8 @@ body > app-root > div > app-details-house > div > div.d-flex.justify-content-bet
   height: 60px;
 }
 
+body > app-root > div > app-welcome > div.fondo > div > form > fieldset.text-center.col-12.p-1 > p-calendar > span > div > div{
+  display: flex;
+  justify-content: space-evenly;
+}
+
