@@ -1,5 +1,5 @@
 import { environment } from './../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CasaResponse } from '../model/responses/casa-response.model';
@@ -112,4 +112,14 @@ export class CasaService {
     };
     return this.httpClient.get<number[]>(`${environment.urlApiCasas}casasIdAlquiladas`, { params });
   }
+
+  eliminarAlquiler(gmail: string, idCasa: number, fechaEntrada: Date): Observable<any> {
+    let params = new HttpParams()
+      .set('gmail', gmail)
+      .set('idCasa', idCasa.toString())
+      .set('fechaEntrada', fechaEntrada.toISOString().split('T')[0]);  // Formato de fecha 'YYYY-MM-DD'
+
+    return this.httpClient.delete<any>(`${environment.urlApiCasas}eliminar`, { params });
+  }
+
 }

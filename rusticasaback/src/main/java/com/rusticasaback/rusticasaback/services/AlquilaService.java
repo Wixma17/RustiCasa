@@ -9,7 +9,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import com.rusticasaback.rusticasaback.DTOs.MunicipioDTO;
 import com.rusticasaback.rusticasaback.Request.AlquilaRequest;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
@@ -89,6 +88,14 @@ public class AlquilaService {
 
     public List<Long> getCasaIdsByFechas(Date fechaEntrada, Date fechaSalida) {
         return alquilaRepository.findCasaIdsByFechas(fechaEntrada, fechaSalida);
+    }  
+    
+    public void eliminarAlquiler(String gmail, Long idCasa, Date fechaEntrada) {
+        System.out.println("gmail=> "+gmail);
+        System.out.println("idCasa=> "+idCasa);
+        System.out.println("fecha=> "+fechaEntrada);
+        AlquilaEntityPK pk = new AlquilaEntityPK(gmail, idCasa, fechaEntrada);
+        alquilaRepository.deleteById(pk);
     }
 
 }

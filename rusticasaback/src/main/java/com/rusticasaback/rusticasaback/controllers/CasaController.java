@@ -70,9 +70,9 @@ public class CasaController {
 
     @GetMapping("/opinionCasaPage/{idCasa}")
     public ResponseEntity<?> OpinionesCasaPage(
-            @PathVariable(name = "idCasa") Long idCasa, 
+            @PathVariable(name = "idCasa") Long idCasa,
             @PageableDefault(page = 0, size = 10) Pageable pageable) {
-        
+
         return opinaService.getListaOpinionCasa(idCasa, pageable);
     }
 
@@ -125,17 +125,17 @@ public class CasaController {
             @RequestParam(value = "files", required = false) List<MultipartFile> files,
             @RequestParam("idCasa") Long idCasa,
             @RequestParam(value = "idsImagenes", required = false) List<Long> idsImagenes) {
-    
+
         // Si idsImagenes es null, inicializa una lista vacía
         if (idsImagenes == null) {
             idsImagenes = new ArrayList<>();
         }
-    
+
         // Si files es null, inicializa una lista vacía
         if (files == null) {
             files = new ArrayList<>();
         }
-    
+
         boolean resultado = imagenService.subidaImagenes(files, idCasa, idsImagenes);
         if (resultado) {
             return ResponseEntity.ok().build();
@@ -189,8 +189,20 @@ public class CasaController {
     }
 
     @GetMapping("/casasIdAlquiladas")
-    public List<Long> getCasasByFechas(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date fechaEntrada, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date fechaSalida) {
+    public List<Long> getCasasByFechas(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date fechaEntrada,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date fechaSalida) {
         return alquilaService.getCasaIdsByFechas(fechaEntrada, fechaSalida);
+    }
+
+    @DeleteMapping("/eliminar")
+    public ResponseEntity<?> eliminarAlquiler(
+            @RequestParam String gmail,
+            @RequestParam Long idCasa,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaEntrada) {
+
+        alquilaService.eliminarAlquiler(gmail, idCasa, fechaEntrada);
+        return ResponseEntity.ok().build();
     }
 
 }
