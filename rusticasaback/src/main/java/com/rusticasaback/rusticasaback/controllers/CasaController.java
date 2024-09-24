@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.rusticasaback.rusticasaback.DTOs.AlquilaDTO;
 import com.rusticasaback.rusticasaback.Request.AlquilaRequest;
 import com.rusticasaback.rusticasaback.Request.CasaRequest;
 import com.rusticasaback.rusticasaback.Request.OpinaRequest;
@@ -175,11 +176,14 @@ public class CasaController {
     }
 
     @GetMapping("/alquileres/{gmail}")
-    public ResponseEntity<?> obtenerAlquileresPorGmail(@PathVariable String gmail) {
+    public ResponseEntity<?> getCasasByGmail(
+            @PathVariable String gmail,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
 
-        ArrayList<AlquilaDTO>lista=alquilaService.getAlquileresPorGmail(gmail);       
-
-        return new ResponseEntity<>(lista, HttpStatus.CREATED);
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Map<String, Object>> casas = alquilaService.getCasasByGmail(gmail, pageable);
+        return new ResponseEntity<>(casas, HttpStatus.OK);
     }
 
 }

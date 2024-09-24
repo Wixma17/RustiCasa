@@ -133,7 +133,7 @@ const routes: Routes = [
     data: {
       breadcrumb: [
         { label: 'Inicio', routerLink: '/welcome' },
-        { label: 'Casas que has alquilado', routerLink: '/list-house-rent' }
+        { label: 'Ver tus reservas', routerLink: '/list-house-rent' }
       ],
     },
   }

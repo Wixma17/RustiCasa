@@ -23,6 +23,7 @@ import { OpinionListHouseModule } from './containers/opinion-list-house/opinion-
 import {CardModule} from 'primeng/card';
 import { RentHouseModule } from './containers/rent-house/rent-house.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ListHouseRentModule } from './containers/list-house-rent/list-house-rent.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -48,6 +49,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ToggleButtonModule,
     ProfileModule,
     UpdateHouseModule,
+    ListHouseRentModule,
     CardModule,
     RentHouseModule,
     BrowserAnimationsModule,

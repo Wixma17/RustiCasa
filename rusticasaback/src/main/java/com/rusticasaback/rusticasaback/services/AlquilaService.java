@@ -2,15 +2,18 @@ package com.rusticasaback.rusticasaback.services;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import com.rusticasaback.rusticasaback.DTOs.AlquilaDTO;
+import com.rusticasaback.rusticasaback.DTOs.MunicipioDTO;
 import com.rusticasaback.rusticasaback.Request.AlquilaRequest;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import com.rusticasaback.rusticasaback.entities.ClienteEntity;
+import com.rusticasaback.rusticasaback.entities.MunicipioEntity;
 import com.rusticasaback.rusticasaback.entities.relaciones.AlquilaEntity;
 import com.rusticasaback.rusticasaback.entities.relaciones.AlquilaEntityPK;
 import com.rusticasaback.rusticasaback.repositories.AlquilaRepository;
@@ -46,16 +49,39 @@ public class AlquilaService {
         return guardaReserva(alquilaCasa);
     }
 
-    public ArrayList<AlquilaDTO> getAlquileresPorGmail(String gmail) {
+    public Page<Map<String, Object>> getCasasByGmail(String gmail, Pageable pageable) {
+    Page<Object[]> results = alquilaRepository.findCasasByGmail(gmail, pageable);
 
-        ArrayList<AlquilaDTO>listaAlquila = new ArrayList<>();
+    return results.map(result -> {
+        CasaEntity casa = (CasaEntity) result[0];
+        Date fechaEntrada = (Date) result[1];
+        Date fechaSalida = (Date) result[2];
 
-        List<AlquilaEntity>listAlquila=alquilaRepository.findByClienteGmail(gmail);
+        Map<String, Object> casaMap = new HashMap<>();
+        casaMap.put("idCasa", casa.getIdCasa());
+        casaMap.put("nombreCasa", casa.getNombreCasa());
+        casaMap.put("descripcion", casa.getDescripcion());
+        casaMap.put("mascotas", casa.isMascotas());
+        casaMap.put("fechaEntrada", fechaEntrada);
+        casaMap.put("fechaSalida", fechaSalida);
+        casaMap.put("numeroHabitaciones", casa.getNumeroHabitaciones());
+        casaMap.put("numeroInquilinos", casa.getNumeroInquilinos());
+        casaMap.put("precioNoche", casa.getPrecioNoche());
 
-        for (AlquilaEntity al : listAlquila) {
-            listaAlquila.add(new AlquilaDTO(al));
-        }
+        // Convertir MunicipioEntity a MunicipioDTO
+        MunicipioEntity municipioEntity = casa.getMunicipio();
+        MunicipioDTO municipioDTO = new MunicipioDTO();
+        municipioDTO.setIdMunicipio(municipioEntity.getIdMunicipio());
+        municipioDTO.setMunicipio(municipioEntity.getMunicipio());
+        municipioDTO.setMunicipioseo(municipioEntity.getMunicipioseo());
+        municipioDTO.setPostal(municipioEntity.getPostal());
+        municipioDTO.setLatitud(municipioEntity.getLatitud());
+        municipioDTO.setLongitud(municipioEntity.getLongitud());
+        
+        casaMap.put("municipio", municipioDTO);        
+        
+        return casaMap;
+    });
+}
 
-        return listaAlquila;
-    }
 }

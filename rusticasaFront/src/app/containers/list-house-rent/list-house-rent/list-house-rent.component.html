@@ -1,1 +1,13 @@
-<p>list-house-rent works!</p>
+<div class="container-fluid d-flex flex-column align-items-center justify-content-between" id="fondo">
+  <h1>Buenas {{usuConn.nickname}} estas son las casas que has alquilado: </h1>
+  <div *ngFor="let casa of casasPaginadas" class="col-lg-7 col-11 p-3 mb-2">
+    <app-house [datosCasa]="casa"></app-house>
+  </div>
+  <p-paginator
+    styleClass="m-2"
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [pageLinkSize]="3"
+    (onPageChange)="onPageChange($event)">
+  </p-paginator>
+</div>
