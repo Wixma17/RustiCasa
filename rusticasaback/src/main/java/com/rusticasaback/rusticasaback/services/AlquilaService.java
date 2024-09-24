@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,45 +44,51 @@ public class AlquilaService {
         CasaEntity casa = casaRepository.findById(alquilaRequest.getIdCasa())
                 .get();
 
-        AlquilaEntity alquilaCasa = new AlquilaEntity(new AlquilaEntityPK(alquilaRequest.getGmail(),alquilaRequest.getIdCasa(),alquilaRequest.getFechaEntrada()),
+        AlquilaEntity alquilaCasa = new AlquilaEntity(
+                new AlquilaEntityPK(alquilaRequest.getGmail(), alquilaRequest.getIdCasa(),
+                        alquilaRequest.getFechaEntrada()),
                 alquilaRequest.getFechaSalida(), cliente, casa);
 
         return guardaReserva(alquilaCasa);
     }
 
     public Page<Map<String, Object>> getCasasByGmail(String gmail, Pageable pageable) {
-    Page<Object[]> results = alquilaRepository.findCasasByGmail(gmail, pageable);
+        Page<Object[]> results = alquilaRepository.findCasasByGmail(gmail, pageable);
 
-    return results.map(result -> {
-        CasaEntity casa = (CasaEntity) result[0];
-        Date fechaEntrada = (Date) result[1];
-        Date fechaSalida = (Date) result[2];
+        return results.map(result -> {
+            CasaEntity casa = (CasaEntity) result[0];
+            Date fechaEntrada = (Date) result[1];
+            Date fechaSalida = (Date) result[2];
 
-        Map<String, Object> casaMap = new HashMap<>();
-        casaMap.put("idCasa", casa.getIdCasa());
-        casaMap.put("nombreCasa", casa.getNombreCasa());
-        casaMap.put("descripcion", casa.getDescripcion());
-        casaMap.put("mascotas", casa.isMascotas());
-        casaMap.put("fechaEntrada", fechaEntrada);
-        casaMap.put("fechaSalida", fechaSalida);
-        casaMap.put("numeroHabitaciones", casa.getNumeroHabitaciones());
-        casaMap.put("numeroInquilinos", casa.getNumeroInquilinos());
-        casaMap.put("precioNoche", casa.getPrecioNoche());
+            Map<String, Object> casaMap = new HashMap<>();
+            casaMap.put("idCasa", casa.getIdCasa());
+            casaMap.put("nombreCasa", casa.getNombreCasa());
+            casaMap.put("descripcion", casa.getDescripcion());
+            casaMap.put("mascotas", casa.isMascotas());
+            casaMap.put("fechaEntrada", fechaEntrada);
+            casaMap.put("fechaSalida", fechaSalida);
+            casaMap.put("numeroHabitaciones", casa.getNumeroHabitaciones());
+            casaMap.put("numeroInquilinos", casa.getNumeroInquilinos());
+            casaMap.put("precioNoche", casa.getPrecioNoche());
 
-        // Convertir MunicipioEntity a MunicipioDTO
-        MunicipioEntity municipioEntity = casa.getMunicipio();
-        MunicipioDTO municipioDTO = new MunicipioDTO();
-        municipioDTO.setIdMunicipio(municipioEntity.getIdMunicipio());
-        municipioDTO.setMunicipio(municipioEntity.getMunicipio());
-        municipioDTO.setMunicipioseo(municipioEntity.getMunicipioseo());
-        municipioDTO.setPostal(municipioEntity.getPostal());
-        municipioDTO.setLatitud(municipioEntity.getLatitud());
-        municipioDTO.setLongitud(municipioEntity.getLongitud());
-        
-        casaMap.put("municipio", municipioDTO);        
-        
-        return casaMap;
-    });
-}
+            // Convertir MunicipioEntity a MunicipioDTO
+            MunicipioEntity municipioEntity = casa.getMunicipio();
+            MunicipioDTO municipioDTO = new MunicipioDTO();
+            municipioDTO.setIdMunicipio(municipioEntity.getIdMunicipio());
+            municipioDTO.setMunicipio(municipioEntity.getMunicipio());
+            municipioDTO.setMunicipioseo(municipioEntity.getMunicipioseo());
+            municipioDTO.setPostal(municipioEntity.getPostal());
+            municipioDTO.setLatitud(municipioEntity.getLatitud());
+            municipioDTO.setLongitud(municipioEntity.getLongitud());
+
+            casaMap.put("municipio", municipioDTO);
+
+            return casaMap;
+        });
+    }
+
+    public List<Long> getCasaIdsByFechas(Date fechaEntrada, Date fechaSalida) {
+        return alquilaRepository.findCasaIdsByFechas(fechaEntrada, fechaSalida);
+    }
 
 }

@@ -17,6 +17,10 @@
               <div *ngIf="alquilaForm.get('fechas').errors.required" class="col-12 text-danger rounded-4">
                 <span class="fs-4">*La fecha es obligatoria</span>
               </div>
+              <!-- En tu template rent-house.component.html -->
+              <div *ngIf="casasOcupadas.length > 0" class="text-danger">
+                La casa ya está alquilada en las fechas seleccionadas.
+              </div>
             </div>
           </div>
 

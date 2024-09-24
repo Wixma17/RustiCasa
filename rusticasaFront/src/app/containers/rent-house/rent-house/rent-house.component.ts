@@ -6,6 +6,7 @@ import { CasaService } from 'src/app/shared/services/casa.service';
 import { MenuItem } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RequestAlquilaCasa } from 'src/app/shared/model/requests/request-alquilar-casa.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-rent-house',
@@ -24,6 +25,7 @@ export class RentHouseComponent implements OnInit {
   items: MenuItem[] = [];
   isFormSubmitted: boolean = false;
   usuarioLog: any;
+  casasOcupadas: number[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -36,14 +38,13 @@ export class RentHouseComponent implements OnInit {
     });
 
     this.alquilaForm2 = this.formBuilder.group({
-      inputDatosTarjeta:['',[Validators.required, Validators.pattern(this.ccRegex)]],
-      cvv:['',[Validators.required,Validators.minLength(3),Validators.maxLength(3)]],
-      direccion:['',[Validators.required]]
+      inputDatosTarjeta: ['', [Validators.required, Validators.pattern(this.ccRegex)]],
+      cvv: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      direccion: ['', [Validators.required]]
     });
   }
 
   ngOnInit(): void {
-
     this.usuarioLog = JSON.parse(sessionStorage.getItem('datosUsu'));
 
     this.items = [
@@ -52,12 +53,9 @@ export class RentHouseComponent implements OnInit {
     ];
 
     this.idCasaString = this.route.snapshot.paramMap.get('idCasa');
-    this.idCasaLong = this.idCasaString
-      ? parseInt(this.idCasaString, 10)
-      : null;
+    this.idCasaLong = this.idCasaString ? parseInt(this.idCasaString, 10) : null;
 
     if (this.idCasaLong) {
-      // Actualiza los breadcrumbs manualmente si es necesario
       this.breadcrumbService.updateBreadcrumbs([
         { label: 'Inicio', routerLink: '/welcome' },
         { label: 'Búsquedas', routerLink: '/full-search' },
@@ -85,12 +83,31 @@ export class RentHouseComponent implements OnInit {
 
   nextStep(): void {
     if (this.alquilaForm.valid) {
-      if (this.activeIndex < this.items.length - 1) {
-        this.activeIndex++;
-      }
+      this.checkAvailability(this.alquilaForm.value.fechas).subscribe({
+        next: (casasOcupadas) => {
+          this.casasOcupadas = casasOcupadas;
+          if (!this.casasOcupadas.includes(this.idCasaLong)) {
+            if (this.activeIndex < this.items.length - 1) {
+              this.activeIndex++;
+            }
+          } else {
+            // Mostrar un mensaje de error que la casa ya está alquilada en esas fechas
+            alert('La casa ya está alquilada en estas fechas.');
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
     } else {
       this.isFormSubmitted = true; // Marcar el formulario como enviado para mostrar errores
     }
+  }
+
+  checkAvailability(fechas: Date[]): Observable<number[]> {
+    const fechaEntrada = new Date(fechas[0]);
+    const fechaSalida = new Date(fechas[1]);
+    return this.casaService.getCasasByFechas(fechaEntrada, fechaSalida);
   }
 
   previousStep(): void {
@@ -99,26 +116,22 @@ export class RentHouseComponent implements OnInit {
     }
   }
 
-  rentHouse(){
-    let casaAlquilada:RequestAlquilaCasa={
+  rentHouse() {
+    let casaAlquilada: RequestAlquilaCasa = {
       gmail: this.usuarioLog.gmail,
       idCasa: this.idCasaLong,
       fechaEntrada: this.alquilaForm.value.fechas[0],
       fechaSalida: this.alquilaForm.value.fechas[1]
-    }
+    };
 
     this.casaService.alquilaCasa(casaAlquilada).subscribe({
-      next:(inf)=>{
-
+      next: (inf) => {},
+      error: (err) => {
+        console.error(err);
       },
-      error:(err)=>{
-        console.error(err)
-      },
-      complete:()=>{
+      complete: () => {
         console.info("Casa Alquilada Correctamente");
       }
     });
-
   }
-
 }

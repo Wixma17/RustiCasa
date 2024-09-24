@@ -104,4 +104,12 @@ export class CasaService {
     let url = `${environment.urlApiCasas}alquileres/${gmail}`;
     return this.httpClient.get<any>(url);
   }
+
+  getCasasByFechas(fechaEntrada: Date, fechaSalida: Date): Observable<number[]> {
+    const params = {
+      fechaEntrada: fechaEntrada.toISOString(),
+      fechaSalida: fechaSalida.toISOString()
+    };
+    return this.httpClient.get<number[]>(`${environment.urlApiCasas}casasIdAlquiladas`, { params });
+  }
 }

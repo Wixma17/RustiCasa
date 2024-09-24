@@ -1,6 +1,7 @@
 package com.rusticasaback.rusticasaback.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -184,6 +185,11 @@ public class CasaController {
         Pageable pageable = PageRequest.of(page, size);
         Page<Map<String, Object>> casas = alquilaService.getCasasByGmail(gmail, pageable);
         return new ResponseEntity<>(casas, HttpStatus.OK);
+    }
+
+    @GetMapping("/casasIdAlquiladas")
+    public List<Long> getCasasByFechas(@RequestParam Date fechaEntrada, @RequestParam Date fechaSalida) {
+        return alquilaService.getCasaIdsByFechas(fechaEntrada, fechaSalida);
     }
 
 }
