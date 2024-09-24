@@ -2,9 +2,7 @@
   <h1>Formulario Alquiler: {{casa.nombreCasa}}</h1>
 
   <div class="d-flex flex-column justify-content-center align-items-center altura">
-
     <div class="contenedor-cristalizado col-10">
-
       <p-steps styleClass="mt-3" [model]="items" [(activeIndex)]="activeIndex" [readonly]="false"></p-steps>
 
       <div class="d-flex flex-column justify-content-center" *ngIf="activeIndex === 0">
@@ -13,14 +11,16 @@
             <label for="cal" class="fs-4 text-start col-11 m-1">Introduzca la fecha: </label>
 
             <p-calendar id="cal" styleClass="col-11 text-center" placeholder="Fecha entrada - Fecha Salida" formControlName="fechas" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="2"></p-calendar>
+
             <div *ngIf="alquilaForm.get('fechas').invalid && alquilaForm.get('fechas').touched" class="d-flex  justify-content-center m-3">
               <div *ngIf="alquilaForm.get('fechas').errors.required" class="col-12 text-danger rounded-4">
                 <span class="fs-4">*La fecha es obligatoria</span>
               </div>
-              <!-- En tu template rent-house.component.html -->
-              <div *ngIf="casasOcupadas.length > 0" class="text-danger">
-                La casa ya está alquilada en las fechas seleccionadas.
-              </div>
+            </div>
+
+            <!-- Mostrar el mensaje de error aquí -->
+            <div *ngIf="errorMessage" class="text-danger">
+              <span class="fs-4">{{ errorMessage }}</span>
             </div>
           </div>
 
@@ -51,8 +51,8 @@
 
             <div *ngIf="alquilaForm2.get('cvv').invalid && alquilaForm2.get('cvv').touched" class="text-danger mt-2">
               <span class="fs-4" *ngIf="alquilaForm2.get('cvv').errors.required">*El cvv es obligatorio</span>
-              <span class="fs-4" *ngIf="alquilaForm2.get('cvv').errors.minlenght">*mínimo 3 números</span>
-              <span class="fs-4" *ngIf="alquilaForm2.get('cvv').errors.maxlenght">*máximo 3 números</span>
+              <span class="fs-4" *ngIf="alquilaForm2.get('cvv').errors.minlength">*mínimo 3 números</span>
+              <span class="fs-4" *ngIf="alquilaForm2.get('cvv').errors.maxlength">*máximo 3 números</span>
             </div>
           </div>
 
@@ -73,8 +73,5 @@
         </form>
       </div>
     </div>
-
   </div>
-
-
 </div>

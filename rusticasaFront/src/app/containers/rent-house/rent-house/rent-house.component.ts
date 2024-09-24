@@ -26,6 +26,7 @@ export class RentHouseComponent implements OnInit {
   isFormSubmitted: boolean = false;
   usuarioLog: any;
   casasOcupadas: number[] = [];
+  errorMessage:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -82,6 +83,7 @@ export class RentHouseComponent implements OnInit {
   }
 
   nextStep(): void {
+    this.errorMessage = ''; // Limpiar el mensaje de error al iniciar
     if (this.alquilaForm.valid) {
       this.checkAvailability(this.alquilaForm.value.fechas).subscribe({
         next: (casasOcupadas) => {
@@ -91,8 +93,8 @@ export class RentHouseComponent implements OnInit {
               this.activeIndex++;
             }
           } else {
-            // Mostrar un mensaje de error que la casa ya está alquilada en esas fechas
-            alert('La casa ya está alquilada en estas fechas.');
+            // Establecer el mensaje de error en lugar de alert
+            this.errorMessage = 'La casa ya está alquilada en estas fechas.';
           }
         },
         error: (err) => {

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -188,7 +189,7 @@ public class CasaController {
     }
 
     @GetMapping("/casasIdAlquiladas")
-    public List<Long> getCasasByFechas(@RequestParam Date fechaEntrada, @RequestParam Date fechaSalida) {
+    public List<Long> getCasasByFechas(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date fechaEntrada, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date fechaSalida) {
         return alquilaService.getCasaIdsByFechas(fechaEntrada, fechaSalida);
     }
 
