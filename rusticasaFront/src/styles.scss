@@ -73,4 +73,17 @@ body > app-root > div > app-welcome > div.fondo > div > form > fieldset.text-cen
   cursor: pointer;
 }
 
+#cal > span > div > div{
+  justify-content: space-evenly;
+}
 
+#cal > span > div > div > div:nth-child(1){
+  border: none;
+}
+body > app-root > div > app-welcome > div.fondo > div > form > fieldset.text-center.col-12.p-1 > p-calendar > span > div > div > div:nth-child(1){
+  border: none;
+}
+
+#fondo > section{
+  margin-top: 82px;
+}

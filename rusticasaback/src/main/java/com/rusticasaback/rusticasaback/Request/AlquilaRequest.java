@@ -1,7 +1,6 @@
 package com.rusticasaback.rusticasaback.Request;
 
-import com.rusticasaback.rusticasaback.DTOs.AlquilaDTO;
-
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,5 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AlquilaRequest {
-    private AlquilaDTO alquilaDTO;
+    private String gmail;  
+    private Long idCasa;
+    private Date fechaEntrada;
+    private Date fechaSalida;
 }

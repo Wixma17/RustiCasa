@@ -1,7 +1,7 @@
 <!--row row-cols-1 row-cols-lg-2-->
-<div class="container-fluid d-flex flex-column flex-lg-row justify-content-between" id="fondo">
+<div class="container-fluid d-flex flex-column flex-lg-row justify-content-between" id="fondo" >
   <aside class="col-12 col-lg-3 d-flex justify-content-center">
-      <form [formGroup]="formuReact" *ngIf="formuReact" class="col-12 formFondo contenedor-cristalizado">
+      <form [formGroup]="formuReact" *ngIf="formuReact" class="col-12 formFondo contenedor-cristalizado mb-sm-5 mb-md-0">
 
         <div class="col-11 d-flex flex-column justify-content-center mb-4">
           <p-checkbox styleClass="m-1" [formControl]="formuReact.controls['piscina']" label="Piscina"></p-checkbox>
@@ -32,7 +32,7 @@
           <p-inputNumber styleClass="col-12 mt-3" placeholder="Numero Inquilinos" [formControl]="formuReact.controls['nInquilinos']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
           <p-inputNumber styleClass="col-12 mt-3" placeholder="Numero de habitaciones" [formControl]="formuReact.controls['nHabitaciones']" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="100"></p-inputNumber>
 
-          <p-calendar styleClass="col-12 text-center mt-3" placeholder="Fecha entrada - Fecha Salida" [formControl]="formuReact.controls['fechas']" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="2"></p-calendar>
+          <p-calendar styleClass="col-12 text-center mt-3" placeholder="Fecha entrada - Fecha Salida" [formControl]="formuReact.controls['fechas']" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="1"></p-calendar>
           <div *ngIf="formuReact.get('fechas').invalid && formuReact.get('fechas').touched" class="d-flex justify-content-center m-3">
             <div *ngIf="formuReact.get('fechas').errors.required" class="bg-white col-4 text-danger rounded-4">
               <span class="fs-3">* Fecha es obligatoria</span>
@@ -49,12 +49,12 @@
       </form>
   </aside>
 
-  <section *ngIf="casasPaginadas.length == 0" class="col d-flex flex-column justify-content-center">
+  <section *ngIf="casasPaginadas.length == 0" class="col d-flex flex-column justify-content-center" style="height: 100vh;">
    <p class="fs-2 text-body-tertiary text-center"> Ningún resultado encontrado <i class="bi bi-emoji-frown-fill"></i></p>
   </section>
 
 
-  <section *ngIf="casasPaginadas.length != 0" class="col-12 col-lg-8 p-2 d-flex flex-column justify-content-center p-2 align-items-center">
+  <section *ngIf="casasPaginadas.length != 0" class="col-12 col-lg-8 p-2 d-flex flex-column justify-content-center p-2 align-items-center" >
     <div *ngFor="let casa of casasPaginadas" class="col-10">
       <app-house [datosCasa]="casa"></app-house>
     </div>

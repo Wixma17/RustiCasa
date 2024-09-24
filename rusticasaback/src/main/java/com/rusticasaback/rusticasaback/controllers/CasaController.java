@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.rusticasaback.rusticasaback.DTOs.AlquilaDTO;
 import com.rusticasaback.rusticasaback.Request.AlquilaRequest;
 import com.rusticasaback.rusticasaback.Request.CasaRequest;
 import com.rusticasaback.rusticasaback.Request.OpinaRequest;
@@ -171,6 +172,14 @@ public class CasaController {
         } else {
             return ResponseEntity.status(404).body("Imagen no encontrada o no pudo ser eliminada");
         }
+    }
+
+    @GetMapping("/alquileres/{gmail}")
+    public ResponseEntity<?> obtenerAlquileresPorGmail(@PathVariable String gmail) {
+
+        ArrayList<AlquilaDTO>lista=alquilaService.getAlquileresPorGmail(gmail);       
+
+        return new ResponseEntity<>(lista, HttpStatus.CREATED);
     }
 
 }

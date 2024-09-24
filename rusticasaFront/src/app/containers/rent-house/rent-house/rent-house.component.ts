@@ -5,6 +5,7 @@ import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 import { CasaService } from 'src/app/shared/services/casa.service';
 import { MenuItem } from 'primeng/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RequestAlquilaCasa } from 'src/app/shared/model/requests/request-alquilar-casa.model';
 
 @Component({
   selector: 'app-rent-house',
@@ -22,6 +23,7 @@ export class RentHouseComponent implements OnInit {
   activeIndex: number = 0;
   items: MenuItem[] = [];
   isFormSubmitted: boolean = false;
+  usuarioLog: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +43,8 @@ export class RentHouseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.usuarioLog = JSON.parse(sessionStorage.getItem('datosUsu'));
 
     this.items = [
       { label: 'Fecha Alquiler' },
@@ -94,4 +98,27 @@ export class RentHouseComponent implements OnInit {
       this.activeIndex--;
     }
   }
+
+  rentHouse(){
+    let casaAlquilada:RequestAlquilaCasa={
+      gmail: this.usuarioLog.gmail,
+      idCasa: this.idCasaLong,
+      fechaEntrada: this.alquilaForm.value.fechas[0],
+      fechaSalida: this.alquilaForm.value.fechas[1]
+    }
+
+    this.casaService.alquilaCasa(casaAlquilada).subscribe({
+      next:(inf)=>{
+
+      },
+      error:(err)=>{
+        console.error(err)
+      },
+      complete:()=>{
+        console.info("Casa Alquilada Correctamente");
+      }
+    });
+
+  }
+
 }

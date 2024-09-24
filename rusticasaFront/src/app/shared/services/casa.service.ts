@@ -8,6 +8,7 @@ import { OpinionResponse } from '../model/responses/opinion-response.model';
 import { RequestRegistrarCasa } from '../model/requests/request-registrar-casa-.model';
 import { SubidaImagenCasaRequest } from '../model/requests/request-subida-img-casa.model';
 import { RequestOpinion } from '../model/requests/request-opina.model';
+import { RequestAlquilaCasa } from '../model/requests/request-alquilar-casa.model';
 
 @Injectable()
 export class CasaService {
@@ -94,4 +95,13 @@ export class CasaService {
     return this.httpClient.post<any>(url,opiRequest);
   }
 
+  alquilaCasa(rentHouseRequest:RequestAlquilaCasa): Observable<any> {
+    let url = `${environment.urlApiCasas}reservarCasa`;
+    return this.httpClient.post<any>(url,rentHouseRequest);
+  }
+
+  getListaCasaAlquilado(gmail:string): Observable<any> {
+    let url = `${environment.urlApiCasas}alquileres/${gmail}`;
+    return this.httpClient.get<any>(url);
+  }
 }

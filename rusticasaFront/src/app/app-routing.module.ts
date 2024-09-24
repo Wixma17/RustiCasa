@@ -11,6 +11,7 @@ import { ListHouseOwnerComponent } from './containers/list-house-owner/list-hous
 import { UpdateHouseComponent } from './containers/update-house/update-house/update-house.component';
 import { OpinionListHouseComponent } from './containers/opinion-list-house/opinion-list-house/opinion-list-house.component';
 import { RentHouseComponent } from './containers/rent-house/rent-house/rent-house.component';
+import { ListHouseRentComponent } from './containers/list-house-rent/list-house-rent/list-house-rent.component';
 
 
 const routes: Routes = [
@@ -123,6 +124,16 @@ const routes: Routes = [
         { label: 'Búsquedas', routerLink: '/full-search' },
         { label: 'Detalles Casa', routerLink: '/details-house/:idCasa' },
         { label: 'Alquila Casa', routerLink: '/rent-house/:idCasa' }
+      ],
+    },
+  },
+  {
+    path: 'list-house-rent',
+    component: ListHouseRentComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Casas que has alquilado', routerLink: '/list-house-rent' }
       ],
     },
   }
