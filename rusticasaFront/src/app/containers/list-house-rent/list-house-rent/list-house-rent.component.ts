@@ -149,37 +149,80 @@ export class ListHouseRentComponent implements OnInit {
   }
 
   generarPdf(casa: any) {
-    const documentDefinition = {
-      content: [
-        { text: 'Detalles de la Casa Alquilada', style: 'header' },
-        { text: `Nombre de la Casa: ${casa.nombreCasa}`, style: 'subheader' },
-        { text: `Descripción: ${casa.descripcion}`, style: 'normal' },
-        { text: `Fecha de Entrada: ${this.formatDateToCET(casa.fechaEntrada)}`, style: 'normal' },
-        { text: `Fecha de Salida: ${this.formatDateToCET(casa.fechaSalida)}`, style: 'normal' },
-        { text: `Número de Habitaciones: ${casa.numeroHabitaciones}`, style: 'normal' },
-        { text: `Número de Inquilinos: ${casa.numeroInquilinos}`, style: 'normal' },
-        { text: `Precio por Noche: $${casa.precioNoche}`, style: 'normal' },
-        { text: `Municipio: ${casa.municipio}`, style: 'normal' },
-      ],
-      styles: {
-        header: {
-          fontSize: 22,
-          bold: true,
-          margin: [0, 0, 0, 10],
-        },
-        subheader: {
-          fontSize: 18,
-          bold: true,
-          margin: [0, 10, 0, 5],
-        },
-        normal: {
-          fontSize: 12,
-          margin: [0, 0, 0, 5],
-        },
-      },
-    };
+    const imageUrl = 'http://localhost:8082/LogoPagina/fondoCasa.jpg'; // Asegúrate de que este sea un PNG válido
 
-    pdfMake.createPdf(documentDefinition).download(`${casa.nombreCasa}_detalles.pdf`);
+    // Convertir la imagen a Blob
+    fetch(imageUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Error al cargar la imagen: ' + response.statusText);
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const dataUrl = reader.result as string; // Convierte el Blob a un dataURL
+
+          const documentDefinition = {
+            content: [
+              { image: dataUrl, width: 500, alignment: 'center' }, // Usa el dataURL de la imagen
+              { text: 'Detalles de la Casa Alquilada', style: 'header' },
+              {
+                table: {
+                  headerRows: 1,
+                  widths: ['*', '*'],
+                  body: [
+                    [
+                      { text: 'Nombre de la Casa', style: 'tableHeader' },
+                      { text: 'Valor', style: 'tableHeader' },
+                    ],
+                    ['Nombre de la Casa', casa.nombreCasa],
+                    ['Descripción', casa.descripcion],
+                    ['Fecha de Entrada', this.formatDateToCET(casa.fechaEntrada)],
+                    ['Fecha de Salida', this.formatDateToCET(casa.fechaSalida)],
+                    ['Número de Habitaciones', casa.numeroHabitaciones.toString()],
+                    ['Número de Inquilinos', casa.numeroInquilinos.toString()],
+                    ['Precio por Noche', `${casa.precioNoche}€`],
+                    ['Municipio', casa.municipio.municipio],
+                  ],
+                },
+                layout: {
+                  hLineWidth: (i) => (i === 0 ? 2 : 1),
+                  vLineWidth: () => 0,
+                  hLineColor: () => '#007bff',
+                  paddingLeft: () => 10,
+                  paddingRight: () => 10,
+                },
+              },
+            ],
+            styles: {
+              header: {
+                fontSize: 22,
+                bold: true,
+                alignment: 'center',
+                margin: [0, 0, 0, 10],
+              },
+              tableHeader: {
+                bold: true,
+                fontSize: 12,
+                color: 'white',
+                fillColor: '#007bff',
+              },
+            },
+          };
+
+          // Crear y descargar el PDF
+          pdfMake.createPdf(documentDefinition).download(`${casa.nombreCasa}_factura.pdf`);
+        };
+
+        reader.readAsDataURL(blob); // Lee el Blob como un dataURL
+      })
+      .catch(error => {
+        console.error('Error al cargar la imagen:', error);
+      });
   }
+
+
 
 }
