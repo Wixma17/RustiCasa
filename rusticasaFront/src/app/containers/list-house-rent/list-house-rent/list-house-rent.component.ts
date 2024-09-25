@@ -133,4 +133,13 @@ export class ListHouseRentComponent implements OnInit {
   }
 
   //--------------------------------------------------------------------------
+
+  formatDateToCET(dateInput: string): string {
+    const date = this.convertStringToDateCET(dateInput);  // Convierte a una fecha ajustada a CET
+    if (date) {
+        // Formatear la fecha a 'yyyy-MM-dd'
+        return date.toISOString().slice(0, 10);
+    }
+    return '';  // Retorna una cadena vacía si no se puede convertir
+}
 }

@@ -10,6 +10,17 @@ h1 {
     -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
 }
 
+.contenedor-cristalizado {
+  background: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+  backdrop-filter: blur(10px); /* Desenfoque de fondo */
+  border-radius: 15px; /* Bordes redondeados para un mejor efecto */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde ligero para resaltar */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: black; /* Color del texto dentro del contenedor */
+}
 
 @media screen and (min-width: 992px) {
   h1 {

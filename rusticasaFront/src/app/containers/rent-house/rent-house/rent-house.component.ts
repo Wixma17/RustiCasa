@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 import { CasaService } from 'src/app/shared/services/casa.service';
@@ -32,7 +32,8 @@ export class RentHouseComponent implements OnInit {
     private route: ActivatedRoute,
     private breadcrumbService: BreadcrumbService,
     private casaService: CasaService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.alquilaForm = this.formBuilder.group({
       fechas: [null, [Validators.required]],
@@ -138,6 +139,7 @@ export class RentHouseComponent implements OnInit {
         },
         complete: () => {
           console.info("Casa Alquilada Correctamente");
+          this.router.navigate(['/list-house-rent']);
         }
       });
     } else {
