@@ -1,7 +1,13 @@
 <div class="container-fluid d-flex flex-column align-items-center justify-content-between" id="fondo">
   <h1 *ngIf="casasPaginadas.length > 0">Buenas {{usuConn.nickname}} estas son las casas que has alquilado: </h1>
     <div *ngFor="let casa of casasPaginadas" class="col-lg-7 col-11 p-3 mb-2 contenedor-cristalizado" >
-      <h4>Casa alquilada del: <strong class="text-success">{{ formatDateToCET(casa.fechaEntrada) }}</strong> hasta <strong class="text-success">{{ formatDateToCET(casa.fechaSalida) }}</strong></h4>
+      <div class="d-flex justify-content-between">
+        <h4>Casa alquilada del: <strong class="text-success">{{ formatDateToCET(casa.fechaEntrada) }}</strong> hasta <strong class="text-success">{{ formatDateToCET(casa.fechaSalida) }}</strong></h4>
+
+        <button class="btn btn-info" (click)="generarPdf(casa)">
+          Descargar factura (PDF) <i class="bi bi-file-earmark-pdf"></i>
+        </button>
+      </div>
       <app-house [datosCasa]="casa"></app-house>
       <button class="btn btn-danger" (click)="eliminarAlquiler(usuConn.gmail ,casa.idCasa,casa.fechaEntrada)">Cancelar Reserva <span class="accesibilidad">({{casa.nombreCasa}})</span> <i class="bi bi-x-circle-fill"></i></button>
     </div>

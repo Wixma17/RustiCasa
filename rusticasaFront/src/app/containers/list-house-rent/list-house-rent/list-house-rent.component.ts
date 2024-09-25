@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CasaService } from 'src/app/shared/services/casa.service';
 
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 @Component({
   selector: 'app-list-house-rent',
   templateUrl: './list-house-rent.component.html',
@@ -135,11 +140,46 @@ export class ListHouseRentComponent implements OnInit {
   //--------------------------------------------------------------------------
 
   formatDateToCET(dateInput: string): string {
-    const date = this.convertStringToDateCET(dateInput);  // Convierte a una fecha ajustada a CET
+    const date = this.convertStringToDateCET(dateInput); // Convierte a una fecha ajustada a CET
     if (date) {
-        // Formatear la fecha a 'yyyy-MM-dd'
-        return date.toISOString().slice(0, 10);
+      // Formatear la fecha a 'yyyy-MM-dd'
+      return date.toISOString().slice(0, 10);
     }
-    return '';  // Retorna una cadena vacía si no se puede convertir
-}
+    return ''; // Retorna una cadena vacía si no se puede convertir
+  }
+
+  generarPdf(casa: any) {
+    const documentDefinition = {
+      content: [
+        { text: 'Detalles de la Casa Alquilada', style: 'header' },
+        { text: `Nombre de la Casa: ${casa.nombreCasa}`, style: 'subheader' },
+        { text: `Descripción: ${casa.descripcion}`, style: 'normal' },
+        { text: `Fecha de Entrada: ${this.formatDateToCET(casa.fechaEntrada)}`, style: 'normal' },
+        { text: `Fecha de Salida: ${this.formatDateToCET(casa.fechaSalida)}`, style: 'normal' },
+        { text: `Número de Habitaciones: ${casa.numeroHabitaciones}`, style: 'normal' },
+        { text: `Número de Inquilinos: ${casa.numeroInquilinos}`, style: 'normal' },
+        { text: `Precio por Noche: $${casa.precioNoche}`, style: 'normal' },
+        { text: `Municipio: ${casa.municipio}`, style: 'normal' },
+      ],
+      styles: {
+        header: {
+          fontSize: 22,
+          bold: true,
+          margin: [0, 0, 0, 10],
+        },
+        subheader: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 10, 0, 5],
+        },
+        normal: {
+          fontSize: 12,
+          margin: [0, 0, 0, 5],
+        },
+      },
+    };
+
+    pdfMake.createPdf(documentDefinition).download(`${casa.nombreCasa}_detalles.pdf`);
+  }
+
 }
