@@ -149,17 +149,17 @@ export class ListHouseRentComponent implements OnInit {
   }
 
   generarPdf(casa: any) {
-    const imageUrl = 'http://localhost:8082/LogoPagina/fondoCasa.jpg'; // Asegúrate de que este sea un PNG válido
+    const imageUrl = 'http://localhost:8082/LogoPagina/imgPdf.png'; // Asegúrate de que este sea un PNG válido
 
     // Convertir la imagen a Blob
     fetch(imageUrl)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error('Error al cargar la imagen: ' + response.statusText);
         }
         return response.blob();
       })
-      .then(blob => {
+      .then((blob) => {
         const reader = new FileReader();
         reader.onloadend = () => {
           const dataUrl = reader.result as string; // Convierte el Blob a un dataURL
@@ -174,17 +174,28 @@ export class ListHouseRentComponent implements OnInit {
                   widths: ['*', '*'],
                   body: [
                     [
-                      { text: 'Nombre de la Casa', style: 'tableHeader' },
-                      { text: 'Valor', style: 'tableHeader' },
+                      { text: 'Detalles de la casa', style: 'tableHeader' },
+                      { text: '', style: 'tableHeader' }, // Columna vacía para mantener el formato
                     ],
-                    ['Nombre de la Casa', casa.nombreCasa],
-                    ['Descripción', casa.descripcion],
-                    ['Fecha de Entrada', this.formatDateToCET(casa.fechaEntrada)],
-                    ['Fecha de Salida', this.formatDateToCET(casa.fechaSalida)],
-                    ['Número de Habitaciones', casa.numeroHabitaciones.toString()],
-                    ['Número de Inquilinos', casa.numeroInquilinos.toString()],
-                    ['Precio por Noche', `${casa.precioNoche}€`],
-                    ['Municipio', casa.municipio.municipio],
+                    [{ text: 'Nombre de la Casa' }, { text: casa.nombreCasa }],
+                    [
+                      { text: 'Fecha de Entrada' },
+                      { text: this.formatDateToCET(casa.fechaEntrada) },
+                    ],
+                    [
+                      { text: 'Fecha de Salida' },
+                      { text: this.formatDateToCET(casa.fechaSalida) },
+                    ],
+                    [
+                      { text: 'Número de Habitaciones' },
+                      { text: casa.numeroHabitaciones.toString() },
+                    ],
+                    [
+                      { text: 'Precio por Noche' },
+                      { text: `${casa.precioNoche}€` },
+                    ],
+                    [{ text: 'Municipio' }, { text: casa.municipio.municipio }],
+                    [{ text: 'Alquilado por:' }, { text: this.usuConn.gmail }],
                   ],
                 },
                 layout: {
@@ -194,6 +205,15 @@ export class ListHouseRentComponent implements OnInit {
                   paddingLeft: () => 10,
                   paddingRight: () => 10,
                 },
+              },
+              {
+                text: 'Al alquilar la casa aceptas los términos y condiciones de nuestra página',
+                margin: [0, 10, 0, 0],
+              },
+              {
+                text: 'Rusticasa 2024©',
+                margin: [0, 0, 0, 20],
+                alignment: 'center',
               },
             ],
             styles: {
@@ -213,16 +233,15 @@ export class ListHouseRentComponent implements OnInit {
           };
 
           // Crear y descargar el PDF
-          pdfMake.createPdf(documentDefinition).download(`${casa.nombreCasa}_factura.pdf`);
+          pdfMake
+            .createPdf(documentDefinition)
+            .download(`${casa.nombreCasa}_factura.pdf`);
         };
 
         reader.readAsDataURL(blob); // Lee el Blob como un dataURL
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Error al cargar la imagen:', error);
       });
   }
-
-
-
 }
