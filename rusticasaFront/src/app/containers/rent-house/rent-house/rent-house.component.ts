@@ -119,21 +119,84 @@ export class RentHouseComponent implements OnInit {
   }
 
   rentHouse() {
-    let casaAlquilada: RequestAlquilaCasa = {
-      gmail: this.usuarioLog.gmail,
-      idCasa: this.idCasaLong,
-      fechaEntrada: this.alquilaForm.value.fechas[0],
-      fechaSalida: this.alquilaForm.value.fechas[1]
-    };
+    // Ajustar las fechas a CET/CEST antes de enviarlas al backend
+    const fechaEntradaAjustada = this.convertStringToDateCET(this.alquilaForm.value.fechas[0]);
+    const fechaSalidaAjustada = this.convertStringToDateCET(this.alquilaForm.value.fechas[1]);
 
-    this.casaService.alquilaCasa(casaAlquilada).subscribe({
-      next: (inf) => {},
-      error: (err) => {
-        console.error(err);
-      },
-      complete: () => {
-        console.info("Casa Alquilada Correctamente");
-      }
-    });
+    if (fechaEntradaAjustada && fechaSalidaAjustada) {
+      let casaAlquilada: RequestAlquilaCasa = {
+        gmail: this.usuarioLog.gmail,
+        idCasa: this.idCasaLong,
+        fechaEntrada: fechaEntradaAjustada, // Usar la fecha ajustada
+        fechaSalida: fechaSalidaAjustada    // Usar la fecha ajustada
+      };
+
+      this.casaService.alquilaCasa(casaAlquilada).subscribe({
+        next: (inf) => {},
+        error: (err) => {
+          console.error(err);
+        },
+        complete: () => {
+          console.info("Casa Alquilada Correctamente");
+        }
+      });
+    } else {
+      console.error('Las fechas no se han podido ajustar correctamente.');
+    }
   }
+
+
+  formatDateToYYYYMMDD(date: Date): string {
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  }
+
+   //----------------------------------------------------------------------
+   convertStringToDateCET(dateInput: any): Date | null {
+    // Si el valor ya es un objeto Date, lo retornamos
+    if (dateInput instanceof Date) {
+      return this.adjustToCET(dateInput);
+    }
+
+    // Si el valor es una cadena, intentamos convertirla a una fecha y luego ajustar a CET
+    if (typeof dateInput === 'string') {
+      const [day, month, year] = dateInput.split('/').map(Number);
+
+      // Crear una fecha en UTC
+      const utcDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
+
+      // Ajustar la fecha a CET y devolverla como Date
+      return this.adjustToCET(utcDate);
+    }
+
+    console.error('El valor proporcionado no es una cadena ni un objeto Date:', dateInput);
+    return null;
+  }
+
+  adjustToCET(utcDate: Date): Date {
+    // CET es UTC + 1, ajustamos la fecha
+    const cetOffset = 1 * 60; // 1 hora (en minutos)
+
+    // Ajuste para horario de verano (CEST es UTC+2)
+    const isDST = this.isDaylightSavingTime(utcDate);
+    const offset = isDST ? 2 * 60 : cetOffset; // 2 horas en verano (CEST)
+
+    // Ajustamos la fecha añadiendo el offset de CET/CEST
+    const adjustedDate = new Date(utcDate.getTime() + offset * 60000); // Convertimos minutos a milisegundos
+
+    return adjustedDate;
+  }
+
+  isDaylightSavingTime(date: Date): boolean {
+    // Verifica si la fecha está dentro del horario de verano (CEST)
+    const jan = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
+    const jul = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
+    return Math.max(jan, jul) !== date.getTimezoneOffset();
+  }
+
+
+  //--------------------------------------------------------------------------
+
 }
