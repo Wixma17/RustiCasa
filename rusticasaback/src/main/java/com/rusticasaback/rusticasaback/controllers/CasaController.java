@@ -205,4 +205,12 @@ public class CasaController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/eliminarCasa")
+    public ResponseEntity<?> eliminarCasa(@RequestParam Long idCasa) {
+
+        
+
+        return ResponseEntity.ok().build();
+    }
+
 }

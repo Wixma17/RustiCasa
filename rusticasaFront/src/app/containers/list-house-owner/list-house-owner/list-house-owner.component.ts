@@ -49,4 +49,8 @@ export class ListHouseOwnerComponent implements OnInit {
   goUpload(){
     this.router.navigate(['/upload-house']);
   }
+
+  eliminarCasa(idCasa:number){
+
+  }
 }

@@ -1,9 +1,19 @@
-<div class="container-fluid " id="fondo">
-  <section *ngIf="casasPaginadas && casasPaginadas.length > 0" class="col-12 d-flex flex-column align-items-center justify-content-around" style="margin-top: 0px;" >
+<div class="container-fluid " id="fondo" [ngStyle]="{'height': casasPaginadas.length === 1 ? '80vh' : 'auto'}">
+  <section *ngIf="casasPaginadas && casasPaginadas.length > 0" class="col-12 d-flex flex-column align-items-center justify-content-around" style="height: 100%; margin-top: 0px;" >
     <h1>Buenas {{usuConn.nickname}} estas son tus casas subidas: </h1>
+
     <div *ngFor="let casa of casasPaginadas" class="col-lg-6 col-10 p-3 mb-2">
-      <app-house [datosCasa]="casa"></app-house>
-      <button class="btn btn-warning" (click)="editarCasa(casa.idCasa)">Editar "{{casa.nombreCasa}}"</button>
+
+      <div class="contenedor-cristalizado p-3">
+        <app-house [datosCasa]="casa"></app-house>
+
+        <div class="d-flex justify-content-around col-12">
+          <button class="btn btn-warning" (click)="editarCasa(casa.idCasa)"><i class="bi bi-box-arrow-up-right"></i> Editar "{{casa.nombreCasa}}"</button>
+          <button class="btn btn-danger" (click)="eliminarCasa(casa.idCasa)"><i class="bi bi-trash-fill"></i> Eliminar "{{casa.nombreCasa}}"</button>
+        </div>
+
+      </div>
+
     </div>
     <p-paginator
       styleClass="m-3"
