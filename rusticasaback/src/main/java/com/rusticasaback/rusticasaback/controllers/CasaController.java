@@ -208,6 +208,7 @@ public class CasaController {
     @DeleteMapping("/eliminarCasa/{id}")
     public ResponseEntity<?> eliminarCasa(@PathVariable Long id) {
         casaService.eliminarCasaPorId(id);
+        imagenService.eliminarCarpetaImagenes(id);
         return ResponseEntity.ok().build();
     }
 

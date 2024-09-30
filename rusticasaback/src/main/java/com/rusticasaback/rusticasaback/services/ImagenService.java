@@ -187,8 +187,6 @@ public class ImagenService {
         return true;
     }
     
-    
-
     public boolean eliminarImagen(Long idImagen, Long idCasa) {
         // Obtener la entidad de la casa
         CasaEntity casaEntity = casaRepository.findById(idCasa)
@@ -231,5 +229,29 @@ public class ImagenService {
             return false;
         }
     }
+
+    public boolean eliminarCarpetaImagenes(Long idCasa) {
+        // Ruta de la carpeta donde están almacenadas las imágenes
+        String rutaCarpeta = "FotosCasas/" + idCasa;
+    
+        // Crear una referencia a la carpeta
+        File carpeta = new File(rutaCarpeta);
+    
+        if (carpeta.exists() && carpeta.isDirectory()) {
+            // Eliminar todos los archivos y carpetas dentro de esta carpeta
+            File[] archivos = carpeta.listFiles();
+            if (archivos != null) {
+                for (File archivo : archivos) {
+                    archivo.delete(); // Eliminar cada archivo
+                }
+            }
+    
+            // Finalmente eliminar la carpeta
+            return carpeta.delete();
+        } else {
+            return false; // Retornar false si la carpeta no existe
+        }
+    }
+    
 
 }
