@@ -51,6 +51,16 @@ export class ListHouseOwnerComponent implements OnInit {
   }
 
   eliminarCasa(idCasa:number){
-
+    this.casaService.eliminarCasa(idCasa).subscribe({
+      next:()=>{
+      },
+      error:(err)=>{
+        console.error(err);
+      },
+      complete:()=>{
+        console.info("Casa Eliminada con éxito");
+        window.location.reload();
+      }
+    });
   }
 }

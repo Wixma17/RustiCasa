@@ -122,4 +122,9 @@ export class CasaService {
     return this.httpClient.delete<any>(`${environment.urlApiCasas}eliminar`, { params });
   }
 
+  eliminarCasa(idCasa: number): Observable<any> {
+    let url = `${environment.urlApiCasas}eliminarCasa/${idCasa}`;
+    return this.httpClient.delete<any>(url);
+  }
+
 }

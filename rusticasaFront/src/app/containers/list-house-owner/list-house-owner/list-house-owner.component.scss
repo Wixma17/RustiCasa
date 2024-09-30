@@ -22,6 +22,10 @@ h1 {
   color: black; /* Color del texto dentro del contenedor */
 }
 
+#fondo > section{
+  margin-top: auto !important;
+}
+
 .botonTexto{
   font-size: 35px;
 }

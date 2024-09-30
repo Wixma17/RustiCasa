@@ -205,11 +205,9 @@ public class CasaController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/eliminarCasa")
-    public ResponseEntity<?> eliminarCasa(@RequestParam Long idCasa) {
-
-        
-
+    @DeleteMapping("/eliminarCasa/{id}")
+    public ResponseEntity<?> eliminarCasa(@PathVariable Long id) {
+        casaService.eliminarCasaPorId(id);
         return ResponseEntity.ok().build();
     }
 

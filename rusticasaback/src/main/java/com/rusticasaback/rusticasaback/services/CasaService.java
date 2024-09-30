@@ -16,9 +16,15 @@ import com.rusticasaback.rusticasaback.Response.CasaCompletaResponse;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
 import com.rusticasaback.rusticasaback.entities.ClienteEntity;
 import com.rusticasaback.rusticasaback.entities.MunicipioEntity;
+import com.rusticasaback.rusticasaback.repositories.AlquilaRepository;
 import com.rusticasaback.rusticasaback.repositories.CasaRepository;
 import com.rusticasaback.rusticasaback.repositories.ClienteRepository;
+import com.rusticasaback.rusticasaback.repositories.ImagenRepository;
 import com.rusticasaback.rusticasaback.repositories.MunicipioRepository;
+import com.rusticasaback.rusticasaback.repositories.OpinaRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,6 +40,15 @@ public class CasaService {
 
     @Autowired
     private MunicipioRepository municipioRepository;
+
+    @Autowired
+    private AlquilaRepository alquilaRepository;
+
+    @Autowired
+    private OpinaRepository opinaRepository;
+
+    @Autowired
+    private ImagenRepository imagenRepository;
 
     public ResponseEntity<?> getListaCasas() {
         List<CasaEntity> listaCasa = casaRepository.findAll();
@@ -154,6 +169,17 @@ public class CasaService {
         CasaDTO casa = new CasaDTO(casaRepository.findById(idCasa).get());
 
         return new ResponseEntity<>(casa, HttpStatus.CREATED);
+    }
+
+    @Transactional
+    public void eliminarCasaPorId(Long idCasa) {
+        // Eliminar las relaciones dependientes primero
+        alquilaRepository.deleteByCasaId(idCasa); // Si tienes este método personalizado en AlquilaRepository
+        opinaRepository.deleteByCasaId(idCasa); // Método en OpinaRepository
+        imagenRepository.deleteByCasaId(idCasa); // Método en ImagenRepository
+
+        // Luego eliminar la casa
+        casaRepository.deleteById(idCasa);
     }
 
 }
