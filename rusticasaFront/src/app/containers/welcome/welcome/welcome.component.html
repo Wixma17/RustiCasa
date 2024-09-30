@@ -1,4 +1,5 @@
 <div class="fondo">
+  <button class="btn btn-success" (click)="cambiarIdioma()"> <i class="bi bi-flag-fill"></i> {{ 'welcome.idioma' | translate }}</button>
   <h1 class="text-center p-2">{{ 'welcome.WELCOME' | translate }}</h1>
 
   <div class="col-12 d-flex flex-column align-items-center">
@@ -18,7 +19,7 @@
       </div>
 
       <fieldset class="text-center col-12  p-1">
-        <p-calendar styleClass="col-11 text-center" placeholder="Fecha entrada - Fecha Salida" formControlName="fechas" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="2"></p-calendar>
+        <p-calendar styleClass="col-11 text-center" placeholder="{{ 'welcome.fecha' | translate }}" formControlName="fechas" selectionMode="range" dateFormat="dd/mm/yy" [showIcon]="true" [numberOfMonths]="2"></p-calendar>
         <div *ngIf="buscaFormu.get('fechas').invalid && buscaFormu.get('fechas').touched" class="d-flex justify-content-center m-3">
           <div *ngIf="buscaFormu.get('fechas').errors.required" class="bg-white col-4 text-danger rounded-4">
             <span class="fs-3">{{ 'welcome.REQUREDATE' | translate }}</span>

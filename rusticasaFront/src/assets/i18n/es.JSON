@@ -8,7 +8,9 @@
     "NUMHAB":"Numero de habitaciones",
     "REQUREDATE":"* La Fecha es obligatoria.",
     "SEARCH":"Buscar",
-    "DESCWEB":"RustiCasa es una página web dedicada al alquiler de casas rurales, ofreciendo a los usuarios una plataforma intuitiva para encontrar  y reservar alojamientos en entornos naturales. La web presenta una amplia selección de propiedades en zonas rurales, con detalles sobre cada casa, incluyendo fotos, descripciones y servicios disponibles. Los usuarios pueden buscar por ubicación, fechas y características específicas,y reservar fácilmente en línea. RustiCasa está diseñada para facilitar a quienes buscan una escapada tranquila en la naturaleza, combinando comodidad y autenticidad."
+    "DESCWEB":"RustiCasa es una página web dedicada al alquiler de casas rurales, ofreciendo a los usuarios una plataforma intuitiva para encontrar  y reservar alojamientos en entornos naturales. La web presenta una amplia selección de propiedades en zonas rurales, con detalles sobre cada casa, incluyendo fotos, descripciones y servicios disponibles. Los usuarios pueden buscar por ubicación, fechas y características específicas,y reservar fácilmente en línea. RustiCasa está diseñada para facilitar a quienes buscan una escapada tranquila en la naturaleza, combinando comodidad y autenticidad.",
+    "idioma":"Cambiar a inglés",
+    "fecha":"Fecha entrada - Fecha Salida"
   }
 
 }

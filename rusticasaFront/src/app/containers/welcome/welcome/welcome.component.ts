@@ -9,6 +9,7 @@ import { MunicipioResponse } from 'src/app/shared/model/responses/municipio-resp
 import { ProvinciaResponse } from 'src/app/shared/model/responses/provincia-response.model';
 import { FiltroService } from 'src/app/shared/services/filtro.service';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-welcome',
@@ -34,7 +35,8 @@ export class WelcomeComponent implements OnInit {
     private provinciaService: ProvinciaService,
     private municipioService: MunicipioService,
     private filtroService: FiltroService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.buscaFormu = this.formubuild.group({
       provinciasS: [0],
@@ -43,6 +45,8 @@ export class WelcomeComponent implements OnInit {
       nInquilinos: [],
       nHabitaciones: [],
     });
+
+    this.translate.setDefaultLang('es');
   }
 
   ngOnInit(): void {
@@ -141,6 +145,20 @@ export class WelcomeComponent implements OnInit {
       complete: () => {
         this.router.navigate(['/full-search']);
       },
+    });
+  }
+
+  cambiarIdioma(): void {
+    // Cambiar entre idiomas
+    const currentLang = this.translate.currentLang;
+    const newLang = currentLang === 'es' ? 'en' : 'es'; // Cambiar entre español e inglés
+
+    this.translate.use(newLang); // Cambiar el idioma
+
+    // Navegar a la misma ruta con el nuevo parámetro de idioma
+    this.router.navigate([], {
+      queryParams: { lang: newLang },
+      queryParamsHandling: 'merge' // Para mantener otros parámetros en la URL
     });
   }
 }
