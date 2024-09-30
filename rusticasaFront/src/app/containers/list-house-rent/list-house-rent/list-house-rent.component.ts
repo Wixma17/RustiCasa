@@ -164,6 +164,14 @@ export class ListHouseRentComponent implements OnInit {
         reader.onloadend = () => {
           const dataUrl = reader.result as string; // Convierte el Blob a un dataURL
 
+          // Calcular los días alquilados
+          const fechaEntrada = new Date(casa.fechaEntrada);
+          const fechaSalida = new Date(casa.fechaSalida);
+          const diasAlquilados = Math.ceil((fechaSalida.getTime() - fechaEntrada.getTime()) / (1000 * 60 * 60 * 24)); // Días totales
+
+          // Calcular el total del precio
+          const totalPrecio = diasAlquilados * casa.precioNoche;
+
           const documentDefinition = {
             content: [
               { image: dataUrl, width: 500, alignment: 'center' }, // Usa el dataURL de la imagen
@@ -196,6 +204,8 @@ export class ListHouseRentComponent implements OnInit {
                     ],
                     [{ text: 'Municipio' }, { text: casa.municipio.municipio }],
                     [{ text: 'Alquilado por:' }, { text: this.usuConn.gmail }],
+                    [{ text: 'Días Alquilados:' }, { text: `${diasAlquilados} días` }],
+                    [{ text: 'Total precio:' }, { text: `${totalPrecio}€` }],
                   ],
                 },
                 layout: {
