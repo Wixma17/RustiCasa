@@ -11,6 +11,7 @@ import { FiltroService } from 'src/app/shared/services/filtro.service';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { TranslateService } from '@ngx-translate/core';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-welcome',
@@ -75,6 +76,7 @@ export class WelcomeComponent implements OnInit {
         // Suscribirse a los cambios del control `usuarioSelect`
         this.buscaUsuFormu.get('usuarioSelect')?.valueChanges.subscribe((value) => {
           this.usuarioSeleccionado = value;
+          console.log(this.usuarioSeleccionado)
         });
       });
     }
