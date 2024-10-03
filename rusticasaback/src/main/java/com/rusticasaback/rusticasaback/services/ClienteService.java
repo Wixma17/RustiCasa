@@ -1,5 +1,7 @@
 package com.rusticasaback.rusticasaback.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,16 @@ public class ClienteService {
     public ClienteDTO recuperarDatosBack(String gmail) {
         ClienteDTO cli = new ClienteDTO(clienteRepository.findById(gmail).orElse(null));
         return cli;
+    }
+
+    public ArrayList<ClienteDTO> getListaUsuarios() {
+        List<ClienteEntity> listaUsuario = clienteRepository.findAll();
+        ArrayList<ClienteDTO> listaUsuResp = new ArrayList<ClienteDTO>();
+        for (ClienteEntity usu : listaUsuario) {
+            listaUsuResp.add(new ClienteDTO(usu));
+        }
+        
+        return listaUsuResp;
     }
 
 }

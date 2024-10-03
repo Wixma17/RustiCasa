@@ -43,6 +43,10 @@ div h2{
   text-shadow: 6px 1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5), -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
 }
 
+#filtro{
+  width: 100%;
+}
+
 @media screen and (min-width: 992px) {
   .centrar {
     display: flex;

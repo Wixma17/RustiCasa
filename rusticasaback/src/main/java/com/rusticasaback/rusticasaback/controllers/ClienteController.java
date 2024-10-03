@@ -1,5 +1,6 @@
 package com.rusticasaback.rusticasaback.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -52,6 +53,14 @@ public class ClienteController {
         ClienteDTO cliente= new ClienteDTO(cli.get());      
 
         return new ResponseEntity<>(cliente, HttpStatus.OK);       
+    }
+
+    @GetMapping("/listaCliente")
+    public ResponseEntity<?> getListaCliente() {
+        
+       ArrayList<ClienteDTO> listaUsu= clienteService.getListaUsuarios();   
+
+        return new ResponseEntity<>(listaUsu, HttpStatus.OK);       
     }
 
 }

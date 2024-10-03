@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CarouselModule } from 'primeng/carousel';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { TranslateModule } from '@ngx-translate/core';
+import {ListboxModule} from 'primeng/listbox';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     CalendarModule,
     InputNumberModule,
-    TranslateModule
+    TranslateModule,
+    ListboxModule
   ],
   providers: [CasaService],
 })

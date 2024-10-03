@@ -10,6 +10,7 @@ import { ProvinciaResponse } from 'src/app/shared/model/responses/provincia-resp
 import { FiltroService } from 'src/app/shared/services/filtro.service';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { TranslateService } from '@ngx-translate/core';
+import { ClienteService } from 'src/app/shared/services/cliente.service';
 
 @Component({
   selector: 'app-welcome',
@@ -29,6 +30,11 @@ export class WelcomeComponent implements OnInit {
   numInqui: number;
   numHabi: number;
   listaResultCasa: CasaResponse[];
+  datosUsu: any;
+  buscaUsuFormu:FormGroup;
+  listaUsuarios: SelectItem[]=[];
+  usuarioSelect: any;
+  usuarioSeleccionado: any;
 
   constructor(
     private formubuild: FormBuilder,
@@ -36,7 +42,8 @@ export class WelcomeComponent implements OnInit {
     private municipioService: MunicipioService,
     private filtroService: FiltroService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private servicioCliente: ClienteService
   ) {
     this.buscaFormu = this.formubuild.group({
       provinciasS: [0],
@@ -50,6 +57,28 @@ export class WelcomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.datosUsu = JSON.parse(sessionStorage.getItem('datosUsu'));
+
+    if (this.datosUsu.administrador) {
+      this.servicioCliente.getListaCliente().subscribe((lista) => {
+        const usuariosConDatos = lista.map((element) => {
+          return { label: element.gmail, value: element };
+        });
+
+        this.listaUsuarios = usuariosConDatos;
+
+        // Inicializa el formulario reactivo
+        this.buscaUsuFormu = this.formubuild.group({
+          usuarioSelect: []
+        });
+
+        // Suscribirse a los cambios del control `usuarioSelect`
+        this.buscaUsuFormu.get('usuarioSelect')?.valueChanges.subscribe((value) => {
+          this.usuarioSeleccionado = value;
+        });
+      });
+    }
+
     this.provinciaService.getListaProvincias().subscribe({
       next: (prov) => {
         this.listaProv = [];
@@ -158,7 +187,7 @@ export class WelcomeComponent implements OnInit {
     // Navegar a la misma ruta con el nuevo parámetro de idioma
     this.router.navigate([], {
       queryParams: { lang: newLang },
-      queryParamsHandling: 'merge' // Para mantener otros parámetros en la URL
+      queryParamsHandling: 'merge', // Para mantener otros parámetros en la URL
     });
   }
 }

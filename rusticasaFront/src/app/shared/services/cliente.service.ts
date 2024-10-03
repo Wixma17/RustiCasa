@@ -24,4 +24,9 @@ export class ClienteService {
     let url = `${environment.urlApiCliente}clienteData/${gmail}`;
     return this.httpClient.get<any>(url);
   }
+
+  getListaCliente(): Observable<any> {
+    let url = `${environment.urlApiCliente}listaCliente`;
+    return this.httpClient.get<any>(url);
+  }
 }
