@@ -84,12 +84,12 @@ CREATE OR REPLACE TABLE Alquila (
 );
 
 CREATE OR REPLACE TABLE Reporte (
-    gmail VARCHAR(150) PRIMARY KEY,
-    n_reportes INT DEFAULT 0,
+    gmail_reportado VARCHAR(150),
     fecha_reporte DATE,
     motivo VARCHAR(255),
     emisor VARCHAR(150),
-    FOREIGN KEY (gmail) REFERENCES Cliente(gmail),
+    PRIMARY KEY (gmail_reportado,emisor),
+    FOREIGN KEY (gmail_reportado) REFERENCES Cliente(gmail),
     FOREIGN KEY (emisor) REFERENCES Cliente(gmail)
 );
 

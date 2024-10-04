@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import com.rusticasaback.rusticasaback.entities.ReporteEntity;
+import com.rusticasaback.rusticasaback.entities.ReporteEntityPK;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,29 +14,28 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReporteDTO {
-    private String gmail;
-    private int nReportes;    
+    private ReporteEntityPK reporteEntityPK;   
     private Date fechaReporte;
     private String motivo;
+    
 
     public ReporteDTO(ReporteEntity reporteEntity) {
-        gmail = reporteEntity.getGmail();
-        nReportes = reporteEntity.getNReportes();
+        reporteEntityPK = reporteEntity.getReporteEntityPK();
         fechaReporte = reporteEntity.getFechaReporte();
         motivo = reporteEntity.getMotivo();
     }
 
-    public ReporteEntity createBloqueadoEntity(){
-        return new ReporteEntity(gmail, nReportes, fechaReporte, motivo,null,null);
+    public ReporteEntity createReporteEntity(){
+        return new ReporteEntity(reporteEntityPK,fechaReporte, motivo,null,null);
     }
 
-    public static ReporteEntity createBloqueadosEntity(ReporteDTO reportado){
-        return new ReporteEntity(reportado.getGmail(),reportado.getNReportes(),reportado.getFechaReporte(),reportado.getMotivo(),null,null);
+    public static ReporteEntity createReporteEntity(ReporteDTO reportado){
+        return new ReporteEntity(reportado.getReporteEntityPK(),reportado.getFechaReporte(),reportado.getMotivo(),null,null);
     }
 
     public static List<ReporteEntity> convertFromDtoList(List<ReporteDTO> listaDTO) {
         List<ReporteEntity> listaEntity = new ArrayList<>();
-        listaDTO.forEach(al -> listaEntity.add(createBloqueadosEntity(al)));
+        listaDTO.forEach(al -> listaEntity.add(createReporteEntity(al)));
         return listaEntity;
     }
 

@@ -1,8 +1,8 @@
 package com.rusticasaback.rusticasaback.entities;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -11,7 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
 
 @Entity
@@ -23,12 +22,8 @@ import java.util.Date;
 @Table(name = "reporte")
 public class ReporteEntity {
 
-    @Id
-    @Column(name = "gmail", nullable = false)
-    private String gmail;
-
-    @Column(name = "n_reportes", nullable = false, columnDefinition = "int default 0")
-    private int nReportes;
+    @EmbeddedId
+    private ReporteEntityPK reporteEntityPK;
 
     @Column(name = "fecha_reporte")
     private Date fechaReporte;
@@ -37,11 +32,11 @@ public class ReporteEntity {
     private String motivo;
 
     @ManyToOne
-    @JoinColumn(name = "emisor", referencedColumnName = "gmail")
-    private ClienteEntity emisor;
+    @JoinColumn(name = "gmail_reportado", insertable = false, updatable = false)
+    private ClienteEntity clienteReportado;
 
     @ManyToOne
-    @JoinColumn(name = "gmail", insertable = false, updatable = false)
-    private ClienteEntity clienteReportado;
+    @JoinColumn(name = "emisor", insertable = false, updatable = false)
+    private ClienteEntity emisorEntity;
 
 }
