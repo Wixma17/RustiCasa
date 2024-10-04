@@ -47,6 +47,14 @@ div h2{
   width: 100%;
 }
 
+.imagenCard{
+  width: 20% !important;
+}
+
+.fondoSec{
+  background-color: antiquewhite;
+}
+
 @media screen and (min-width: 992px) {
   .centrar {
     display: flex;

@@ -36,6 +36,7 @@ export class WelcomeComponent implements OnInit {
   listaUsuarios: SelectItem[]=[];
   usuarioSelect: any;
   usuarioSeleccionado: any;
+  ruta: SafeResourceUrl;
 
   constructor(
     private formubuild: FormBuilder,
@@ -60,7 +61,7 @@ export class WelcomeComponent implements OnInit {
   ngOnInit(): void {
     this.datosUsu = JSON.parse(sessionStorage.getItem('datosUsu'));
 
-    if (this.datosUsu.administrador) {
+    if (this.datosUsu?.administrador) {
       this.servicioCliente.getListaCliente().subscribe((lista) => {
         const usuariosConDatos = lista.map((element) => {
           return { label: element.gmail, value: element };
@@ -76,7 +77,9 @@ export class WelcomeComponent implements OnInit {
         // Suscribirse a los cambios del control `usuarioSelect`
         this.buscaUsuFormu.get('usuarioSelect')?.valueChanges.subscribe((value) => {
           this.usuarioSeleccionado = value;
-          console.log(this.usuarioSeleccionado)
+          this.servicioCliente.getRutaFotoPerfil(this.usuarioSeleccionado.gmail).subscribe((rut)=>{
+            this.ruta=rut.urlImg;
+          });
         });
       });
     }

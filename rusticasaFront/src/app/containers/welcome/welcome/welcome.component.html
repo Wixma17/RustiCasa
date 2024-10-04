@@ -1,4 +1,4 @@
-<div class="fondo" *ngIf="datosUsu && !datosUsu?.administrador">
+<div class="fondo" *ngIf="!datosUsu?.administrador">
   <button class="btn btn-success" (click)="cambiarIdioma()"> <i class="bi bi-flag-fill"></i> {{ 'welcome.idioma' | translate }}</button>
   <h1 class="text-center p-2">{{ 'welcome.WELCOME' | translate }}</h1>
 
@@ -35,7 +35,7 @@
   </div>
 </div>
 
-<div class="d-flex justify-content-center p-2" *ngIf="datosUsu && !datosUsu?.administrador">
+<div class="d-flex justify-content-center p-2" *ngIf="!datosUsu?.administrador">
   <!--<div *ngFor="let casa of listaCasaGenerica" class="w-50 m-3">
     <-- <div class="card mb-3">
       <div class="row g-0">
@@ -97,11 +97,22 @@
 </div>
 
 <!-- Mostrar detalles del usuario seleccionado -->
-<div class="container-fluid" *ngIf="usuarioSeleccionado">
+<div class="container-fluid fondoSec d-flex flex-column" *ngIf="usuarioSeleccionado" style="height: 100%;">
   <h2>Detalles del Usuario Seleccionado</h2>
-  <p><strong>Nombre:</strong> {{ usuarioSeleccionado.nombre }}</p>
-  <p><strong>Email:</strong> {{ usuarioSeleccionado.gmail }}</p>
-  <!-- Aquí puedes agregar más detalles según los datos disponibles del usuario -->
+
+  <p-card styleClass="col-10 col-lg-8 m-2 p-1">
+    <p-header>
+      <img [src]="ruta" alt="foto perfil del usuario seleccionado" class="rounded imagenCard">
+    </p-header>
+
+    <p><strong>Nombre:</strong> {{ usuarioSeleccionado.nombre }}</p>
+    <p><strong>Email:</strong> {{ usuarioSeleccionado.gmail }}</p>
+
+    <p-footer>
+        Footer content here
+    </p-footer>
+  </p-card>
+
 </div>
 
 

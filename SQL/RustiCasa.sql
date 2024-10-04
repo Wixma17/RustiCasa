@@ -85,7 +85,7 @@ CREATE OR REPLACE TABLE Alquila (
 
 CREATE OR REPLACE TABLE Reporte (
     gmail VARCHAR(150) PRIMARY KEY,
-    nReportes INT DEFAULT 0,
+    n_reportes INT DEFAULT 0,
     fecha_reporte DATE,
     motivo VARCHAR(255),
     emisor VARCHAR(150),
@@ -94,13 +94,11 @@ CREATE OR REPLACE TABLE Reporte (
 );
 
 CREATE OR REPLACE TABLE Bloqueados (
-    gmail_bloqueado VARCHAR(150),
-    emisor VARCHAR(150),
+    gmail_bloqueado VARCHAR(150),   
     fecha_bloqueo DATE DEFAULT CURRENT_DATE,
     motivo VARCHAR(255),
     PRIMARY KEY (gmail_bloqueado),
-    FOREIGN KEY (gmail_bloqueado) REFERENCES Cliente(gmail),
-    FOREIGN KEY (emisor) REFERENCES Cliente(gmail)
+    FOREIGN KEY (gmail_bloqueado) REFERENCES Cliente(gmail)    
 );
 
 INSERT INTO Cliente (gmail, passwd, nickname, nombre, apellido, administrador, fecha_nacimiento,imagen)

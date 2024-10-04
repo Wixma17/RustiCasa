@@ -12,6 +12,7 @@ import { CarouselModule } from 'primeng/carousel';
 import {InputNumberModule} from 'primeng/inputnumber';
 import { TranslateModule } from '@ngx-translate/core';
 import {ListboxModule} from 'primeng/listbox';
+import {CardModule} from 'primeng/card';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {ListboxModule} from 'primeng/listbox';
     CalendarModule,
     InputNumberModule,
     TranslateModule,
-    ListboxModule
+    ListboxModule,
+    CardModule
   ],
   providers: [CasaService],
 })
