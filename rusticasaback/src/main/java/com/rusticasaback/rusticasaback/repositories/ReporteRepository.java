@@ -14,4 +14,8 @@ public interface ReporteRepository extends JpaRepository<ReporteEntity, ReporteE
     
     @Query("SELECT COUNT(r) FROM ReporteEntity r WHERE r.clienteReportado.gmail = :gmail")
     int countReportesByGmail(@Param("gmail") String gmail);
+
+    void deleteByReporteEntityPK_GmailReportado(String gmailReportado);
+
+    ReporteEntity findByReporteEntityPK_GmailReportado(String gmailReportado);
 }
