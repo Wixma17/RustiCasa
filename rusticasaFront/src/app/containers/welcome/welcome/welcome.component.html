@@ -77,7 +77,7 @@
 
 <!-- VERSION ADMIN -->
 
-<div class="fondo" *ngIf="datosUsu && datosUsu?.administrador">
+<div class="fondo" *ngIf="datosUsu && datosUsu?.administrador" style="height: 80vh;">
   <button class="btn btn-success" (click)="cambiarIdioma()"> <i class="bi bi-flag-fill"></i> {{ 'welcome.idioma' | translate }}</button>
   <h1 class="text-center p-2">{{ 'welcome.welcomeAdmin' | translate }}</h1>
 
@@ -97,27 +97,35 @@
 </div>
 
 <!-- Mostrar detalles del usuario seleccionado -->
-<div class="container-fluid fondoSec d-flex flex-column align-items-center" *ngIf="usuarioSeleccionado" style="height: 100%;">
+<div class="container-fluid fondoSec d-flex flex-column" *ngIf="usuarioSeleccionado" style="height: 100%;">
   <h2>Detalles del Usuario Seleccionado</h2>
 
-  <p-card styleClass="col-11 col-lg-8 m-2 p-1">
+  <p-card styleClass="col-12 col-lg-8 mx-auto mb-3">
     <p-header>
-      <img [src]="ruta" alt="foto perfil del usuario seleccionado" class="rounded imagenCard">
+      <div class="text-center d-flex flex-column align-items-center">
+        <img [src]="ruta" alt="foto perfil del usuario seleccionado" class="rounded imagenCard" style="margin: 15px;">
+      </div>
     </p-header>
 
-    <p><strong>Nombre:</strong> {{ usuarioSeleccionado.nombre }}</p>
-    <p><strong>Email:</strong> {{ usuarioSeleccionado.gmail }}</p>
-    <p><strong>Fecha Nacimiento:</strong> {{ formatDateToCET(usuarioSeleccionado.fechaNacimiento) }}</p>
-    <p><strong>Nickname:</strong> {{ usuarioSeleccionado.nickname }}</p>
-    <p><strong>Nombre y apellidos:</strong> {{ usuarioSeleccionado.nombre }} {{ usuarioSeleccionado.apellido }}</p>
+    <div class="text-center py-3">
+      <p><strong>Nombre:</strong> {{ usuarioSeleccionado.nombre }}</p>
+      <p><strong>Email:</strong> {{ usuarioSeleccionado.gmail }}</p>
+      <p><strong>Fecha Nacimiento:</strong> {{ formatDateToCET(usuarioSeleccionado.fechaNacimiento) }}</p>
+      <p><strong>Nickname:</strong> {{ usuarioSeleccionado.nickname }}</p>
+      <p><strong>Nombre y apellidos:</strong> {{ usuarioSeleccionado.nombre }} {{ usuarioSeleccionado.apellido }}</p>
+    </div>
 
-    <p-footer>
-      <div class="d-flex justify-content-around">
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blockModal">
+    <p-footer style="width: 100%;">
+      <div class="d-flex justify-content-between col-12 py-2">
+        <button type="button" class="btn btn-danger col-3" data-bs-toggle="modal" data-bs-target="#blockModal">
           <i class="bi bi-x-circle-fill"></i> Bloquear usuario
         </button>
-        <button class="btn btn-warning"> <i class="bi bi-wrench"></i> Modificar usuario</button>
-        <button class="btn btn-success" (click)="desbloquearUsu(usuarioSeleccionado)"> <i class="bi bi-check-circle-fill"></i> Desbloquear usuario</button>
+        <button class="btn btn-warning col-3">
+          <i class="bi bi-wrench"></i> Modificar usuario
+        </button>
+        <button class="btn btn-success col-3" pButton pRipple [disabled]="!isbloqueado" (click)="desbloquearUsu(usuarioSeleccionado)">
+          <i class="bi bi-check-circle-fill"></i> Desbloquear usuario
+        </button>
       </div>
     </p-footer>
   </p-card>
@@ -137,8 +145,6 @@
           <textarea [rows]="5" [cols]="30" pInputTextarea formControlName="motivo"></textarea>
           <button class="btn btn-danger m-3" (click)="bloquearUsu(usuarioSeleccionado)">  <i class="bi bi-exclamation-triangle-fill"></i> Confirmar Bloqueo</button>
         </form>
-
-        <p *ngIf="men" class="text-danger">{{this.men}}</p>
 
       </div>
     </div>

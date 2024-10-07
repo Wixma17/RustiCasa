@@ -46,4 +46,9 @@ public class BloqueadosController {
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/existeBloqueado/{gmailBloqueado}")
+    public boolean verificarBloqueo(@PathVariable String gmailBloqueado) {
+        return bloqueadosService.existeBloqueado(gmailBloqueado);
+    }
 }

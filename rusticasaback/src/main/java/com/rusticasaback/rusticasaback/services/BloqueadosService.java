@@ -39,4 +39,9 @@ public class BloqueadosService {
         bloqueadosRepository.deleteByGmailBloqueado(gmailBloqueado);
     }
 
+    @Transactional
+    public boolean existeBloqueado(String gmailReportado) {
+        return bloqueadosRepository.existsByGmailBloqueado(gmailReportado);
+    }
+
 }

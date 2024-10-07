@@ -19,4 +19,9 @@ export class BloqueadoService {
     let url = `${environment.urlApiBloqueo}eliminar/${email}`;
     return this.httpClient.delete<any>(url);
   }
+
+  consultaBloqueo(email:string){
+    let url = `${environment.urlApiBloqueo}existeBloqueado/${email}`;
+    return this.httpClient.get<any>(url);
+  }
 }

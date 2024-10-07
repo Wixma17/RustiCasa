@@ -14,6 +14,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import {ListboxModule} from 'primeng/listbox';
 import {CardModule} from 'primeng/card';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {ToastModule} from 'primeng/toast';
+import { MessagesModule } from 'primeng/messages';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -32,8 +35,10 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     TranslateModule,
     ListboxModule,
     CardModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ToastModule,
+    MessagesModule
   ],
-  providers: [CasaService],
+  providers: [CasaService,MessageService],
 })
 export class WelcomeModule {}

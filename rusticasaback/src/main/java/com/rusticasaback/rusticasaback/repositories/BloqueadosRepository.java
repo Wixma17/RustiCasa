@@ -8,5 +8,7 @@ public interface BloqueadosRepository extends JpaRepository<BloqueadosEntity, St
     
     // Método para eliminar un registro de bloqueo
     void deleteByGmailBloqueado(String gmailBloqueado);
+
+    boolean existsByGmailBloqueado(String gmailReportado);
     
 }

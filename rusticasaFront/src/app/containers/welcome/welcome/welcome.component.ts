@@ -3,7 +3,7 @@ import { MunicipioService } from './../../../shared/services/municipio.service';
 import { ProvinciaService } from './../../../shared/services/provincia.service';
 import { Component, OnInit, Sanitizer } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SelectItem } from 'primeng/api';
+import { MessageService, PrimeNGConfig, SelectItem } from 'primeng/api';
 import { RequestCasaSimple } from 'src/app/shared/model/requests/request-casa-simple.model';
 import { MunicipioResponse } from 'src/app/shared/model/responses/municipio-response.model';
 import { ProvinciaResponse } from 'src/app/shared/model/responses/provincia-response.model';
@@ -34,13 +34,14 @@ export class WelcomeComponent implements OnInit {
   numHabi: number;
   listaResultCasa: CasaResponse[];
   datosUsu: any;
-  buscaUsuFormu:FormGroup;
-  listaUsuarios: SelectItem[]=[];
+  buscaUsuFormu: FormGroup;
+  listaUsuarios: SelectItem[] = [];
   usuarioSelect: any;
   usuarioSeleccionado: any;
   ruta: SafeResourceUrl;
   blockForm: FormGroup;
-  men:any
+  men: any;
+  isbloqueado: boolean = false;
 
   constructor(
     private formubuild: FormBuilder,
@@ -50,7 +51,9 @@ export class WelcomeComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private servicioCliente: ClienteService,
-    private bloqueoService:BloqueadoService
+    private bloqueoService: BloqueadoService,
+    private messageService: MessageService,
+    private primengConfig: PrimeNGConfig
   ) {
     this.buscaFormu = this.formubuild.group({
       provinciasS: [0],
@@ -61,7 +64,11 @@ export class WelcomeComponent implements OnInit {
     });
 
     this.blockForm = this.formubuild.group({
-      motivo:[]
+      motivo: [],
+    });
+
+    this.buscaUsuFormu = this.formubuild.group({
+      usuarioSelect: [null],
     });
 
     this.translate.setDefaultLang('es');
@@ -70,37 +77,48 @@ export class WelcomeComponent implements OnInit {
   ngOnInit(): void {
     this.datosUsu = JSON.parse(sessionStorage.getItem('datosUsu'));
 
+    this.primengConfig.ripple = true;
+
     if (this.datosUsu?.administrador) {
       this.servicioCliente.getListaCliente().subscribe((lista) => {
         // Filtrar y mapear correctamente los usuarios
         const usuariosConDatos = lista
-          .filter(element => element.gmail !== "admin@admin.com") // Filtrar usuarios válidos
+          .filter((element) => element.gmail !== 'admin@admin.com') // Filtrar usuarios válidos
           .map((element) => {
             return { label: element.gmail, value: element };
+          },
+          (error) => {
+            console.error('Error al obtener la lista de clientes:', error);
           });
 
         this.listaUsuarios = usuariosConDatos;
 
-        // Inicializa el formulario reactivo
-        this.buscaUsuFormu = this.formubuild.group({
-          usuarioSelect: [null] // Asegurarse de que el valor inicial esté definido
-        });
+
 
         // Suscribirse a los cambios del control `usuarioSelect`
-        this.buscaUsuFormu.get('usuarioSelect')?.valueChanges.subscribe((value) => {
-          if (value) { // Verificar que value no sea undefined
-            this.usuarioSeleccionado = value;
+        this.buscaUsuFormu
+          .get('usuarioSelect')
+          ?.valueChanges.subscribe((value) => {
+            if (value) {
+              // Verificar que value no sea undefined
+              this.usuarioSeleccionado = value;
 
-            console.log(this.usuarioSeleccionado)
+              console.log(this.usuarioSeleccionado);
 
-            // Evitar que la propiedad `gmail` sea undefined
-            if (this.usuarioSeleccionado && this.usuarioSeleccionado.gmail) {
-              this.servicioCliente.getRutaFotoPerfil(this.usuarioSeleccionado.gmail).subscribe((rut) => {
-                this.ruta = rut.urlImg;
+              this.bloqueoService.consultaBloqueo(this.usuarioSeleccionado.gmail).subscribe((bloq)=>{
+                this.isbloqueado=bloq;
               });
+
+              // Evitar que la propiedad `gmail` sea undefined
+              if (this.usuarioSeleccionado && this.usuarioSeleccionado.gmail) {
+                this.servicioCliente
+                  .getRutaFotoPerfil(this.usuarioSeleccionado.gmail)
+                  .subscribe((rut) => {
+                    this.ruta = rut.urlImg;
+                  });
+              }
             }
-          }
-        });
+          });
       });
     }
 
@@ -133,8 +151,6 @@ export class WelcomeComponent implements OnInit {
     this.listaMunicipio = [];
     this.listadoPueblos = [];
     this.idProv = this.buscaFormu.value.provinciasS;
-
-    console.info(this.listaMunicipio);
 
     this.municipioService.getListaMunicipio(this.idProv).subscribe({
       next: (mun) => {
@@ -285,23 +301,42 @@ export class WelcomeComponent implements OnInit {
     return ''; // Retorna una cadena vacía si no se puede convertir
   }
 
-  bloquearUsu(usu:any){
-    this.men="";
+  bloquearUsu(usu: any) {
+    this.men = '';
 
-    let request:RequestBloqueado={
+    let request: RequestBloqueado = {
       gmailBloqueado: usu.gmail,
-      motivo: this.blockForm.value.motivo
-    }
-    this.bloqueoService.crearBloqueo(request).subscribe((info)=>{
-      this.men="Usuario Bloqueado con éxito";
+      motivo: this.blockForm.value.motivo,
+    };
+
+    this.bloqueoService.crearBloqueo(request).subscribe((info) => {
+      this.men = 'Usuario Bloqueado con éxito';
+      this.isbloqueado=true;
     });
   }
 
-  desbloquearUsu(usu:any){
-    this.men="";
-
-    this.bloqueoService.elimnarBloqueo(usu.gmail).subscribe(()=>{
-      this.men="Usuario desbloqueado con éxito";
-    });
+  desbloquearUsu(usu: any) {
+    this.bloqueoService.elimnarBloqueo(usu.gmail).subscribe(
+      () => {
+        this.isbloqueado = false;
+        this.men = 'Usuario desbloqueado con éxito';
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Operación con éxito',
+          detail: this.men
+        });
+      },
+      (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error al desbloquear',
+          detail: 'No se pudo desbloquear al usuario'
+        });
+        console.error(error)
+      }
+    );
   }
+
+
+
 }
