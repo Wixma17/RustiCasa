@@ -312,21 +312,19 @@ export class WelcomeComponent implements OnInit {
 
     this.bloqueoService.crearBloqueo(request).subscribe((info) => {
       this.men = 'Usuario Bloqueado con éxito';
-      this.isbloqueado=true;
+      this.isbloqueado = true;
       this.messageService.add({
         severity: 'info',
         summary: 'Operación con éxito',
         detail: this.men
       });
-    });
 
-    const modalElement = document.getElementById('blockModal');
-    if (modalElement) {
-      const modal = Modal.getInstance(modalElement);
-      if (modal) {
-        modal.hide();
+      // Simula un clic en el botón de cerrar del modal
+      const closeButton = document.querySelector('#blockModal .btn-close') as HTMLElement;
+      if (closeButton) {
+        closeButton.click();
       }
-    }
+    });
   }
 
   desbloquearUsu(usu: any) {

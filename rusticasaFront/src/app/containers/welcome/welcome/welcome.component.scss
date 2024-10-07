@@ -61,7 +61,7 @@ div h2{
 
 :host ::ng-deep .p-toast {
   position: fixed;
-  top: 90px;
+  top: 130px;
   right: 30px;
   z-index: 1000;
 }
@@ -80,5 +80,12 @@ div h2{
 
   .imagenCard{
     width:60% !important;
+  }
+
+  :host ::ng-deep .p-toast {
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    z-index: 1000;
   }
 }
