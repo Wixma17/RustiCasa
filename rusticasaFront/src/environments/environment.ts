@@ -9,7 +9,9 @@ export const environment = {
   urlApiFiltro:`http://localhost:8082/api/filtro/`,
   urlApiAuth:`http://localhost:8082/api/auth/`,
   urlApiEmail:`http://localhost:8082/api/email/`,
-  urlApiCliente:`http://localhost:8082/api/cliente/`
+  urlApiCliente:`http://localhost:8082/api/cliente/`,
+  urlApiReporte:`http://localhost:8082/api/reporte/`,
+  urlApiBloqueo:`http://localhost:8082/api/bloqueados/`
 };
 
 /*

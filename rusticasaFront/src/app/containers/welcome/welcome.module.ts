@@ -13,6 +13,7 @@ import {InputNumberModule} from 'primeng/inputnumber';
 import { TranslateModule } from '@ngx-translate/core';
 import {ListboxModule} from 'primeng/listbox';
 import {CardModule} from 'primeng/card';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {CardModule} from 'primeng/card';
     InputNumberModule,
     TranslateModule,
     ListboxModule,
-    CardModule
+    CardModule,
+    InputTextareaModule
   ],
   providers: [CasaService],
 })

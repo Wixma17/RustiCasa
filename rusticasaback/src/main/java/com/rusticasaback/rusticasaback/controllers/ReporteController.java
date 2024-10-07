@@ -24,8 +24,8 @@ public class ReporteController {
     }
 
     // Endpoint para contar reportes por Gmail
-    @GetMapping("/count")
-    public ResponseEntity<?> contarReportesPorGmail(@RequestParam String gmail) {
+    @GetMapping("/count/{gmail}")
+    public ResponseEntity<?> contarReportesPorGmail(@PathVariable String gmail) {
         int conteo = reporteService.contarReportesPorGmail(gmail);
         return new ResponseEntity<>(conteo, HttpStatus.OK);
     }

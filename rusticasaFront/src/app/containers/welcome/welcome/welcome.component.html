@@ -97,22 +97,52 @@
 </div>
 
 <!-- Mostrar detalles del usuario seleccionado -->
-<div class="container-fluid fondoSec d-flex flex-column" *ngIf="usuarioSeleccionado" style="height: 100%;">
+<div class="container-fluid fondoSec d-flex flex-column align-items-center" *ngIf="usuarioSeleccionado" style="height: 100%;">
   <h2>Detalles del Usuario Seleccionado</h2>
 
-  <p-card styleClass="col-10 col-lg-8 m-2 p-1">
+  <p-card styleClass="col-11 col-lg-8 m-2 p-1">
     <p-header>
       <img [src]="ruta" alt="foto perfil del usuario seleccionado" class="rounded imagenCard">
     </p-header>
 
     <p><strong>Nombre:</strong> {{ usuarioSeleccionado.nombre }}</p>
     <p><strong>Email:</strong> {{ usuarioSeleccionado.gmail }}</p>
+    <p><strong>Fecha Nacimiento:</strong> {{ formatDateToCET(usuarioSeleccionado.fechaNacimiento) }}</p>
+    <p><strong>Nickname:</strong> {{ usuarioSeleccionado.nickname }}</p>
+    <p><strong>Nombre y apellidos:</strong> {{ usuarioSeleccionado.nombre }} {{ usuarioSeleccionado.apellido }}</p>
 
     <p-footer>
-        Footer content here
+      <div class="d-flex justify-content-around">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blockModal">
+          <i class="bi bi-x-circle-fill"></i> Bloquear usuario
+        </button>
+        <button class="btn btn-warning"> <i class="bi bi-wrench"></i> Modificar usuario</button>
+        <button class="btn btn-success" (click)="desbloquearUsu(usuarioSeleccionado)"> <i class="bi bi-check-circle-fill"></i> Desbloquear usuario</button>
+      </div>
     </p-footer>
   </p-card>
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="blockModal" tabindex="-1" aria-labelledby="blockModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="blockModalLabel">Indica el motivo del bloqueo</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="blockForm" class="d-flex flex-column">
+          <textarea [rows]="5" [cols]="30" pInputTextarea formControlName="motivo"></textarea>
+          <button class="btn btn-danger m-3" (click)="bloquearUsu(usuarioSeleccionado)">  <i class="bi bi-exclamation-triangle-fill"></i> Confirmar Bloqueo</button>
+        </form>
+
+        <p *ngIf="men" class="text-danger">{{this.men}}</p>
+
+      </div>
+    </div>
+  </div>
 </div>
 
 

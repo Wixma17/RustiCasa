@@ -33,8 +33,8 @@ public class BloqueadosController {
     }
 
     // Endpoint para eliminar un bloqueo
-    @DeleteMapping("/eliminar")
-    public ResponseEntity<?> eliminarBloqueo(@RequestParam String gmailBloqueado) {
+    @DeleteMapping("/eliminar/{gmailBloqueado}")
+    public ResponseEntity<?> eliminarBloqueo(@PathVariable String gmailBloqueado) {
         try {
             bloqueadosService.eliminarBloqueo(gmailBloqueado);
             Map<String, String> response = new HashMap<>();

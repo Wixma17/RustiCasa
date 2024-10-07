@@ -12,6 +12,8 @@ import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model
 import { TranslateService } from '@ngx-translate/core';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { BloqueadoService } from 'src/app/shared/services/bloqueado.service';
+import { RequestBloqueado } from 'src/app/shared/model/requests/request-bloqueado.model';
 
 @Component({
   selector: 'app-welcome',
@@ -37,6 +39,8 @@ export class WelcomeComponent implements OnInit {
   usuarioSelect: any;
   usuarioSeleccionado: any;
   ruta: SafeResourceUrl;
+  blockForm: FormGroup;
+  men:any
 
   constructor(
     private formubuild: FormBuilder,
@@ -45,7 +49,8 @@ export class WelcomeComponent implements OnInit {
     private filtroService: FiltroService,
     private router: Router,
     private translate: TranslateService,
-    private servicioCliente: ClienteService
+    private servicioCliente: ClienteService,
+    private bloqueoService:BloqueadoService
   ) {
     this.buscaFormu = this.formubuild.group({
       provinciasS: [0],
@@ -53,6 +58,10 @@ export class WelcomeComponent implements OnInit {
       pueblos: [0],
       nInquilinos: [],
       nHabitaciones: [],
+    });
+
+    this.blockForm = this.formubuild.group({
+      motivo:[]
     });
 
     this.translate.setDefaultLang('es');
@@ -63,23 +72,34 @@ export class WelcomeComponent implements OnInit {
 
     if (this.datosUsu?.administrador) {
       this.servicioCliente.getListaCliente().subscribe((lista) => {
-        const usuariosConDatos = lista.map((element) => {
-          return { label: element.gmail, value: element };
-        });
+        // Filtrar y mapear correctamente los usuarios
+        const usuariosConDatos = lista
+          .filter(element => element.gmail !== "admin@admin.com") // Filtrar usuarios válidos
+          .map((element) => {
+            return { label: element.gmail, value: element };
+          });
 
         this.listaUsuarios = usuariosConDatos;
 
         // Inicializa el formulario reactivo
         this.buscaUsuFormu = this.formubuild.group({
-          usuarioSelect: []
+          usuarioSelect: [null] // Asegurarse de que el valor inicial esté definido
         });
 
         // Suscribirse a los cambios del control `usuarioSelect`
         this.buscaUsuFormu.get('usuarioSelect')?.valueChanges.subscribe((value) => {
-          this.usuarioSeleccionado = value;
-          this.servicioCliente.getRutaFotoPerfil(this.usuarioSeleccionado.gmail).subscribe((rut)=>{
-            this.ruta=rut.urlImg;
-          });
+          if (value) { // Verificar que value no sea undefined
+            this.usuarioSeleccionado = value;
+
+            console.log(this.usuarioSeleccionado)
+
+            // Evitar que la propiedad `gmail` sea undefined
+            if (this.usuarioSeleccionado && this.usuarioSeleccionado.gmail) {
+              this.servicioCliente.getRutaFotoPerfil(this.usuarioSeleccionado.gmail).subscribe((rut) => {
+                this.ruta = rut.urlImg;
+              });
+            }
+          }
         });
       });
     }
@@ -193,6 +213,95 @@ export class WelcomeComponent implements OnInit {
     this.router.navigate([], {
       queryParams: { lang: newLang },
       queryParamsHandling: 'merge', // Para mantener otros parámetros en la URL
+    });
+  }
+
+  //----------------------------------------------------------------------
+  convertStringToDateCET(dateInput: any): Date | null {
+    // Si el valor ya es un objeto Date, lo retornamos ajustado a CET
+    if (dateInput instanceof Date) {
+      return this.adjustToCET(dateInput);
+    }
+
+    // Si el valor es una cadena en formato yyyy-MM-dd
+    if (
+      typeof dateInput === 'string' &&
+      /^\d{4}-\d{2}-\d{2}$/.test(dateInput)
+    ) {
+      const [year, month, day] = dateInput.split('-').map(Number);
+
+      // Crear una fecha en UTC
+      const utcDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
+
+      // Ajustar la fecha a CET y devolverla como Date
+      return this.adjustToCET(utcDate);
+    }
+
+    // Si el valor es una cadena en formato ISO (como '2024-12-26T23:00:00.000+00:00')
+    if (typeof dateInput === 'string' && !isNaN(Date.parse(dateInput))) {
+      // Convertir la cadena ISO a un objeto Date
+      const isoDate = new Date(dateInput);
+
+      // Ajustar la fecha a CET y devolverla como Date
+      return this.adjustToCET(isoDate);
+    }
+
+    console.error(
+      'El valor proporcionado no es una cadena en formato válido ni un objeto Date:',
+      dateInput
+    );
+    return null;
+  }
+
+  adjustToCET(utcDate: Date): Date {
+    // CET es UTC + 1, ajustamos la fecha
+    const cetOffset = 1 * 60; // 1 hora (en minutos)
+
+    // Ajuste para horario de verano (CEST es UTC+2)
+    const isDST = this.isDaylightSavingTime(utcDate);
+    const offset = isDST ? 2 * 60 : cetOffset; // 2 horas en verano (CEST)
+
+    // Ajustamos la fecha añadiendo el offset de CET/CEST
+    const adjustedDate = new Date(utcDate.getTime() + offset * 60000); // Convertimos minutos a milisegundos
+
+    return adjustedDate;
+  }
+
+  isDaylightSavingTime(date: Date): boolean {
+    // Verifica si la fecha está dentro del horario de verano (CEST)
+    const jan = new Date(date.getFullYear(), 0, 1).getTimezoneOffset();
+    const jul = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
+    return Math.max(jan, jul) !== date.getTimezoneOffset();
+  }
+
+  //--------------------------------------------------------------------------
+
+  formatDateToCET(dateInput: string): string {
+    const date = this.convertStringToDateCET(dateInput); // Convierte a una fecha ajustada a CET
+    if (date) {
+      // Formatear la fecha a 'yyyy-MM-dd'
+      return date.toISOString().slice(0, 10);
+    }
+    return ''; // Retorna una cadena vacía si no se puede convertir
+  }
+
+  bloquearUsu(usu:any){
+    this.men="";
+
+    let request:RequestBloqueado={
+      gmailBloqueado: usu.gmail,
+      motivo: this.blockForm.value.motivo
+    }
+    this.bloqueoService.crearBloqueo(request).subscribe((info)=>{
+      this.men="Usuario Bloqueado con éxito";
+    });
+  }
+
+  desbloquearUsu(usu:any){
+    this.men="";
+
+    this.bloqueoService.elimnarBloqueo(usu.gmail).subscribe(()=>{
+      this.men="Usuario desbloqueado con éxito";
     });
   }
 }
