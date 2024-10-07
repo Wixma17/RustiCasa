@@ -14,6 +14,7 @@ import { ClienteService } from 'src/app/shared/services/cliente.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { BloqueadoService } from 'src/app/shared/services/bloqueado.service';
 import { RequestBloqueado } from 'src/app/shared/model/requests/request-bloqueado.model';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-welcome',
@@ -312,7 +313,20 @@ export class WelcomeComponent implements OnInit {
     this.bloqueoService.crearBloqueo(request).subscribe((info) => {
       this.men = 'Usuario Bloqueado con éxito';
       this.isbloqueado=true;
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Operación con éxito',
+        detail: this.men
+      });
     });
+
+    const modalElement = document.getElementById('blockModal');
+    if (modalElement) {
+      const modal = Modal.getInstance(modalElement);
+      if (modal) {
+        modal.hide();
+      }
+    }
   }
 
   desbloquearUsu(usu: any) {

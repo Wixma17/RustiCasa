@@ -117,20 +117,22 @@
 
     <p-footer style="width: 100%;">
       <div class="d-flex justify-content-between col-12 py-2">
-        <button type="button" class="btn btn-danger col-3" data-bs-toggle="modal" data-bs-target="#blockModal">
+        <button type="button" class="btn btn-danger col-3" data-bs-toggle="modal" data-bs-target="#blockModal" [disabled]="isbloqueado">
           <i class="bi bi-x-circle-fill"></i> Bloquear usuario
         </button>
         <button class="btn btn-warning col-3">
           <i class="bi bi-wrench"></i> Modificar usuario
         </button>
-        <button class="btn btn-success col-3" pButton pRipple [disabled]="!isbloqueado" (click)="desbloquearUsu(usuarioSeleccionado)">
-          <i class="bi bi-check-circle-fill"></i> Desbloquear usuario
+        <button class="btn btn-success col-3" pButton pRipple [disabled]="!isbloqueado" (click)="desbloquearUsu(usuarioSeleccionado)" label="Desbloquear usuario">
+          <i class="bi bi-check-circle-fill"></i>
         </button>
       </div>
     </p-footer>
   </p-card>
 
 </div>
+
+<p-toast></p-toast>
 
 <!-- Modal -->
 <div class="modal fade" id="blockModal" tabindex="-1" aria-labelledby="blockModalLabel" aria-hidden="true">
@@ -143,7 +145,7 @@
       <div class="modal-body">
         <form [formGroup]="blockForm" class="d-flex flex-column">
           <textarea [rows]="5" [cols]="30" pInputTextarea formControlName="motivo"></textarea>
-          <button class="btn btn-danger m-3" (click)="bloquearUsu(usuarioSeleccionado)">  <i class="bi bi-exclamation-triangle-fill"></i> Confirmar Bloqueo</button>
+          <button class="p-button-danger m-3" pButton pRipple (click)="bloquearUsu(usuarioSeleccionado)" label="Confirmar Bloqueo">  <i class="bi bi-exclamation-triangle-fill"></i> </button>
         </form>
 
       </div>

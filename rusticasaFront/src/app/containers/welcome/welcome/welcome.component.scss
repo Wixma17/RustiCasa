@@ -59,6 +59,13 @@ div h2{
   display: flex;
 }
 
+:host ::ng-deep .p-toast {
+  position: fixed;
+  top: 90px;
+  right: 30px;
+  z-index: 1000;
+}
+
 @media screen and (min-width: 992px) {
 
   div h2{
