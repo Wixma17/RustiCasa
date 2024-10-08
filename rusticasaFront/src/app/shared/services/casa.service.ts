@@ -127,4 +127,9 @@ export class CasaService {
     return this.httpClient.delete<any>(url);
   }
 
+  getCasasPorMes(){
+    let url = `${environment.urlApiCasas}por-mes`;
+    return this.httpClient.get<any>(url);
+  }
+
 }

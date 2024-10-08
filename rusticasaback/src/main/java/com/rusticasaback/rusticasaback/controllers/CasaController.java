@@ -212,4 +212,11 @@ public class CasaController {
         return ResponseEntity.ok().build();
     }
 
+
+    @GetMapping("/por-mes")
+    public ResponseEntity<?> obtenerAlquilerPorMes() {
+        List<Object[]> alquileresPorMes = alquilaService.obtenerAlquilerPorMes();
+        return ResponseEntity.ok(alquileresPorMes);
+    }
+
 }

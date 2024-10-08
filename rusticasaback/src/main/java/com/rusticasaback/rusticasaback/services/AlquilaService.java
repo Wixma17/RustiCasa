@@ -98,4 +98,8 @@ public class AlquilaService {
         alquilaRepository.deleteById(pk);
     }
 
+    public List<Object[]> obtenerAlquilerPorMes() {
+        return alquilaRepository.findAlquilerPorMes();
+    }
+
 }

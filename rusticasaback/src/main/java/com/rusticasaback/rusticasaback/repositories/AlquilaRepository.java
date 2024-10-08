@@ -20,11 +20,19 @@ public interface AlquilaRepository extends JpaRepository<AlquilaEntity, AlquilaE
     Page<Object[]> findCasasByGmail(@Param("gmail") String gmail, Pageable pageable);
 
     @Query("SELECT a.casa.idCasa FROM AlquilaEntity a WHERE a.fechaSalida >= :fechaEntrada AND a.alquilaEntityPK.fechaEntrada <= :fechaSalida")
-    List<Long> findCasaIdsByFechas(@Param("fechaEntrada") Date fechaEntrada, @Param("fechaSalida") Date fechaSalida);   
+    List<Long> findCasaIdsByFechas(@Param("fechaEntrada") Date fechaEntrada, @Param("fechaSalida") Date fechaSalida);
 
     @Transactional
     @Modifying
     @Query("DELETE FROM AlquilaEntity a WHERE a.casa.idCasa = :idCasa")
     void deleteByCasaId(Long idCasa);
+
+    @Query("SELECT YEAR(a.alquilaEntityPK.fechaEntrada) AS anio, " +
+            "MONTH(a.alquilaEntityPK.fechaEntrada) AS mes, " +
+            "COUNT(a) AS totalAlquileres " +
+            "FROM AlquilaEntity a " +
+            "GROUP BY YEAR(a.alquilaEntityPK.fechaEntrada), MONTH(a.alquilaEntityPK.fechaEntrada) " +
+            "ORDER BY anio, mes")
+    List<Object[]> findAlquilerPorMes();
 
 }
