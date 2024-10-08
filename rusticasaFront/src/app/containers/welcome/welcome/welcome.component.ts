@@ -15,6 +15,7 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 import { BloqueadoService } from 'src/app/shared/services/bloqueado.service';
 import { RequestBloqueado } from 'src/app/shared/model/requests/request-bloqueado.model';
 import { Modal } from 'bootstrap';
+import { ReporteService } from 'src/app/shared/services/reporte.service';
 
 @Component({
   selector: 'app-welcome',
@@ -43,6 +44,7 @@ export class WelcomeComponent implements OnInit {
   blockForm: FormGroup;
   men: any;
   isbloqueado: boolean = false;
+  numReportes:number;
 
   constructor(
     private formubuild: FormBuilder,
@@ -54,7 +56,8 @@ export class WelcomeComponent implements OnInit {
     private servicioCliente: ClienteService,
     private bloqueoService: BloqueadoService,
     private messageService: MessageService,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private reporteService:ReporteService
   ) {
     this.buscaFormu = this.formubuild.group({
       provinciasS: [0],
@@ -108,6 +111,10 @@ export class WelcomeComponent implements OnInit {
 
               this.bloqueoService.consultaBloqueo(this.usuarioSeleccionado.gmail).subscribe((bloq)=>{
                 this.isbloqueado=bloq;
+              });
+
+              this.reporteService.numeroReportes(this.usuarioSeleccionado.gmail).subscribe((nRepor)=>{
+                this.numReportes=nRepor;
               });
 
               // Evitar que la propiedad `gmail` sea undefined

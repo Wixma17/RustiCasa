@@ -12,7 +12,11 @@
     "idioma":"Cambiar a inglés",
     "fecha":"Fecha entrada - Fecha Salida",
     "welcomeAdmin":"Bienvenido al panel administrador",
-    "adminUsuForm":"Administrar usuarios"
+    "adminUsuForm":"Administrar usuarios",
+    "detallesUsu":"Detalles del usuario",
+    "nombreUsu":"Nombre y apellidos",
+    "emailUsu":"Email",
+    "fechaUsu":"Fecha Nacimiento"
   }
 
 }

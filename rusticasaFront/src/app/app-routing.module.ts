@@ -12,6 +12,7 @@ import { UpdateHouseComponent } from './containers/update-house/update-house/upd
 import { OpinionListHouseComponent } from './containers/opinion-list-house/opinion-list-house/opinion-list-house.component';
 import { RentHouseComponent } from './containers/rent-house/rent-house/rent-house.component';
 import { ListHouseRentComponent } from './containers/list-house-rent/list-house-rent/list-house-rent.component';
+import { StatisticsComponent } from './containers/statistics/statistics/statistics.component';
 
 
 const routes: Routes = [
@@ -134,6 +135,16 @@ const routes: Routes = [
       breadcrumb: [
         { label: 'Inicio', routerLink: '/welcome' },
         { label: 'Ver tus reservas', routerLink: '/list-house-rent' }
+      ],
+    },
+  },
+  {
+    path: 'statistics',
+    component: StatisticsComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Estadísticas y datos', routerLink: '/statistics' }
       ],
     },
   }

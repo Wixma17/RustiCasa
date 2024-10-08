@@ -98,7 +98,7 @@
 
 <!-- Mostrar detalles del usuario seleccionado -->
 <div class="container-fluid fondoSec d-flex flex-column" *ngIf="usuarioSeleccionado" style="height: 100%;">
-  <h2>Detalles del Usuario Seleccionado</h2>
+  <h2>{{ 'welcome.detallesUsu' | translate }}</h2>
 
   <p-card styleClass="col-12 col-lg-8 mx-auto mb-3">
     <p-header>
@@ -108,22 +108,40 @@
     </p-header>
 
     <div class="py-3">
-      <p><strong>Nombre:</strong> {{ usuarioSeleccionado.nombre }}</p>
-      <p><strong>Email:</strong> {{ usuarioSeleccionado.gmail }}</p>
-      <p><strong>Fecha Nacimiento:</strong> {{ formatDateToCET(usuarioSeleccionado.fechaNacimiento) }}</p>
+      <p><strong>{{ 'welcome.nombreUsu' | translate }}:</strong> {{ usuarioSeleccionado.nombre }} {{ usuarioSeleccionado.apellido }}</p>
+      <p><strong>{{ 'welcome.emailUsu' | translate }}:</strong> {{ usuarioSeleccionado.gmail }}</p>
+      <p><strong>{{ 'welcome.fechaUsu' | translate }}:</strong> {{ formatDateToCET(usuarioSeleccionado.fechaNacimiento) }}</p>
       <p><strong>Nickname:</strong> {{ usuarioSeleccionado.nickname }}</p>
-      <p><strong>Nombre y apellidos:</strong> {{ usuarioSeleccionado.nombre }} {{ usuarioSeleccionado.apellido }}</p>
     </div>
+
+    <div>
+      <strong>
+      <p>
+        Número de Reportes:
+
+        <span
+          [ngStyle]="{
+            'background-color': numReportes < 5 ? 'green' : (numReportes <= 10 ? 'yellow' : 'red'),
+            'color': 'white'
+          }"
+          style="padding: 5px; border-radius: 4px;">
+          {{ numReportes }}
+
+          <i *ngIf="numReportes > 10" class="bi bi-exclamation-triangle-fill"></i>
+          <i *ngIf="numReportes < 10" class="bi bi-emoji-smile-fill"></i>
+          <i *ngIf="numReportes < 10 && numReportes > 5" class="bi bi-cone"></i>
+        </span>
+      </p>
+    </strong>
+    </div>
+
 
     <p-footer style="width: 100%;">
       <div class="d-flex justify-content-between col-12 py-2">
-        <button type="button" class="btn btn-danger col-3" data-bs-toggle="modal" data-bs-target="#blockModal" [disabled]="isbloqueado">
+        <button type="button" class="btn btn-danger col-5" data-bs-toggle="modal" data-bs-target="#blockModal" [disabled]="isbloqueado">
           <i class="bi bi-x-circle-fill"></i> Bloquear usuario
         </button>
-        <button class="btn btn-warning col-3">
-          <i class="bi bi-wrench"></i> Modificar usuario
-        </button>
-        <button class="btn btn-success col-3" pButton pRipple [disabled]="!isbloqueado" (click)="desbloquearUsu(usuarioSeleccionado)" label="Desbloquear usuario">
+        <button class="btn btn-success col-5" pButton pRipple [disabled]="!isbloqueado" (click)="desbloquearUsu(usuarioSeleccionado)" label="Desbloquear usuario">
           <i class="bi bi-check-circle-fill"></i>
         </button>
       </div>

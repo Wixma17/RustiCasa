@@ -37,6 +37,7 @@ export class FullSearchComponent implements OnInit {
   provSele: String = '-- Selecciona la provincia --';
   muniSele: String = '-- Selecciona el municipio --';
   listaResultCasa: CasaResponse[];
+  usuarioLog: any;
 
   constructor(
     private casaService: CasaService,
@@ -60,6 +61,9 @@ export class FullSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.usuarioLog = JSON.parse(sessionStorage.getItem('datosUsu'));
+
     //-------------CargaProv-------------
     this.provinciaService.getListaProvincias().subscribe({
       next: (prov) => {
@@ -133,7 +137,8 @@ export class FullSearchComponent implements OnInit {
       });
 
       //------------Poner Municipio y Provincia---------------
-      this.provinciaService
+      if(datosBusquedas.codProv != null){
+        this.provinciaService
         .getNombreProvincia(datosBusquedas.codProv)
         .subscribe({
           next: (provincia) => {
@@ -159,6 +164,7 @@ export class FullSearchComponent implements OnInit {
             console.info('nombre Prov=> ' + this.provSele);
           },
         });
+      }
     } else {
       this.formuReact = this.formubuild.group({
         piscina: [false], // Booleano
@@ -299,5 +305,19 @@ export class FullSearchComponent implements OnInit {
       const toast = new Toast(toastElement);
       toast.show(); // Muestra el toast
     }
+  }
+
+  eliminaCasa(idCasa){
+    this.casaService.eliminarCasa(idCasa).subscribe({
+      next:()=>{
+      },
+      error:(err)=>{
+        console.error(err);
+      },
+      complete:()=>{
+        console.info("Casa Eliminada con éxito");
+        window.location.reload();
+      }
+    });
   }
 }

@@ -12,7 +12,11 @@
     "idioma":"Change to spanish",
     "fecha":"Check In - Check Out",
     "welcomeAdmin":"Welcome to control panel",
-    "adminUsuForm":"Admin a user"
+    "adminUsuForm":"Admin a user",
+    "detallesUsu":"Details of a user",
+    "nombreUsu":"Name and LastName",
+    "emailUsu":"Email",
+    "fechaUsu":"Birthday"
   }
 
 }
