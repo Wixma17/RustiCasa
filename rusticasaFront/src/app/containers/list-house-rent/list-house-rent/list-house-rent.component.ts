@@ -18,12 +18,22 @@ export class ListHouseRentComponent implements OnInit {
   rows: number = 10; // Número de filas por página
   totalRecords: number = 0; // Total de registros
   usuConn: any;
+  isDispo:boolean=false;
+  isCancel:boolean=false;
 
   constructor(private casaService: CasaService, private router: Router) {}
 
   ngOnInit(): void {
     this.usuConn = JSON.parse(sessionStorage.getItem('datosUsu'));
     this.loadCasas(this.currentPage);
+    this.casaService.getEstadoCasaPorGmailInteresado(this.usuConn.gmail).subscribe((estado)=>{
+      if(estado!="P" && estado!="C"){
+        this.isDispo=true;
+      }
+      if(estado=="C"){
+        this.isCancel=true;
+      }
+    });
   }
 
   loadCasas(page: number) {
@@ -254,4 +264,6 @@ export class ListHouseRentComponent implements OnInit {
         console.error('Error al cargar la imagen:', error);
       });
   }
+
+
 }

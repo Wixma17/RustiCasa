@@ -70,8 +70,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           console.log(this.datosUsu);
           return this.casaService.getNumeroSolicitudPorGmail(this.datosUsu.gmail);
         } else {
-          // Si no hay usuario, devuelve un observable vacío o 0
-          return of(0); // Necesitas importar `of` de 'rxjs'
+          return of(0);
         }
       })
     ).subscribe((n) => {

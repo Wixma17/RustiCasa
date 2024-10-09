@@ -2,14 +2,16 @@
   <h1 *ngIf="casasPaginadas.length > 0">Buenas {{usuConn.nickname}} estas son las casas que has alquilado: </h1>
     <div *ngFor="let casa of casasPaginadas" class="col-lg-7 col-11 p-3 mb-2 contenedor-cristalizado" >
       <div class="d-flex justify-content-between">
-        <h4>Casa alquilada del: <strong class="text-success">{{ formatDateToCET(casa.fechaEntrada) }}</strong> hasta <strong class="text-success">{{ formatDateToCET(casa.fechaSalida) }}</strong></h4>
-
-        <button class="btn btn-info" (click)="generarPdf(casa)">
+        <h4 *ngIf="isDispo">Casa alquilada del: <strong class="text-success">{{ formatDateToCET(casa.fechaEntrada) }}</strong> hasta <strong class="text-success">{{ formatDateToCET(casa.fechaSalida) }}</strong></h4>
+        <h4 *ngIf="!isDispo && !isCancel">En Revisión de su solicitud</h4>
+        <h4 *ngIf="isCancel">Solicitud Cancelada</h4>
+        <button class="btn btn-info" (click)="generarPdf(casa)" [disabled]="!isDispo">
           Descargar factura (PDF) <i class="bi bi-file-earmark-pdf"></i>
         </button>
       </div>
       <app-house [datosCasa]="casa"></app-house>
-      <button class="btn btn-danger" (click)="eliminarAlquiler(usuConn.gmail ,casa.idCasa,casa.fechaEntrada)">Cancelar Reserva <span class="accesibilidad">({{casa.nombreCasa}})</span> <i class="bi bi-x-circle-fill"></i></button>
+      <button *ngIf="!isCancel" class="btn btn-danger" [disabled]="!isDispo" (click)="eliminarAlquiler(usuConn.gmail ,casa.idCasa,casa.fechaEntrada)">Cancelar Reserva <span class="accesibilidad">({{casa.nombreCasa}})</span> <i class="bi bi-x-circle-fill"></i></button>
+      <button *ngIf="isCancel" class="btn btn-danger m-2" (click)="eliminarAlquiler(usuConn.gmail ,casa.idCasa,casa.fechaEntrada)">Borrar Reserva <span class="accesibilidad">({{casa.nombreCasa}})</span> <i class="bi bi-trash3-fill"></i></button>
     </div>
 
   <div *ngIf="casasPaginadas.length == 0" class="text-center d-flex flex-column justify-content-center align-items-center" style="height: 80vh;">

@@ -162,4 +162,9 @@ export class CasaService {
     let url = `${environment.urlApiCasas}numero-solicitudes/${gmail}`;
     return this.httpClient.get<any>(url);
   }
+
+  getEstadoCasaPorGmailInteresado(gmail) {
+    let url = `${environment.urlApiCasas}estado-solicitudes-interesado/${gmail}`;
+    return this.httpClient.get<any>(url);
+  }
 }

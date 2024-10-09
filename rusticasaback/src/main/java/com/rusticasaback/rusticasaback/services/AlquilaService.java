@@ -110,4 +110,8 @@ public class AlquilaService {
         return alquilaRepository.countEstadoPByGmail(gmail);
     }
 
+    public List<String> getEstadoPorInteresado(String gmail){
+        return alquilaRepository.findEstadosByGmailPropietario(gmail);
+    }
+
 }
