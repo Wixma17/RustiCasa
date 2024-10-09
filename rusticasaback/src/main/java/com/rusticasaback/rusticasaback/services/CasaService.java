@@ -182,4 +182,8 @@ public class CasaService {
         casaRepository.deleteById(idCasa);
     }
 
+    public String obtenerGmailPublicador(Long idCasa) {
+        return casaRepository.findGmailPublicadorByIdCasa(idCasa);
+    }
+
 }

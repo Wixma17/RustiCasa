@@ -74,4 +74,7 @@ public interface CasaRepository extends JpaRepository<CasaEntity, Long> {
         Integer findMinPrecioNoche();
 
         Page<CasaEntity> findByClientePublicador(ClienteEntity cliente, Pageable pageable);
+
+        @Query("SELECT c.clientePublicador.gmail FROM CasaEntity c WHERE c.idCasa = :idCasa")
+        String findGmailPublicadorByIdCasa(Long idCasa);
 }

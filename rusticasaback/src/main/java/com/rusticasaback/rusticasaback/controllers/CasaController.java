@@ -219,4 +219,17 @@ public class CasaController {
         return ResponseEntity.ok(alquileresPorMes);
     }
 
+    @GetMapping("/{idCasa}/publicador")
+    public ResponseEntity<?> obtenerGmailPublicador(@PathVariable Long idCasa) {
+        String gmailPublicador = casaService.obtenerGmailPublicador(idCasa);
+        if (gmailPublicador != null) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", gmailPublicador);
+
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

@@ -2,6 +2,10 @@
   <div class="d-flex justify-content-between align-items-center">
     <h1 id="titulo">{{ casa.nombreCasa }}</h1>
 
+    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#reportModal" [disabled]="isDisabled">
+      <i class="bi bi-exclamation-triangle-fill"></i> Reportar
+    </button>
+
     <div
       *ngIf="listaOpinionCasa"
     >
@@ -75,4 +79,48 @@
 
 
   <app-mapa [datosLoc]="casa.municipio" class="m-2"></app-mapa>
+</div>
+
+<p-toast></p-toast>
+
+<!-- Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="reportLabel">Motivo del reporte</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="reportForm" class="d-flex flex-column">
+          <ul>
+            <li (click)="seleccionarMotivo('Casa sospechosa de fraude')"
+                [class.selected]="reportForm.get('motivo').value === 'Casa sospechosa de fraude'">
+              Casa sospechosa de fraude
+            </li>
+            <li (click)="seleccionarMotivo('Descripción engañosa de la casa')"
+                [class.selected]="reportForm.get('motivo').value === 'Descripción engañosa de la casa'">
+              Descripción engañosa de la casa
+            </li>
+            <li (click)="seleccionarMotivo('Problemas con el anfitrión')"
+                [class.selected]="reportForm.get('motivo').value === 'Problemas con el anfitrión'">
+              Problemas con el anfitrión
+            </li>
+            <li (click)="seleccionarMotivo('Casa no disponible')"
+                [class.selected]="reportForm.get('motivo').value === 'Casa no disponible'">
+              Casa no disponible a la llegada
+            </li>
+            <li (click)="seleccionarMotivo('Precios o tarifas ocultas')"
+                [class.selected]="reportForm.get('motivo').value === 'Precios o tarifas ocultas'">
+              Precios o tarifas ocultas
+            </li>
+          </ul>
+
+          <button class="p-button-danger m-3" pButton pRipple (click)="reportUsu()" label="Confirmar Reporte">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

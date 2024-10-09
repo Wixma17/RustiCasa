@@ -34,7 +34,11 @@ export class CasaService {
     return this.httpClient.get<OpinionResponse[]>(url);
   }
 
-  getListaOpinionCasaPage(idCasa: number, page: number = 0, size: number = 10): Observable<any> {
+  getListaOpinionCasaPage(
+    idCasa: number,
+    page: number = 0,
+    size: number = 10
+  ): Observable<any> {
     const url = `${environment.urlApiCasas}opinionCasaPage/${idCasa}`;
     const params = { page: page.toString(), size: size.toString() }; // Parámetros de paginación
     return this.httpClient.get<any>(url, { params });
@@ -90,36 +94,48 @@ export class CasaService {
     return this.httpClient.delete<any>(url);
   }
 
-  publicaOpi(opiRequest:RequestOpinion): Observable<any> {
+  publicaOpi(opiRequest: RequestOpinion): Observable<any> {
     let url = `${environment.urlApiCasas}subirOpinion`;
-    return this.httpClient.post<any>(url,opiRequest);
+    return this.httpClient.post<any>(url, opiRequest);
   }
 
-  alquilaCasa(rentHouseRequest:RequestAlquilaCasa): Observable<any> {
+  alquilaCasa(rentHouseRequest: RequestAlquilaCasa): Observable<any> {
     let url = `${environment.urlApiCasas}reservarCasa`;
-    return this.httpClient.post<any>(url,rentHouseRequest);
+    return this.httpClient.post<any>(url, rentHouseRequest);
   }
 
-  getListaCasaAlquilado(gmail:string): Observable<any> {
+  getListaCasaAlquilado(gmail: string): Observable<any> {
     let url = `${environment.urlApiCasas}alquileres/${gmail}`;
     return this.httpClient.get<any>(url);
   }
 
-  getCasasByFechas(fechaEntrada: Date, fechaSalida: Date): Observable<number[]> {
+  getCasasByFechas(
+    fechaEntrada: Date,
+    fechaSalida: Date
+  ): Observable<number[]> {
     const params = {
       fechaEntrada: fechaEntrada.toISOString(),
-      fechaSalida: fechaSalida.toISOString()
+      fechaSalida: fechaSalida.toISOString(),
     };
-    return this.httpClient.get<number[]>(`${environment.urlApiCasas}casasIdAlquiladas`, { params });
+    return this.httpClient.get<number[]>(
+      `${environment.urlApiCasas}casasIdAlquiladas`,
+      { params }
+    );
   }
 
-  eliminarAlquiler(gmail: string, idCasa: number, fechaEntrada: Date): Observable<any> {
+  eliminarAlquiler(
+    gmail: string,
+    idCasa: number,
+    fechaEntrada: Date
+  ): Observable<any> {
     let params = new HttpParams()
       .set('gmail', gmail)
       .set('idCasa', idCasa.toString())
-      .set('fechaEntrada', fechaEntrada.toISOString().split('T')[0]);  // Formato de fecha 'YYYY-MM-DD'
+      .set('fechaEntrada', fechaEntrada.toISOString().split('T')[0]); // Formato de fecha 'YYYY-MM-DD'
 
-    return this.httpClient.delete<any>(`${environment.urlApiCasas}eliminar`, { params });
+    return this.httpClient.delete<any>(`${environment.urlApiCasas}eliminar`, {
+      params,
+    });
   }
 
   eliminarCasa(idCasa: number): Observable<any> {
@@ -127,9 +143,13 @@ export class CasaService {
     return this.httpClient.delete<any>(url);
   }
 
-  getCasasPorMes(){
+  getCasasPorMes() {
     let url = `${environment.urlApiCasas}por-mes`;
     return this.httpClient.get<any>(url);
   }
 
+  getGmailPorIdCasa(idCasa) {
+    let url = `${environment.urlApiCasas}${idCasa}/publicador`;
+    return this.httpClient.get<any>(url);
+  }
 }

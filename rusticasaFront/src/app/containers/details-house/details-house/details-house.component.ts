@@ -1,12 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { merge, Observable, Subject, Subscription } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { RequestReporte } from 'src/app/shared/model/requests/request-reporte.model';
 import { CasaResponse } from 'src/app/shared/model/responses/casa-response.model';
 import { ImagenResponse } from 'src/app/shared/model/responses/imagen-response.model';
 import { OpinionResponse } from 'src/app/shared/model/responses/opinion-response.model';
 import { CasaService } from 'src/app/shared/services/casa.service';
+import { ReporteService } from 'src/app/shared/services/reporte.service';
 
 
 @Component({
@@ -23,6 +27,9 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
   usuConn: any;
   idCasaString:string;
   idCasaLong:number;
+  reportForm: FormGroup;
+  men:any;
+  isbloqueado:boolean=false;
 
   // Subjects
   private destroySubject = new Subject<void>();
@@ -39,10 +46,20 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
     private serviceHouse: CasaService,
     private sanitizer: DomSanitizer,
     private router: Router,
-    private casaService: CasaService
-  ) {}
+    private casaService: CasaService,
+    private formubuild: FormBuilder,
+    private reporteService:ReporteService,
+    private primengConfig: PrimeNGConfig,
+    private messageService: MessageService
+  ) {
+    this.reportForm = this.formubuild.group({
+      motivo:[]
+    });
+  }
 
   ngOnInit(): void {
+
+    this.primengConfig.ripple = true;
 
     this.usuConn = JSON.parse(sessionStorage.getItem('datosUsu'));
 
@@ -178,5 +195,49 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
 
   goAlquilaCasa(){
     this.router.navigate(['/rent-house/'+this.casa.idCasa]);
+  }
+
+  seleccionarMotivo(motivo: string): void {
+    this.reportForm.patchValue({ motivo });
+  }
+
+  reportUsu(){
+
+    if (this.reportForm.valid) {
+      console.log('Motivo seleccionado:', );
+      // Aquí puedes manejar la lógica de envío del reporte
+    } else {
+      console.log('No se ha seleccionado ningún motivo');
+    }
+
+    this.casaService.getGmailPorIdCasa(this.idCasaLong).subscribe((correo)=>{
+      let report:RequestReporte= {
+        gmailReportado:correo.message,
+        emisor: this.usuConn.gmail,
+        fechaReporte: new Date(),
+        motivo: this.reportForm.value.motivo
+      }
+
+      console.info(report)
+
+      this.reporteService.crearReporte(report).subscribe((info)=>{
+
+        this.men = 'Usuario Bloqueado con éxito';
+      this.isbloqueado = true;
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Operación con éxito',
+        detail: this.men
+      });
+
+
+        const closeButton = document.querySelector('#reportModal .btn-close') as HTMLElement;
+        if (closeButton) {
+          closeButton.click();
+        }
+      });
+
+    });
+
   }
 }
