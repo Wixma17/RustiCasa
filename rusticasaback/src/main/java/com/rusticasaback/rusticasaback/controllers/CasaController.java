@@ -233,12 +233,19 @@ public class CasaController {
     }
 
     @GetMapping("/estados-casas/{gmail}")
-    public ResponseEntity<List<String>> getEstadosCasasByPropietario(@PathVariable String gmail) {
+    public ResponseEntity<?> getEstadosCasasByPropietario(@PathVariable String gmail) {
         List<String> estados = alquilaService.getEstadosByGmailPropietario(gmail);
         
         if (estados.isEmpty()) {
             return ResponseEntity.noContent().build(); 
         }
+        
+        return new ResponseEntity<>(estados, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/numero-solicitudes/{gmail}")
+    public ResponseEntity<?> getNSolicitudes(@PathVariable String gmail) {
+        Long estados = alquilaService.getNSolicitudes(gmail);  
         
         return new ResponseEntity<>(estados, HttpStatus.CREATED);
     }

@@ -1,12 +1,14 @@
 import { ClienteService } from './../../../shared/services/cliente.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { Dropdown } from 'bootstrap';
 import { Collapse } from 'bootstrap';
 import { BusquedasService } from 'src/app/shared/services/busquedas.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { CasaService } from 'src/app/shared/services/casa.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -18,12 +20,14 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   muestraBusqueda: boolean = true;
   datosUsu: any;
   ruta: SafeResourceUrl;
+  nSolicitudes:any;
 
   constructor(
     private busqueda: BusquedasService,
     private authService: AuthService,
     private router: Router,
-    private clienteService:ClienteService
+    private clienteService:ClienteService,
+    private casaService:CasaService
   ) {}
 
   private collapseElement!: HTMLElement;
@@ -59,14 +63,24 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.authService.userData$.subscribe((data) => {
-      this.datosUsu = data;
+    this.authService.userData$.pipe(
+      switchMap((data) => {
+        this.datosUsu = data;
+        if (this.datosUsu) {
+          console.log(this.datosUsu);
+          return this.casaService.getNumeroSolicitudPorGmail(this.datosUsu.gmail);
+        } else {
+          // Si no hay usuario, devuelve un observable vacío o 0
+          return of(0); // Necesitas importar `of` de 'rxjs'
+        }
+      })
+    ).subscribe((n) => {
+      this.nSolicitudes = n;
     });
 
-      this.authService.rutaImg$.subscribe((url) => {
-        this.ruta = url;
-      });
-
+    this.authService.rutaImg$.subscribe((url) => {
+      this.ruta = url;
+    });
   }
 
   toggleDropdown() {

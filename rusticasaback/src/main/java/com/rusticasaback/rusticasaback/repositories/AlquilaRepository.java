@@ -39,4 +39,6 @@ public interface AlquilaRepository extends JpaRepository<AlquilaEntity, AlquilaE
         @Query("SELECT a.estado FROM AlquilaEntity a JOIN a.casa c WHERE c.clientePublicador.gmail = :gmail")
         List<String> findEstadoByGmail(@Param("gmail") String gmail);
 
+        @Query("SELECT COUNT(a) FROM AlquilaEntity a JOIN a.casa c WHERE c.clientePublicador.gmail = :gmail AND a.estado = 'P'")
+        Long countEstadoPByGmail(@Param("gmail") String gmail);
 }

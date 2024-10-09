@@ -106,4 +106,8 @@ public class AlquilaService {
         return alquilaRepository.findEstadoByGmail(gmail);
     }
 
+    public Long getNSolicitudes(String gmail) {
+        return alquilaRepository.countEstadoPByGmail(gmail);
+    }
+
 }
