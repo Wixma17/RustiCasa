@@ -232,4 +232,15 @@ public class CasaController {
         }
     }
 
+    @GetMapping("/estados-casas/{gmail}")
+    public ResponseEntity<List<String>> getEstadosCasasByPropietario(@PathVariable String gmail) {
+        List<String> estados = alquilaService.getEstadosByGmailPropietario(gmail);
+        
+        if (estados.isEmpty()) {
+            return ResponseEntity.noContent().build(); 
+        }
+        
+        return new ResponseEntity<>(estados, HttpStatus.CREATED);
+    }
+
 }

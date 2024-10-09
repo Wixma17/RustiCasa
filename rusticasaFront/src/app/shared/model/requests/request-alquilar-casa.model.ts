@@ -3,4 +3,5 @@ export class RequestAlquilaCasa {
   idCasa: number;
   fechaEntrada: Date;
   fechaSalida: Date;
+  estado?:string;
 }

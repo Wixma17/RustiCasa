@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class AlquilaDTO {
     private AlquilaEntityPK alquilaEntityPK;
     private Date fechaSalida;
+    private String estado;
 
     public AlquilaDTO(AlquilaEntity alquilaEntity) {
         alquilaEntityPK = alquilaEntity.getAlquilaEntityPK();
@@ -22,11 +23,11 @@ public class AlquilaDTO {
     }
 
     public AlquilaEntity createAlquilaEntity(){
-        return new AlquilaEntity(alquilaEntityPK, fechaSalida, null, null);
+        return new AlquilaEntity(alquilaEntityPK, fechaSalida,null, null,estado);
     }
 
     public static AlquilaEntity createAlquilaEntity(AlquilaDTO alquila){
-        return new AlquilaEntity(alquila.alquilaEntityPK, alquila.fechaSalida, null, null);
+        return new AlquilaEntity(alquila.alquilaEntityPK, alquila.fechaSalida, null, null,alquila.estado);
     }
 
     public static List<AlquilaEntity> convertFromDtoList(List<AlquilaDTO> listaDTO) {

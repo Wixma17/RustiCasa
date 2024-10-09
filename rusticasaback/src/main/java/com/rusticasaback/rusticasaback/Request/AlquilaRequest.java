@@ -13,4 +13,5 @@ public class AlquilaRequest {
     private Long idCasa;
     private Date fechaEntrada;
     private Date fechaSalida;
+    private String estado = "P";
 }

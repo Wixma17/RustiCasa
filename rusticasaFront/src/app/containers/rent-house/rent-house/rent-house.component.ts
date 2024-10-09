@@ -128,8 +128,9 @@ export class RentHouseComponent implements OnInit {
       let casaAlquilada: RequestAlquilaCasa = {
         gmail: this.usuarioLog.gmail,
         idCasa: this.idCasaLong,
-        fechaEntrada: fechaEntradaAjustada, // Usar la fecha ajustada
-        fechaSalida: fechaSalidaAjustada    // Usar la fecha ajustada
+        fechaEntrada: fechaEntradaAjustada,
+        fechaSalida: fechaSalidaAjustada,
+        estado:"P"
       };
 
       this.casaService.alquilaCasa(casaAlquilada).subscribe({
@@ -146,7 +147,6 @@ export class RentHouseComponent implements OnInit {
       console.error('Las fechas no se han podido ajustar correctamente.');
     }
   }
-
 
   formatDateToYYYYMMDD(date: Date): string {
     const year = date.getFullYear();

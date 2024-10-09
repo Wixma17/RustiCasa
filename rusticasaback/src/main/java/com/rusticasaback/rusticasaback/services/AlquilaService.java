@@ -46,7 +46,7 @@ public class AlquilaService {
         AlquilaEntity alquilaCasa = new AlquilaEntity(
                 new AlquilaEntityPK(alquilaRequest.getGmail(), alquilaRequest.getIdCasa(),
                         alquilaRequest.getFechaEntrada()),
-                alquilaRequest.getFechaSalida(), cliente, casa);
+                alquilaRequest.getFechaSalida(), cliente, casa,alquilaRequest.getEstado());
 
         return guardaReserva(alquilaCasa);
     }
@@ -100,6 +100,10 @@ public class AlquilaService {
 
     public List<Object[]> obtenerAlquilerPorMes() {
         return alquilaRepository.findAlquilerPorMes();
+    }
+
+    public List<String> getEstadosByGmailPropietario(String gmail) {
+        return alquilaRepository.findEstadoByGmail(gmail);
     }
 
 }

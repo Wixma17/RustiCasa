@@ -78,10 +78,13 @@ CREATE OR REPLACE TABLE Alquila (
     id_casa INT,
     fecha_entrada DATE,
     fecha_salida DATE,
-    PRIMARY KEY (gmail, id_casa,fecha_entrada),
+    estado VARCHAR(1) DEFAULT 'P',
+    PRIMARY KEY (gmail, id_casa, fecha_entrada),
     FOREIGN KEY (gmail) REFERENCES Cliente(gmail),
-    FOREIGN KEY (id_casa) REFERENCES Casa(id_casa)
+    FOREIGN KEY (id_casa) REFERENCES Casa(id_casa),
+    CHECK (estado IN ('P', 'C', 'A'))
 );
+
 
 CREATE OR REPLACE TABLE Reporte (
     gmail_reportado VARCHAR(150),

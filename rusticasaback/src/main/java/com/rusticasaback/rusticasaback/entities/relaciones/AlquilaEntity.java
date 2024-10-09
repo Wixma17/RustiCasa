@@ -42,5 +42,8 @@ public class AlquilaEntity {
     @MapsId("idCasa")
     @JoinColumn(name = "id_casa", referencedColumnName = "id_casa")
     private CasaEntity casa;
+    
+    @Column(name = "estado")
+    private String estado;
 
 }
