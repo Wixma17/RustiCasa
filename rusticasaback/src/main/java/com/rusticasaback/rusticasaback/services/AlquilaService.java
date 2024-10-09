@@ -114,4 +114,12 @@ public class AlquilaService {
         return alquilaRepository.findEstadosByGmailPropietario(gmail);
     }
 
+    public void actualizarEstadoPorIdCasa(Long idCasa, String nuevoEstado) {
+        int filasActualizadas = alquilaRepository.updateEstadoByIdCasa(idCasa, nuevoEstado);
+        if (filasActualizadas > 0) {
+            System.out.println("Estado actualizado correctamente.");
+        } else {
+            System.out.println("No se encontró ninguna entidad con el id de casa especificado.");
+        }
+    }
 }

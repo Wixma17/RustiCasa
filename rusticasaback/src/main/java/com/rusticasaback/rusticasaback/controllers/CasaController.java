@@ -257,4 +257,12 @@ public class CasaController {
         return new ResponseEntity<>(estados, HttpStatus.CREATED);
     }
 
+    @PutMapping("/actualizar-estado")
+    public ResponseEntity<?> actualizarEstado(@RequestParam Long idCasa, @RequestParam String nuevoEstado) {
+        alquilaService.actualizarEstadoPorIdCasa(idCasa, nuevoEstado);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "okey");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
 }

@@ -167,4 +167,10 @@ export class CasaService {
     let url = `${environment.urlApiCasas}estado-solicitudes-interesado/${gmail}`;
     return this.httpClient.get<any>(url);
   }
+
+  updateEstadoCasa(idCasa: number, nuevoEstado: string) {
+    let url = `${environment.urlApiCasas}actualizar-estado?idCasa=${idCasa}&nuevoEstado=${nuevoEstado}`;
+    return this.httpClient.put<any>(url, {});
+  }
+
 }

@@ -1,3 +1,31 @@
-<div class="container-fluid" id="fondo">
-<h1 class="p-0">Hola</h1>
+<div class="container-fluid " id="fondo" [ngStyle]="{'height': casasPaginadas.length === 1 ? '80vh' : 'auto'}">
+  <section *ngIf="casasPaginadas && casasPaginadas.length > 0" class="col-12 d-flex flex-column align-items-center justify-content-around" style="height: 100%; margin-top: 0px;" >
+    <h1>Buenas {{usuConn.nickname}} estas son tus solicitudes: </h1>
+
+    <div *ngFor="let casa of casasPaginadas" class="col-lg-6 col-10 p-3 mb-2">
+
+      <div class="contenedor-cristalizado p-3">
+        <app-house [datosCasa]="casa"></app-house>
+        <div class="d-flex justify-content-around col-12">
+          <button class="btn btn-primary" (click)="aceptaSolicitud(casa.idCasa)"><i class="bi bi-check-lg"></i> Aceptar Solicitud</button>
+          <button class="btn btn-warning" (click)="revisionSolicitud(casa.idCasa)"><i class="bi bi-cone"></i> Poner en revision Solicitud</button>
+          <button class="btn btn-danger" (click)="eliminaSolicitud(casa.idCasa)"><i class="bi bi-x-lg"></i> Denegar Solicitud</button>
+        </div>
+      </div>
+
+    </div>
+    <p-paginator
+      styleClass="m-3"
+      [rows]="rows"
+      [totalRecords]="totalRecords"
+      [pageLinkSize]="3"
+      (onPageChange)="onPageChange($event)">
+    </p-paginator>
+  </section>
+
+  <section *ngIf="casasPaginadas.length == 0" class="col-12 p-2 d-flex flex-column align-items-center p-2 justify-content-around" style="height: 80vh;">
+      <h1>No tienes ninguna Solicitud</h1>
+  </section>
 </div>
+
+<p-toast></p-toast>

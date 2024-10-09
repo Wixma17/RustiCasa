@@ -1,3 +1,30 @@
 #fondo{
   background: url(../../../../assets/fondoLogin2.jpg);
 }
+
+.contenedor-cristalizado {
+  background: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+  backdrop-filter: blur(10px); /* Desenfoque de fondo */
+  border-radius: 15px; /* Bordes redondeados para un mejor efecto */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde ligero para resaltar */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: black; /* Color del texto dentro del contenedor */
+}
+
+h1 {
+  font-size: 50px;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  text-shadow: 6px 1px 0 rgba(0, 0, 0, 0.5), 1px -1px 0 rgba(0, 0, 0, 0.5),
+    -1px 1px 0 rgba(0, 0, 0, 0.5), 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+:host ::ng-deep .p-toast {
+  position: fixed;
+  top: 130px;
+  right: 30px;
+  z-index: 1000;
+}

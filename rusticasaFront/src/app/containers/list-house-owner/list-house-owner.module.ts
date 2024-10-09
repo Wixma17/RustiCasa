@@ -10,6 +10,7 @@ import { CommonComponentsModule } from 'src/app/common-components/common-compone
 import { SliderModule } from 'primeng/slider';
 import { PaginatorModule } from 'primeng/paginator';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {ToastModule} from 'primeng/toast';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
     PaginatorModule,
     NoopAnimationsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ToastModule
   ]
 })
 export class ListHouseOwnerModule { }

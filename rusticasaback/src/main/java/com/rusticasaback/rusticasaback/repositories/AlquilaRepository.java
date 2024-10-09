@@ -44,4 +44,9 @@ public interface AlquilaRepository extends JpaRepository<AlquilaEntity, AlquilaE
 
         @Query("SELECT a.estado FROM AlquilaEntity a WHERE a.cliente.gmail = :gmail")
         List<String> findEstadosByGmailPropietario(String gmail);
+
+        @Transactional
+        @Modifying
+        @Query("UPDATE AlquilaEntity a SET a.estado = ?2 WHERE a.alquilaEntityPK.idCasa = ?1")
+        int updateEstadoByIdCasa(Long idCasa, String estado);
 }
