@@ -47,11 +47,11 @@ public interface AlquilaRepository extends JpaRepository<AlquilaEntity, AlquilaE
 
         @Transactional
         @Modifying
-        @Query("UPDATE AlquilaEntity a SET a.estado = ?2 WHERE a.alquilaEntityPK.idCasa = ?1")
-        int updateEstadoByIdCasa(Long idCasa, String estado);
-
+        @Query("UPDATE AlquilaEntity a SET a.estado = ?3 WHERE a.alquilaEntityPK.idCasa = ?1 AND a.alquilaEntityPK.gmail = ?2")
+        int updateEstadoByIdCasaAndGmail(Long idCasa, String gmail, String estado);
 
         // public List<AlquilaEntity> findByCasaClientePublicadorGmail(String email);
 
-        Page<AlquilaEntity> findByCasaClientePublicadorGmail(String email, Pageable pageable);
+        @Query("SELECT a FROM AlquilaEntity a WHERE a.casa.clientePublicador.gmail = :email AND a.estado = 'P'")
+        Page<AlquilaEntity> findByCasaClientePublicadorGmailAndEstado(String email, Pageable pageable);
 }

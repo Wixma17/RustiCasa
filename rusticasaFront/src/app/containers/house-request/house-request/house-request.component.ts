@@ -16,6 +16,7 @@ export class HouseRequestComponent implements OnInit {
   totalRecords: number = 0; // Total de registros
   usuConn: { gmail: string } | null = null; // Almacena la conexión del usuario
   datosUsuSolicitante: { [key: string]: any } = {}; // Almacena los datos de los usuarios por correo
+  datosCasa: { [key: string]: any } = {}; // Inicializa como un objeto vacío
 
   constructor(
     private casaService: CasaService,
@@ -66,6 +67,19 @@ export class HouseRequestComponent implements OnInit {
           }
         );
     });
+
+    this.casasPaginadas.forEach((element) => {
+      this.casaService.getDatosCasaIdCasa(element.alquilaEntityPK.idCasa).subscribe(
+          (info) => {
+              this.datosCasa[element.alquilaEntityPK.idCasa] = info; // Asegúrate de tener esta propiedad definida
+              console.info(this.datosCasa);
+          },
+          (error) => {
+              console.error(`Error al obtener datos de la casa ${element.idCasa}:`, error);
+          }
+      );
+    });
+
   }
 
   onPageChange(event: any): void {
@@ -74,13 +88,14 @@ export class HouseRequestComponent implements OnInit {
   }
 
   aceptaSolicitud(idCasa: number, gmailInteresado: string): void {
-    this.casaService.updateEstadoCasa(idCasa, 'A').subscribe(
+    this.casaService.updateEstadoCasa(idCasa,gmailInteresado ,'A').subscribe(
       () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Operación con éxito',
           detail: 'Petición Aceptada con éxito',
         });
+        window.location.reload();
       },
       (error) => {
         console.error('Error al aceptar solicitud:', error);
@@ -89,13 +104,14 @@ export class HouseRequestComponent implements OnInit {
   }
 
   eliminaSolicitud(idCasa: number, gmailInteresado: string): void {
-    this.casaService.updateEstadoCasa(idCasa, 'C').subscribe(
+    this.casaService.updateEstadoCasa(idCasa,gmailInteresado, 'C').subscribe(
       () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Operación con éxito',
           detail: 'Petición Rechazada con éxito',
         });
+        window.location.reload();
       },
       (error) => {
         console.error('Error al eliminar solicitud:', error);
@@ -104,13 +120,14 @@ export class HouseRequestComponent implements OnInit {
   }
 
   revisionSolicitud(idCasa: number, gmailInteresado: string): void {
-    this.casaService.updateEstadoCasa(idCasa, 'P').subscribe(
+    this.casaService.updateEstadoCasa(idCasa,gmailInteresado, 'P').subscribe(
       () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Operación con éxito',
           detail: 'Petición en revisión con éxito',
         });
+        window.location.reload();
       },
       (error) => {
         console.error('Error al revisar solicitud:', error);

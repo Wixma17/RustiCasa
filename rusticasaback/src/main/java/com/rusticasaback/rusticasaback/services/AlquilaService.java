@@ -119,21 +119,22 @@ public class AlquilaService {
         return alquilaRepository.findEstadosByGmailPropietario(gmail);
     }
 
-    public void actualizarEstadoPorIdCasa(Long idCasa, String nuevoEstado) {
-        int filasActualizadas = alquilaRepository.updateEstadoByIdCasa(idCasa, nuevoEstado);
+    public void actualizarEstadoPorIdCasaYGmail(Long idCasa, String gmail, String nuevoEstado) {
+        int filasActualizadas = alquilaRepository.updateEstadoByIdCasaAndGmail(idCasa, gmail, nuevoEstado);
         if (filasActualizadas > 0) {
             System.out.println("Estado actualizado correctamente.");
         } else {
-            System.out.println("No se encontró ninguna entidad con el id de casa especificado.");
+            System.out.println("No se encontró ninguna entidad con el id de casa y gmail especificados.");
         }
     }
+    
 
    public ResponseEntity<?> getListaCasaPorPropietario(@RequestParam String email, @RequestParam int page, @RequestParam int size) {
     // Crear el objeto Pageable con el número de página y el tamaño
     Pageable pageable = PageRequest.of(page, size);
     
     // Obtener la página de AlquilaEntity
-    Page<AlquilaEntity> pageResult = alquilaRepository.findByCasaClientePublicadorGmail(email, pageable);
+    Page<AlquilaEntity> pageResult = alquilaRepository.findByCasaClientePublicadorGmailAndEstado(email, pageable);
     
     // Convertir la lista de AlquilaEntity a lista de AlquilaDTO
     List<AlquilaDTO> listaAlquilaDTO = AlquilaDTO.convertFromEntityList(pageResult.getContent());

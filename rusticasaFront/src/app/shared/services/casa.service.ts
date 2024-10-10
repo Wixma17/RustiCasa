@@ -168,10 +168,10 @@ export class CasaService {
     return this.httpClient.get<any>(url);
   }
 
-  updateEstadoCasa(idCasa: number, nuevoEstado: string) {
-    let url = `${environment.urlApiCasas}actualizar-estado?idCasa=${idCasa}&nuevoEstado=${nuevoEstado}`;
+  updateEstadoCasa(idCasa: number, gmail: string, nuevoEstado: string) {
+    let url = `${environment.urlApiCasas}actualizar-estado?idCasa=${idCasa}&gmail=${gmail}&nuevoEstado=${nuevoEstado}`;
     return this.httpClient.put<any>(url, {});
-  }
+}
 
   getInfoCasasPorEmailPropietario(gmail: string, page: number, size: number) {
     let url = `${environment.urlApiCasas}casasInfoAlquiladas/${gmail}?page=${page}&size=${size}`;

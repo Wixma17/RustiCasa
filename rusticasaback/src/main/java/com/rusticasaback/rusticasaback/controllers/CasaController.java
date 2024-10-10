@@ -257,8 +257,9 @@ public class CasaController {
     }
 
     @PutMapping("/actualizar-estado")
-    public ResponseEntity<?> actualizarEstado(@RequestParam Long idCasa, @RequestParam String nuevoEstado) {
-        alquilaService.actualizarEstadoPorIdCasa(idCasa, nuevoEstado);
+    public ResponseEntity<?> actualizarEstado(@RequestParam Long idCasa, @RequestParam String gmail,
+            @RequestParam String nuevoEstado) {
+        alquilaService.actualizarEstadoPorIdCasaYGmail(idCasa, gmail, nuevoEstado);
         Map<String, String> response = new HashMap<>();
         response.put("message", "okey");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
@@ -266,11 +267,10 @@ public class CasaController {
 
     @GetMapping("/casasInfoAlquiladas/{gmail}")
     public ResponseEntity<?> getInfoCasasPorEmailPropietario(
-         @PathVariable String gmail,
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "10") int size) {
+            @PathVariable String gmail,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
         return alquilaService.getListaCasaPorPropietario(gmail, page, size);
     }
-
 
 }
