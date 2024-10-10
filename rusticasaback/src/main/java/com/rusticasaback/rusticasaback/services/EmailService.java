@@ -25,7 +25,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Recuperación Correo");
-        message.setText("Hola Buenas tu solicitud ha sido aceptada");
+        message.setText("Hola Buenas tu solicitud sobre la casa ha sido aceptada");
         message.setFrom("rusticasa066@gmail.com");
 
         mailSender.send(message);
@@ -35,7 +35,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Recuperación Correo");
-        message.setText("Hola Buenas tu solicitud ha sido cancelada");
+        message.setText("Hola Buenas tu solicitud sobre la casa ha sido cancelada");
         message.setFrom("rusticasa066@gmail.com");
 
         mailSender.send(message);
