@@ -26,5 +26,21 @@ public class EmailController {
         response.put("message", "Revisa tu bandeja");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @PostMapping("/acceptEmail")
+    public ResponseEntity<?> acceptEmail(@RequestBody String email) {
+        emailService.sendAcceptEmail(email);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Revisa tu bandeja");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/deniedEmail")
+    public ResponseEntity<?> deniedEmail(@RequestBody String email) {
+        emailService.sendDeniedEmail(email);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Revisa tu bandeja");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
     
 }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { CasaService } from 'src/app/shared/services/casa.service';
 import { ClienteService } from 'src/app/shared/services/cliente.service';
+import { EmailService } from 'src/app/shared/services/email.service';
 
 @Component({
   selector: 'app-house-request',
@@ -23,7 +24,8 @@ export class HouseRequestComponent implements OnInit {
     private router: Router,
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private emailService: EmailService
   ) {}
 
   ngOnInit(): void {
@@ -69,17 +71,21 @@ export class HouseRequestComponent implements OnInit {
     });
 
     this.casasPaginadas.forEach((element) => {
-      this.casaService.getDatosCasaIdCasa(element.alquilaEntityPK.idCasa).subscribe(
+      this.casaService
+        .getDatosCasaIdCasa(element.alquilaEntityPK.idCasa)
+        .subscribe(
           (info) => {
-              this.datosCasa[element.alquilaEntityPK.idCasa] = info; // Asegúrate de tener esta propiedad definida
-              console.info(this.datosCasa);
+            this.datosCasa[element.alquilaEntityPK.idCasa] = info; // Asegúrate de tener esta propiedad definida
+            console.info(this.datosCasa);
           },
           (error) => {
-              console.error(`Error al obtener datos de la casa ${element.idCasa}:`, error);
+            console.error(
+              `Error al obtener datos de la casa ${element.idCasa}:`,
+              error
+            );
           }
-      );
+        );
     });
-
   }
 
   onPageChange(event: any): void {
@@ -88,39 +94,59 @@ export class HouseRequestComponent implements OnInit {
   }
 
   aceptaSolicitud(idCasa: number, gmailInteresado: string): void {
-    this.casaService.updateEstadoCasa(idCasa,gmailInteresado ,'A').subscribe(
-      () => {
+    this.casaService.updateEstadoCasa(idCasa, gmailInteresado, 'A').subscribe({
+      next: () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Operación con éxito',
           detail: 'Petición Aceptada con éxito',
         });
+
+        this.emailService
+          .enviarSolicitudOkEmail(gmailInteresado)
+          .subscribe((s) => {
+            console.log('ok');
+          });
+      },
+      error: (error) => {
+        console.error('Error al aceptar solicitud:', error);
+      },
+      complete: () => {
         window.location.reload();
       },
-      (error) => {
-        console.error('Error al aceptar solicitud:', error);
-      }
-    );
+    });
   }
 
   eliminaSolicitud(idCasa: number, gmailInteresado: string): void {
-    this.casaService.updateEstadoCasa(idCasa,gmailInteresado, 'C').subscribe(
-      () => {
+    this.casaService.updateEstadoCasa(idCasa, gmailInteresado, 'C').subscribe({
+      next: () => {
         this.messageService.add({
           severity: 'success',
           summary: 'Operación con éxito',
           detail: 'Petición Rechazada con éxito',
         });
+
+        this.emailService
+          .enviarSolicitudDenegadaEmail(gmailInteresado)
+          .subscribe((s) => {
+            console.log('ok');
+          });
+      },
+      error: (error) => {
+        console.error('Error al eliminar solicitud:', error);
+      },
+      complete: () => {
         window.location.reload();
       },
-      (error) => {
-        console.error('Error al eliminar solicitud:', error);
-      }
-    );
+    });
+  }
+
+  goDetallesCasa(idCasa) {
+    this.router.navigate(['/details-house/' + idCasa]);
   }
 
   revisionSolicitud(idCasa: number, gmailInteresado: string): void {
-    this.casaService.updateEstadoCasa(idCasa,gmailInteresado, 'P').subscribe(
+    this.casaService.updateEstadoCasa(idCasa, gmailInteresado, 'P').subscribe(
       () => {
         this.messageService.add({
           severity: 'success',

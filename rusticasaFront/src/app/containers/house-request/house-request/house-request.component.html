@@ -14,10 +14,11 @@
           <p *ngIf="datosCasa[casa.alquilaEntityPK.idCasa]?.municipio">Localizado en: <strong>{{ datosCasa[casa.alquilaEntityPK.idCasa].municipio.municipio }}</strong></p>
           <p>Número habitaciones: <strong>{{ datosCasa[casa.alquilaEntityPK.idCasa]?.numeroHabitaciones }}</strong></p>
           <p>Número inquilinos: <strong>{{ datosCasa[casa.alquilaEntityPK.idCasa]?.numeroInquilinos }}</strong></p>
+          <button class="btn btn-primary m-1 col-12" (click)="goDetallesCasa(casa.alquilaEntityPK.idCasa)">Ver detalles de la casa ({{ datosCasa[casa.alquilaEntityPK.idCasa]?.nombreCasa }})</button>
         </div>
 
         <div class="d-flex justify-content-around col-12">
-          <button class="btn btn-primary" (click)="aceptaSolicitud(casa.alquilaEntityPK.idCasa, casa.alquilaEntityPK.gmail)">
+          <button class="btn btn-success" (click)="aceptaSolicitud(casa.alquilaEntityPK.idCasa, casa.alquilaEntityPK.gmail)">
             <i class="bi bi-check-lg"></i> Aceptar Solicitud
           </button>
           <button class="btn btn-warning" (click)="revisionSolicitud(casa.alquilaEntityPK.idCasa, casa.alquilaEntityPK.gmail)">

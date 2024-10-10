@@ -6,21 +6,38 @@ import { EmailResponse } from '../model/responses/email-response.model';
 import { catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmailService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   enviarEmail(email: EmailResponse): Observable<string> {
     let url = `${environment.urlApiEmail}sendEmail`;
-    return this.httpClient.post<string>(url, email)
-      .pipe(
-        catchError(error => {
-          console.error('Error al enviar el correo', error);
-          return throwError(error);
-        })
-      );
-}
+    return this.httpClient.post<string>(url, email).pipe(
+      catchError((error) => {
+        console.error('Error al enviar el correo', error);
+        return throwError(error);
+      })
+    );
+  }
 
+  enviarSolicitudOkEmail(email: string): Observable<string> {
+    let url = `${environment.urlApiEmail}acceptEmail`;
+    return this.httpClient.post<string>(url, email).pipe(
+      catchError((error) => {
+        console.error('Error al enviar el correo', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  enviarSolicitudDenegadaEmail(email: string): Observable<string> {
+    let url = `${environment.urlApiEmail}deniedEmail`;
+    return this.httpClient.post<string>(url, email).pipe(
+      catchError((error) => {
+        console.error('Error al enviar el correo', error);
+        return throwError(error);
+      })
+    );
+  }
 }

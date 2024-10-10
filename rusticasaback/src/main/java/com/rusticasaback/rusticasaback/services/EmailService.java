@@ -20,4 +20,24 @@ public class EmailService {
 
         mailSender.send(message);
     }
+
+    public void sendAcceptEmail(String toEmail) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("Recuperación Correo");
+        message.setText("Hola Buenas tu solicitud ha sido aceptada");
+        message.setFrom("rusticasa066@gmail.com");
+
+        mailSender.send(message);
+    }
+
+    public void sendDeniedEmail(String toEmail) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject("Recuperación Correo");
+        message.setText("Hola Buenas tu solicitud ha sido cancelada");
+        message.setFrom("rusticasa066@gmail.com");
+
+        mailSender.send(message);
+    }
 }
