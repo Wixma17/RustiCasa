@@ -1,6 +1,7 @@
 package com.rusticasaback.rusticasaback.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -8,7 +9,11 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import com.rusticasaback.rusticasaback.DTOs.AlquilaDTO;
 import com.rusticasaback.rusticasaback.DTOs.MunicipioDTO;
 import com.rusticasaback.rusticasaback.Request.AlquilaRequest;
 import com.rusticasaback.rusticasaback.entities.CasaEntity;
@@ -46,7 +51,7 @@ public class AlquilaService {
         AlquilaEntity alquilaCasa = new AlquilaEntity(
                 new AlquilaEntityPK(alquilaRequest.getGmail(), alquilaRequest.getIdCasa(),
                         alquilaRequest.getFechaEntrada()),
-                alquilaRequest.getFechaSalida(), cliente, casa,alquilaRequest.getEstado());
+                alquilaRequest.getFechaSalida(), cliente, casa, alquilaRequest.getEstado());
 
         return guardaReserva(alquilaCasa);
     }
@@ -88,12 +93,12 @@ public class AlquilaService {
 
     public List<Long> getCasaIdsByFechas(Date fechaEntrada, Date fechaSalida) {
         return alquilaRepository.findCasaIdsByFechas(fechaEntrada, fechaSalida);
-    }  
-    
+    }
+
     public void eliminarAlquiler(String gmail, Long idCasa, Date fechaEntrada) {
-        System.out.println("gmail=> "+gmail);
-        System.out.println("idCasa=> "+idCasa);
-        System.out.println("fecha=> "+fechaEntrada);
+        System.out.println("gmail=> " + gmail);
+        System.out.println("idCasa=> " + idCasa);
+        System.out.println("fecha=> " + fechaEntrada);
         AlquilaEntityPK pk = new AlquilaEntityPK(gmail, idCasa, fechaEntrada);
         alquilaRepository.deleteById(pk);
     }
@@ -110,7 +115,7 @@ public class AlquilaService {
         return alquilaRepository.countEstadoPByGmail(gmail);
     }
 
-    public List<String> getEstadoPorInteresado(String gmail){
+    public List<String> getEstadoPorInteresado(String gmail) {
         return alquilaRepository.findEstadosByGmailPropietario(gmail);
     }
 
@@ -122,4 +127,24 @@ public class AlquilaService {
             System.out.println("No se encontró ninguna entidad con el id de casa especificado.");
         }
     }
+
+   public ResponseEntity<?> getListaCasaPorPropietario(@RequestParam String email, @RequestParam int page, @RequestParam int size) {
+    // Crear el objeto Pageable con el número de página y el tamaño
+    Pageable pageable = PageRequest.of(page, size);
+    
+    // Obtener la página de AlquilaEntity
+    Page<AlquilaEntity> pageResult = alquilaRepository.findByCasaClientePublicadorGmail(email, pageable);
+    
+    // Convertir la lista de AlquilaEntity a lista de AlquilaDTO
+    List<AlquilaDTO> listaAlquilaDTO = AlquilaDTO.convertFromEntityList(pageResult.getContent());
+    
+    // Crear un objeto de respuesta con la información de paginación
+    Map<String, Object> response = new HashMap<>();
+    response.put("content", listaAlquilaDTO);
+    response.put("currentPage", pageResult.getNumber());
+    response.put("totalItems", pageResult.getTotalElements());
+    response.put("totalPages", pageResult.getTotalPages());
+
+    return new ResponseEntity<>(response, HttpStatus.OK);
+}
 }

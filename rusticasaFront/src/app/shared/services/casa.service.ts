@@ -173,4 +173,10 @@ export class CasaService {
     return this.httpClient.put<any>(url, {});
   }
 
+  getInfoCasasPorEmailPropietario(gmail: string, page: number, size: number) {
+    let url = `${environment.urlApiCasas}casasInfoAlquiladas/${gmail}?page=${page}&size=${size}`;
+    return this.httpClient.get<any>(url);
+}
+
+
 }

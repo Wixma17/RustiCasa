@@ -212,7 +212,6 @@ public class CasaController {
         return ResponseEntity.ok().build();
     }
 
-
     @GetMapping("/por-mes")
     public ResponseEntity<?> obtenerAlquilerPorMes() {
         List<Object[]> alquileresPorMes = alquilaService.obtenerAlquilerPorMes();
@@ -235,25 +234,25 @@ public class CasaController {
     @GetMapping("/estados-casas/{gmail}")
     public ResponseEntity<?> getEstadosCasasByPropietario(@PathVariable String gmail) {
         List<String> estados = alquilaService.getEstadosByGmailPropietario(gmail);
-        
+
         if (estados.isEmpty()) {
-            return ResponseEntity.noContent().build(); 
+            return ResponseEntity.noContent().build();
         }
-        
+
         return new ResponseEntity<>(estados, HttpStatus.CREATED);
     }
 
     @GetMapping("/numero-solicitudes/{gmail}")
     public ResponseEntity<?> getNSolicitudes(@PathVariable String gmail) {
-        Long estados = alquilaService.getNSolicitudes(gmail);  
-        
+        Long estados = alquilaService.getNSolicitudes(gmail);
+
         return new ResponseEntity<>(estados, HttpStatus.CREATED);
     }
 
     @GetMapping("/estado-solicitudes-interesado/{gmail}")
     public ResponseEntity<?> getEstadosCasasByInteresado(@PathVariable String gmail) {
-        List<String> estados = alquilaService.getEstadoPorInteresado(gmail);  
-        
+        List<String> estados = alquilaService.getEstadoPorInteresado(gmail);
+
         return new ResponseEntity<>(estados, HttpStatus.CREATED);
     }
 
@@ -264,5 +263,14 @@ public class CasaController {
         response.put("message", "okey");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
+    @GetMapping("/casasInfoAlquiladas/{gmail}")
+    public ResponseEntity<?> getInfoCasasPorEmailPropietario(
+         @PathVariable String gmail,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size) {
+        return alquilaService.getListaCasaPorPropietario(gmail, page, size);
+    }
+
 
 }
