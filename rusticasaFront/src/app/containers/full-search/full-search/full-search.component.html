@@ -58,7 +58,7 @@
     <div *ngFor="let casa of casasPaginadas" class="col-10">
       <div class="contenedor-cristalizado p-2 m-2">
         <app-house [datosCasa]="casa"></app-house>
-        <button class="btn btn-danger" *ngIf="usuarioLog.administrador" (click)="eliminaCasa(casa.idCasa)"> <i class="bi bi-trash3-fill"></i> Eliminar {{casa.nombreCasa}}</button>
+        <button class="btn btn-danger" *ngIf="usuarioLog?.administrador" (click)="eliminaCasa(casa.idCasa)"> <i class="bi bi-trash3-fill"></i> Eliminar {{casa.nombreCasa}}</button>
       </div>
     </div>
     <p-paginator
