@@ -12,7 +12,6 @@ import { OpinionResponse } from 'src/app/shared/model/responses/opinion-response
 import { CasaService } from 'src/app/shared/services/casa.service';
 import { ReporteService } from 'src/app/shared/services/reporte.service';
 
-
 @Component({
   selector: 'app-details-house',
   templateUrl: './details-house.component.html',
@@ -23,13 +22,14 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
   listaImagenes: any[];
   listaOpinionCasa: any[];
   mediaOp: number = 0;
-  isDisabled:boolean=false;
+  isDisabled: boolean = false;
   usuConn: any;
-  idCasaString:string;
-  idCasaLong:number;
+  idCasaString: string;
+  idCasaLong: number;
   reportForm: FormGroup;
-  men:any;
-  isbloqueado:boolean=false;
+  men: any;
+  isbloqueado: boolean = false;
+  isIniSesion: boolean = false;
 
   // Subjects
   private destroySubject = new Subject<void>();
@@ -48,23 +48,24 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
     private router: Router,
     private casaService: CasaService,
     private formubuild: FormBuilder,
-    private reporteService:ReporteService,
+    private reporteService: ReporteService,
     private primengConfig: PrimeNGConfig,
     private messageService: MessageService
   ) {
     this.reportForm = this.formubuild.group({
-      motivo:[]
+      motivo: [],
     });
   }
 
   ngOnInit(): void {
-
     this.primengConfig.ripple = true;
 
     this.usuConn = JSON.parse(sessionStorage.getItem('datosUsu'));
 
     this.idCasaString = this.route.snapshot.paramMap.get('idCasa');
-    this.idCasaLong = this.idCasaString ? parseInt(this.idCasaString, 10) : null;
+    this.idCasaLong = this.idCasaString
+      ? parseInt(this.idCasaString, 10)
+      : null;
 
     this.serviceHouse.getDatosCasaIdCasa(this.idCasaLong).subscribe({
       next: (casaR) => {
@@ -92,42 +93,46 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
         })
       )
     );
-    this.opiniones$ = this.serviceHouse.getListaOpinionCasa(this.idCasaLong).pipe(
-      map((op) => {
-        this.listaOpinionCasa = op;
+    this.opiniones$ = this.serviceHouse
+      .getListaOpinionCasa(this.idCasaLong)
+      .pipe(
+        map((op) => {
+          this.listaOpinionCasa = op;
 
-        // Inicializa la variable de la media
-        let sumaPuntuaciones = 0;
+          // Inicializa la variable de la media
+          let sumaPuntuaciones = 0;
 
-        // Suma todas las puntuaciones
-        this.listaOpinionCasa.forEach((opi) => {
-          sumaPuntuaciones += opi.puntuacion;
-        });
+          // Suma todas las puntuaciones
+          this.listaOpinionCasa.forEach((opi) => {
+            sumaPuntuaciones += opi.puntuacion;
+          });
 
-        // Calcula la media solo si hay opiniones
-        if (this.listaOpinionCasa.length > 0) {
-          this.mediaOp = Math.floor(
-            sumaPuntuaciones / this.listaOpinionCasa.length
-          );
-        } else {
-          this.mediaOp = 0;
-        }
-
-        return op;
-      })
-    );
-
-
-    this.casaService
-      .getListaCasasPorGmail(this.usuConn.gmail)
-      .subscribe((casas) => {
-        casas.content.forEach((element) => {
-          if (element.idCasa == this.idCasaLong) {
-            this.isDisabled = true;
+          // Calcula la media solo si hay opiniones
+          if (this.listaOpinionCasa.length > 0) {
+            this.mediaOp = Math.floor(
+              sumaPuntuaciones / this.listaOpinionCasa.length
+            );
+          } else {
+            this.mediaOp = 0;
           }
-        });
-      });
 
+          return op;
+        })
+      );
+
+    if (this.usuConn?.gmail != undefined) {
+      this.casaService
+        .getListaCasasPorGmail(this.usuConn.gmail)
+        .subscribe((casas) => {
+          casas.content.forEach((element) => {
+            if (element.idCasa == this.idCasaLong) {
+              this.isDisabled = true;
+            }
+          });
+        });
+    } else {
+      this.isIniSesion = true;
+    }
   }
 
   subscriptionPoint(): void {
@@ -189,55 +194,56 @@ export class DetailsHouseComponent implements OnInit, OnDestroy {
     this.destroySubject.next();
   }
 
-  goListOpinion(){
-    this.router.navigate(['/opinion-list-house/'+this.casa.idCasa]);
+  goListOpinion() {
+    this.router.navigate(['/opinion-list-house/' + this.casa.idCasa]);
   }
 
-  goAlquilaCasa(){
-    this.router.navigate(['/rent-house/'+this.casa.idCasa]);
+  goIniSesion() {
+    this.router.navigate(['/login']);
+  }
+
+  goAlquilaCasa() {
+    this.router.navigate(['/rent-house/' + this.casa.idCasa]);
   }
 
   seleccionarMotivo(motivo: string): void {
     this.reportForm.patchValue({ motivo });
   }
 
-  reportUsu(){
-
+  reportUsu() {
     if (this.reportForm.valid) {
-      console.log('Motivo seleccionado:', );
+      console.log('Motivo seleccionado:');
       // Aquí puedes manejar la lógica de envío del reporte
     } else {
       console.log('No se ha seleccionado ningún motivo');
     }
 
-    this.casaService.getGmailPorIdCasa(this.idCasaLong).subscribe((correo)=>{
-      let report:RequestReporte= {
-        gmailReportado:correo.message,
+    this.casaService.getGmailPorIdCasa(this.idCasaLong).subscribe((correo) => {
+      let report: RequestReporte = {
+        gmailReportado: correo.message,
         emisor: this.usuConn.gmail,
         fechaReporte: new Date(),
-        motivo: this.reportForm.value.motivo
-      }
+        motivo: this.reportForm.value.motivo,
+      };
 
-      console.info(report)
+      console.info(report);
 
-      this.reporteService.crearReporte(report).subscribe((info)=>{
-
+      this.reporteService.crearReporte(report).subscribe((info) => {
         this.men = 'Usuario Bloqueado con éxito';
-      this.isbloqueado = true;
-      this.messageService.add({
-        severity: 'info',
-        summary: 'Operación con éxito',
-        detail: this.men
-      });
+        this.isbloqueado = true;
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Operación con éxito',
+          detail: this.men,
+        });
 
-
-        const closeButton = document.querySelector('#reportModal .btn-close') as HTMLElement;
+        const closeButton = document.querySelector(
+          '#reportModal .btn-close'
+        ) as HTMLElement;
         if (closeButton) {
           closeButton.click();
         }
       });
-
     });
-
   }
 }

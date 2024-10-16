@@ -1,8 +1,26 @@
 <div *ngIf="casa" class="container-fluid" id="fondo">
+
+  <div class="mt-2 d-flex justify-content-center text-center">
+    <span *ngIf="isIniSesion" class="text-danger bg-secondary-subtle p-2 rounded col-4 m-2">
+      * Para alquilar esta casa tiene que
+      <strong>
+        <a (click)="goIniSesion()" id="link" class="position-relative">
+          iniciar sesion
+          <i class="bi bi-box-arrow-up-right position-absolute icon-above"></i>
+        </a>
+      </strong>
+    </span>
+
+    <span *ngIf="isDisabled" class="text-danger bg-secondary-subtle p-2 rounded col-4 m-2">
+      <strong>* No puedes alquilar tu propia casa</strong>
+    </span>
+  </div>
+
+
   <div class="d-flex justify-content-between align-items-center">
     <h1 id="titulo">{{ casa.nombreCasa }}</h1>
 
-    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#reportModal" [disabled]="isDisabled">
+    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#reportModal" [disabled]="isDisabled || isIniSesion">
       <i class="bi bi-exclamation-triangle-fill"></i> Reportar
     </button>
 

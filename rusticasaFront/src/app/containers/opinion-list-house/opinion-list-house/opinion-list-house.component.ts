@@ -23,6 +23,7 @@ export class OpinionListHouseComponent implements OnInit {
   subeOpinionForm: FormGroup;
   isDisabled: boolean = false;
   usuConn: any;
+  isIniSesion:boolean =false;
 
   // Variables de paginación
   page: number = 0; // Página actual
@@ -35,7 +36,7 @@ export class OpinionListHouseComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private casaService: CasaService,
     private clienteService: ClienteService,
-    private formubuild: FormBuilder,
+    private formubuild: FormBuilder
   ) {
     this.subeOpinionForm = this.formubuild.group({
       nEstrellas: [0],
@@ -51,15 +52,19 @@ export class OpinionListHouseComponent implements OnInit {
       ? parseInt(this.idCasaString, 10)
       : null;
 
-    this.casaService
-      .getListaCasasPorGmail(this.usuConn.gmail)
-      .subscribe((casas) => {
-        casas.content.forEach((element) => {
-          if (element.idCasa == this.idCasaLong) {
-            this.isDisabled = true;
-          }
+    if (this.usuConn?.gmail != undefined) {
+      this.casaService
+        .getListaCasasPorGmail(this.usuConn.gmail)
+        .subscribe((casas) => {
+          casas.content.forEach((element) => {
+            if (element.idCasa == this.idCasaLong) {
+              this.isDisabled = true;
+            }
+          });
         });
-      });
+    }else{
+      this.isIniSesion= true
+    }
 
     if (this.idCasaLong) {
       // Actualiza los breadcrumbs manualmente si es necesario
@@ -162,15 +167,15 @@ export class OpinionListHouseComponent implements OnInit {
     };
 
     this.casaService.publicaOpi(opinion).subscribe({
-      next:(s)=>{
-      console.info("Opinion subida con exito")
+      next: (s) => {
+        console.info('Opinion subida con exito');
       },
-      error:(err)=>{
-        console.error(err)
+      error: (err) => {
+        console.error(err);
       },
-      complete:()=>{
+      complete: () => {
         window.location.reload();
-      }
-    })
+      },
+    });
   }
 }

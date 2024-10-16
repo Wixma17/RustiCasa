@@ -46,7 +46,7 @@ export class MapaComponent implements OnInit {
       // Añade un marcador en las coordenadas deseadas con el icono personalizado
       L.marker(latLng, { icon: this.customIcon })
         .addTo(this.map)
-        .bindPopup('Aquí está tu marcador!')
+        .bindPopup('🏠 Ubicación de '+this.datosLoc.municipio+'!')
         .openPopup();
     } else {
       console.error('Leaflet is not loaded or datosLoc is missing');

@@ -1,4 +1,21 @@
 <div class="container-fluid d-flex flex-column justify-content-between"  id="fondo">
+
+  <div class="mt-2 d-flex justify-content-center text-center">
+    <span *ngIf="isIniSesion" class="text-danger bg-secondary-subtle p-2 rounded col-4 m-2">
+      * Para opinar esta casa tiene que
+      <strong>
+        <a (click)="goIniSesion()" id="link" class="position-relative">
+          iniciar sesion
+          <i class="bi bi-box-arrow-up-right position-absolute icon-above"></i>
+        </a>
+      </strong>
+    </span>
+
+    <span *ngIf="isDisabled" class="text-danger bg-secondary-subtle p-2 rounded col-4 m-2">
+      <strong>* No puedes opinar tu propia casa</strong>
+    </span>
+  </div>
+
   <h1 class="col-12" *ngIf="casa">Opiniones de: {{casa.nombreCasa}}</h1>
 
   <h1 class="col-12" *ngIf="listaOpinion.length==0 && casa">¡Ahora mismo no existe Opiniones de: {{casa.nombreCasa}} sube una!</h1>
