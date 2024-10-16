@@ -14,6 +14,7 @@ import { RentHouseComponent } from './containers/rent-house/rent-house/rent-hous
 import { ListHouseRentComponent } from './containers/list-house-rent/list-house-rent/list-house-rent.component';
 import { StatisticsComponent } from './containers/statistics/statistics/statistics.component';
 import { HouseRequestComponent } from './containers/house-request/house-request/house-request.component';
+import { FaqsComponent } from './containers/faqs/faqs/faqs.component';
 
 
 const routes: Routes = [
@@ -156,6 +157,16 @@ const routes: Routes = [
       breadcrumb: [
         { label: 'Inicio', routerLink: '/welcome' },
         { label: 'Solicitudes de Casas', routerLink: '/house-request' }
+      ],
+    },
+  },
+  {
+    path: 'faqs',
+    component: FaqsComponent,
+    data: {
+      breadcrumb: [
+        { label: 'Inicio', routerLink: '/welcome' },
+        { label: 'Preguntas frecuentes', routerLink: '/faqs' },
       ],
     },
   }

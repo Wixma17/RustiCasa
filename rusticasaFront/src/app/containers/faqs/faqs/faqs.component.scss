@@ -1,0 +1,26 @@
+h1 {
+  margin: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 20px auto;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+h2 {
+  color: #333;
+  border-bottom: 2px solid #4CAF50;
+  padding-bottom: 5px;
+}
+
+p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.faq {
+  margin-bottom: 20px;
+}

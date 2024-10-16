@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from './footer/footer.component';
-import { CasaService } from 'src/app/shared/services/casa.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [FooterComponent],
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   exports: [FooterComponent],
   providers: [],
 })

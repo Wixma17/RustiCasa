@@ -1,14 +1,17 @@
-
-footer{
+footer {
   background-color: rgb(147 196 124);
   position: static;
 }
 
-i{
+i {
   font-size: 25px;
 }
 
-a{
+.link:hover {
+  cursor: pointer;
+}
+
+a {
   color: black;
   text-decoration: none;
   padding: 3px;
