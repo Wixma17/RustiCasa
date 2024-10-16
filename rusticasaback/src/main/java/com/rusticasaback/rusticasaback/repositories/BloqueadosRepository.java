@@ -10,5 +10,4 @@ public interface BloqueadosRepository extends JpaRepository<BloqueadosEntity, St
     void deleteByGmailBloqueado(String gmailBloqueado);
 
     boolean existsByGmailBloqueado(String gmailReportado);
-    
 }

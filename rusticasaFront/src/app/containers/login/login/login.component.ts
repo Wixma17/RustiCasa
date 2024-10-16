@@ -64,18 +64,22 @@ export class LoginComponent implements OnInit {
 
       this.register.login(cliente).subscribe({
         next: (cli) => {
+          // Guardar credenciales si el usuario lo solicita
           if (this.loginForm.value.agreed) {
             localStorage.setItem('credenciales', JSON.stringify(cliente));
           } else {
-            if (localStorage.getItem('credenciales')) {
-              localStorage.removeItem('credenciales');
-            }
+            localStorage.removeItem('credenciales');
           }
           this.clienteIni = cli;
         },
         error: (err) => {
-          console.error(err);
-          this.loginError = 'Error al iniciar sesión. Intente de nuevo.';
+          // Manejo específico del código de error 403 (usuario bloqueado)
+          if (err.status === 403) {
+            this.loginError = 'El usuario está bloqueado. Por favor, contacta al administrador.';
+          } else {
+            this.loginError = 'Error al iniciar sesión. Intente de nuevo.';
+          }
+          console.error('Error al iniciar sesión:', err);
         },
         complete: () => {
           if (this.clienteIni != null) {
@@ -84,16 +88,17 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/welcome']);
           } else {
             console.error('Cliente no existe');
-            this.loginError = 'Usuario o contraseña incorrectos.'; // Establecer el mensaje de error
+            this.loginError = 'Usuario o contraseña incorrectos.';
           }
         },
       });
     } else {
       console.log('Formulario inválido');
-      // Manejar el caso cuando el formulario no es válido
       this.loginForm.markAllAsTouched();
     }
   }
+
+
 
   showPassword(){
     this.showPasswd=!this.showPasswd;

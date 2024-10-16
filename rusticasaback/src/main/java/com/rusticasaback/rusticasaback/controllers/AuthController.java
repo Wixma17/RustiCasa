@@ -15,6 +15,7 @@ import com.rusticasaback.rusticasaback.DTOs.ClienteDTO;
 import com.rusticasaback.rusticasaback.Request.LoginRequest;
 import com.rusticasaback.rusticasaback.Request.RegisterRequest;
 import com.rusticasaback.rusticasaback.entities.ClienteEntity;
+import com.rusticasaback.rusticasaback.repositories.BloqueadosRepository;
 import com.rusticasaback.rusticasaback.services.ClienteService;
 import com.rusticasaback.rusticasaback.services.ImagenService;
 
@@ -28,19 +29,33 @@ public class AuthController {
     @Autowired
     private ImagenService imagenService;
 
+    @Autowired
+    private BloqueadosRepository bloqueadosRepository;
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        ClienteDTO cli = clienteService.authenticate(loginRequest.getGmail(), loginRequest.getPasswd());
-        return new ResponseEntity<>(cli, HttpStatus.CREATED);
+    public ResponseEntity<?> login(@RequestBody LoginRequest cliente) {
+        ClienteDTO clienteDTO = clienteService.authenticate(cliente.getGmail(), cliente.getPasswd());
+
+        if (clienteDTO != null) {
+            return new ResponseEntity<>(clienteDTO, HttpStatus.OK);
+        } else {
+            boolean isBlocked = bloqueadosRepository.existsByGmailBloqueado(cliente.getGmail());
+            if (isBlocked) {
+                return new ResponseEntity<>("Usuario bloqueado", HttpStatus.FORBIDDEN);
+            } else {
+                return new ResponseEntity<>("Credenciales incorrectas", HttpStatus.UNAUTHORIZED);
+            }
+        }
     }
 
     @PostMapping("/registerUser")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
         ClienteEntity clienteExistente;
-    
-        Optional<ClienteEntity> clienteExistenteOptional = clienteService.verClienteExistente(registerRequest.getGmail());
+
+        Optional<ClienteEntity> clienteExistenteOptional = clienteService
+                .verClienteExistente(registerRequest.getGmail());
         if (!clienteExistenteOptional.isPresent()) {
-            ClienteDTO c= clienteService.crearCliente(registerRequest);
+            ClienteDTO c = clienteService.crearCliente(registerRequest);
             clienteExistente = c.createClienteEntity();
         } else {
             clienteExistente = clienteExistenteOptional.get();

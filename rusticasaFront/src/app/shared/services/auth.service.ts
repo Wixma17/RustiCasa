@@ -2,11 +2,12 @@ import { Injectable, Sanitizer } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { ClienteResponse } from '../model/responses/cliente-response.model';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ClienteService } from './cliente.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RequestCliente } from '../model/requests/request-register.model';
 import { SubidaImagenRequest } from '../model/requests/request-subida-imagenesRequest.model';
+import { catchError } from 'rxjs/operators'; // Importar catchError
 
 @Injectable({
   providedIn: 'root',
@@ -38,14 +39,34 @@ export class AuthService {
     }
   }
 
+  // Manejo de errores
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMsg: string;
+    if (error.status === 403) {
+      errorMsg = 'El usuario está bloqueado.';
+    } else if (error.status === 401) {
+      errorMsg = 'Credenciales incorrectas.';
+    } else {
+      errorMsg = 'Ocurrió un error al procesar la solicitud.';
+    }
+    console.error('Error en la solicitud:', errorMsg);
+    return throwError(() => new Error(errorMsg));
+  }
+
   getDatosUsuEmail(email: string): Observable<ClienteResponse> {
     let url = `${environment.urlApiAuth}datosUsuario`;
-    return this.httpClient.post<ClienteResponse>(url, email);
+    return this.httpClient.post<ClienteResponse>(url, email)
+      .pipe(
+        catchError(this.handleError) // Maneja el error con catchError
+      );
   }
 
   registrarUsuario(register: RequestCliente): Observable<any> {
     let url = `${environment.urlApiAuth}registerUser`;
-    return this.httpClient.post<any>(url, register);
+    return this.httpClient.post<any>(url, register)
+      .pipe(
+        catchError(this.handleError) // Maneja el error con catchError
+      );
   }
 
   subirImagenPerfil(data: SubidaImagenRequest): Observable<any> {
@@ -54,22 +75,20 @@ export class AuthService {
 
     // Crear una instancia de FormData
     const formData = new FormData();
-
-    // Agregar el campo de correo electrónico
     formData.append('gmail', data.gmail);
 
     if (data.files) {
-      formData.append('files', data.files, data.files.name); // Añadir el archivo con el nombre 'files'
-      console.info("Sube la imagen")
+      formData.append('files', data.files, data.files.name);
+      console.info("Sube la imagen");
     } else {
       console.error('No se ha proporcionado ningún archivo.');
-      return throwError(
-        () => new Error('No se ha proporcionado ningún archivo.')
-      );
+      return throwError(() => new Error('No se ha proporcionado ningún archivo.'));
     }
 
-    // Enviar la solicitud POST con FormData
-    return this.httpClient.post<any>(url, formData);
+    return this.httpClient.post<any>(url, formData)
+      .pipe(
+        catchError(this.handleError) // Maneja el error con catchError
+      );
   }
 
   updateUserData(data: any) {
