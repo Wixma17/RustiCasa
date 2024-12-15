@@ -15,7 +15,7 @@ public class EmailService {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Recuperación Correo");
-        message.setText("Hola Buenas tu contraseña es la siguiente: "+body+" no se te olvide apuntarlo en algun lado seguro y no lo compartas");
+        message.setText("Hola Buenas tu contraseña es la siguiente: '"+body+"' no se te olvide apuntarlo en algun lado seguro y no lo compartas");
         message.setFrom("rusticasa066@gmail.com");
 
         mailSender.send(message);
